@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="lab.security.Section" table="sections">
+		<id name="id" column="id">
+			<generator class="sequence">
+				<param name="sequence">sections_id_seq</param>
+			</generator>
+		</id>
+		<property name="name" column="name"/>
+		<property name="url" column="url"/>
+		<set name="subsections" table="sections" lazy="false">
+			<key column="parent_section"/>
+			<one-to-many class="lab.security.Section"/>
+		</set>
+	</class>
+</hibernate-mapping>

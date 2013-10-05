@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="lab.model.labcase.Labcase" table="labcase">
+		<id name="id" column="id">
+			<generator class="sequence">
+				<param name="sequence">sc_labcase</param>
+			</generator>
+		</id>
+		<property name="code" column="code"/>
+		<property name="owner" column="owner"/>
+		<property name="zone" column="zone"/>
+		<property name="farm" column="farm"/>
+		<property name="status" column="state"/>
+		<property name="analysisPurpose" column="analysis_purpose"/>
+		<property name="receptionDate" column="reception_date"/>
+		<property name="sender" column="sender"/>
+		<property name="reproductiveProblem" column="reproductive_problem"/>
+		<property name="observations" column="observations"/>
+		<property name="icaNumber" column="results_number"/>
+		<many-to-one name="enterpriseSender" class="lab.model.enterprise.Enterprise"
+				column="enterprise"/>
+		<many-to-one name="city" class="lab.model.place.Place"
+				column="city"/>
+		<many-to-one name="technicalDirector" class="lab.model.person.LabProfessional"
+				column="technical_director"/>
+		<list name="animals" table="animal" lazy="false">
+			<key column="labcase"/>
+			<index column="position"/>
+			<one-to-many class="lab.model.animal.Animal"/>
+		</list>
+	</class>
+</hibernate-mapping>

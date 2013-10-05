@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="lab.model.test.result.Result" table="result">
+		<id name="id" column="id">
+			<generator class="sequence">
+				<param name="sequence">sc_result</param>
+			</generator>
+		</id>
+		<property name="value" column="string_value"/>
+        <property name="relativeValue" column="relative_value"/>
+		<property name="resultDate" column="result_date"/>
+		<many-to-one name="resultFactor" column="result_factor"
+				class="lab.model.test.result.resultfactor.ResultFactor"/>
+		<many-to-one name="assemblyTest" class="lab.model.assembly.AssemblyTest"
+				column="assembly_test" unique="true"/>
+		<many-to-one name="labProfessional" class="lab.model.person.LabProfessional"
+				column="lab_professional"/>
+	</class>
+</hibernate-mapping>

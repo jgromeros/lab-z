@@ -1,0 +1,16 @@
+@CHARSET "UTF-8";
+
+#layerizq {
+	position:absolute; 
+	top:150px;
+	left:0px;
+}
+
+#layerder {
+	position:absolute;	
+	left:190px;
+}
+
+#layerdown {
+	position:relative;
+}

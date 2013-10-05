@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="lab.model.test.Test" table="test">
+		<id name="id" column="id">
+			<generator class="sequence">
+				<param name="sequence">sc_test</param>
+			</generator>
+		</id>
+		<many-to-one name="testDescription" class="lab.model.test.TestDescription"
+				column="test_description"/>
+ 		<set name="results" table="result" lazy="false" order-by="result_factor">
+			<key column="test"/>
+			<one-to-many class="lab.model.test.result.Result"/>
+		</set>
+		<many-to-one name="animal" class="lab.model.animal.Animal" column="animal"/>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="copro" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ec1b81a6-5fc5-48de-aacc-5fa0fd37a520">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="labcase" class="java.lang.Long"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/Users/juanromero/Documents/workspace/lab-zw/WebContent/reports/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT l.reception_date, l.code, a.name AS animal, a.age, ra.name AS race,
+        a.gender, e.first_name, p.name AS city, dpt.name AS state, l.zone, l.farm, l.owner,
+        lp.first_name || ' ' || lp.last_name AS professional, s.name AS specie, td.description,
+        la.description AS area, rf._group, rf.name, r.string_value, r.result_date, l.analysis_purpose,
+        l.observations, rv.absolute_ref_value, rv.relative_ref_value, td.show_reference_value, l.sender
+FROM (result r JOIN lab_professional lp ON r.lab_professional = lp.id)
+        JOIN (((test t JOIN ((animal a JOIN
+                        (race ra JOIN specie s ON ra.specie = s.id)
+                        ON a.race = ra.id)
+                JOIN ((labcase l
+                        JOIN (place p JOIN place dpt ON p.placed_on = dpt.id)
+                                ON l.city = p.id)
+                        JOIN enterprise e ON l.enterprise = e.id)
+                ON l.id = a.labcase)
+        ON a.id = t.animal) JOIN
+                ((test_description td JOIN result_factor rf
+                        ON td.id = rf.test_description)
+                        JOIN lab_area la ON td.lab_area = la.id)
+                ON td.id = t.test_description) LEFT JOIN reference_value rv
+                        ON rv.result_factor = rf.id AND rv.specie = s.id)
+        ON t.id = r.test AND r.result_factor = rf.id
+WHERE l.id = $P{labcase}
+ORDER BY rf._group]]>
+	</queryString>
+	<field name="reception_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="code" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="animal" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="age" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="race" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="gender" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="first_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="city" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="state" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="zone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="farm" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="owner" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="professional" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="specie" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="area" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="_group" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="string_value" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="result_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="analysis_purpose" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="observations" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="absolute_ref_value" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="relative_ref_value" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="show_reference_value" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sender" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="Grupo">
+		<groupExpression><![CDATA[$F{_group}]]></groupExpression>
+		<groupHeader>
+			<band height="25">
+				<printWhenExpression><![CDATA[$F{_group} != null]]></printWhenExpression>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="abd2ad55-05c2-4e29-82d0-6dbd0a6bee72" x="20" y="5" width="267" height="13"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{_group}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="81" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="51cc9c00-f377-4528-b100-ab7c555a21a5" x="5" y="7" width="97" height="13"/>
+				<textElement/>
+				<text><![CDATA[Fecha de ingreso:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a86879ca-0560-45f0-85a3-9b11a93b220f" x="399" y="7" width="65" height="13"/>
+				<textElement/>
+				<text><![CDATA[No. de caso:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d288af63-376e-405c-a386-0a9dd0617b5a" x="196" y="7" width="100" height="13"/>
+				<textElement/>
+				<text><![CDATA[Fecha de emisión:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="f0d4a4bb-69cb-407f-901c-3ae7566e6d52" x="464" y="7" width="91" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="93f022f5-889e-4c3e-89a9-11c02606b340" x="100" y="7" width="93" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{reception_date}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="71a1b5c9-139b-4394-9024-234c87cb3d82" x="295" y="7" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{result_date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="101">
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="f9bf5faf-0c13-4d3f-842f-13a94cc389f8" x="204" y="75" width="140" height="13"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f28eae20-804b-4cbf-ad74-e79939e097be" x="453" y="88" width="101" height="13">
+					<printWhenExpression><![CDATA[$F{show_reference_value} == true]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Valor de Referencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5e4f79c6-7f62-4ce8-ab53-55f320d17614" x="5" y="42" width="46" height="13"/>
+				<textElement/>
+				<text><![CDATA[Entidad:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a7bade90-ab6c-4cf9-b4b9-86999dbad6d6" x="199" y="24" width="60" height="13"/>
+				<textElement/>
+				<text><![CDATA[Propietario:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1637a598-609a-4e49-9819-aec04f9f0e3a" x="196" y="6" width="46" height="13"/>
+				<textElement/>
+				<text><![CDATA[Especie:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="5361b612-9fc2-4624-8724-2b72e210b01e" x="244" y="6" width="138" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{specie}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="58681a64-154e-4017-b57a-5c58e5cebdbf" x="263" y="24" width="138" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{owner}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b8227a90-56ac-447c-b96a-d3ec6f0e5784" x="51" y="42" width="212" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{first_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="d26c6df1-1265-46c2-981e-6564f21f47ad" x="5" y="6" width="72" height="13"/>
+				<textElement/>
+				<text><![CDATA[Identificación:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="28dc8596-e353-4b83-ac8f-dc33746f5ab5" x="77" y="6" width="111" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{animal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="96219fe7-c0f5-4cff-a735-9300d76cd541" x="102" y="24" width="28" height="13"/>
+				<textElement/>
+				<text><![CDATA[Edad:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="49da4422-a219-463a-a647-f9f71d361664" x="130" y="24" width="63" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{age}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2343b997-ec15-4384-bc1c-0b835132fd63" x="5" y="24" width="34" height="13"/>
+				<textElement/>
+				<text><![CDATA[Sexo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="3decc170-92ba-4866-ba5f-855ac5b4bf9c" x="39" y="24" width="57" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{gender}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="35a07dd5-61ef-4dcd-8f30-9f13f2cac3f4" x="382" y="6" width="34" height="13"/>
+				<textElement/>
+				<text><![CDATA[Raza:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="05aae36a-3710-4708-ae3a-d8740a235421" x="416" y="6" width="137" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{race}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="902c18c9-25f7-4273-9f5d-f3602299e997" x="326" y="42" width="155" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{sender}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f23efa41-81a4-4282-b2a2-6fe08cd2add3" x="269" y="42" width="55" height="13"/>
+				<textElement/>
+				<text><![CDATA[Solicitante:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement uuid="823221e3-cd60-4f7a-8cc5-4c83670964ee" x="20" y="5" width="140" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="13324e53-12d4-4d31-a226-1818655b0f85" x="160" y="5" width="304" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{string_value}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7867535e-3d57-4cb8-86e7-fd41f92263a7" x="465" y="5" width="90" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{absolute_ref_value}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement uuid="f847d478-88f1-4b47-9a71-9a4700d983b5" x="435" y="5" width="80" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="e32c381f-a238-4fcd-9b80-5e2c45ae64fc" x="0" y="7" width="176" height="13"/>
+				<textElement/>
+				<text><![CDATA[Profesional que realiza la prueba:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="706330ce-a9ad-4be4-be5e-89ab9f522d4e" x="188" y="7" width="183" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{professional}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="4845512e-0b02-40a0-b6e5-4520ca6dfc21" x="515" y="5" width="40" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="36">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="8ae1ed83-5a1f-4365-be0e-026ba3c1d7c6" x="0" y="19" width="555" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{observations}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="6b6cf198-bf8c-4739-8d78-22a76486910e" x="0" y="2" width="100" height="13"/>
+				<textElement/>
+				<text><![CDATA[Observaciones]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

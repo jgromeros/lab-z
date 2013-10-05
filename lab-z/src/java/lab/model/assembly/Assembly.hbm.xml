@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="lab.model.assembly.Assembly" table="assembly">
+		<id name="id" column="id">
+			<generator class="sequence">
+				<param name="sequence">sc_assembly</param>
+			</generator>
+		</id>
+		<property name="assemblyDate" column="assembly_date"/>
+		<property name="initRow" column="init_row"/>
+		<property name="initCol" column="init_col"/>
+		<list name="tests" table="assembly_test">
+			<key column="assembly"/>
+			<index column="position"/>
+			<one-to-many class="lab.model.assembly.AssemblyTest"/>
+		</list>
+		<many-to-one name="assemblyType" class="lab.model.assembly.AssemblyType" column="assembly_type"/>
+	</class>
+</hibernate-mapping>

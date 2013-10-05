@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="lab.model.animal.Specie" table="specie">
+		<id name="id" column="id">
+			<generator class="sequence">
+				<param name="sequence">sc_specie</param>
+			</generator>
+		</id>
+		<property name="name" column="name"/>
+		<set name="races" table="race">
+            <key column="specie"/>
+            <one-to-many class="lab.model.animal.Race"/>
+        </set>
+	</class>
+</hibernate-mapping>

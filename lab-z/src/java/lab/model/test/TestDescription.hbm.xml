@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="lab.model.test.TestDescription" table="test_description">
+		<id name="id" column="id">
+			<generator class="sequence">
+				<param name="sequence">sc_test_description</param>
+			</generator>
+		</id>
+		<property name="description" column="description"/>
+		<property name="saveInBank" column="save_in_bank"/>
+        <property name="doWeDoIt" column="we_do_it"/>
+		<many-to-one name="assemblyType" class="lab.model.assembly.AssemblyType" column="assembly_type"/>
+		<set name="resultFactors" table="result_factor" lazy="false" order-by="_group">
+			<key column="test_description"/>
+			<one-to-many class="lab.model.test.result.resultfactor.ResultFactor"/>
+		</set>
+		<many-to-one name="sampleType" class="lab.model.sample.SampleType" column="sample_type"/>
+	</class>
+</hibernate-mapping>

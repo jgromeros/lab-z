@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="res_bru_ofi" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="128"/>
+	<parameter name="labcase" class="java.lang.Long"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/Users/juanromero/Documents/workspace/lab-zw/WebContent/reports/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="testdescription" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT *, ((results.res/results.control_pf)*100) AS pp, (CASE WHEN ((results.res/results.control_pf)*100) < 30
+        THEN 'Negativo' ELSE 'Positivo' END) AS interpretation FROM (
+SELECT l.code, l.reception_date, e.first_name, e.numero_ica, l.sender, l.observations, p.name AS city,
+        p1.name AS state, l.zone, l.farm, l.owner, l.analysis_purpose, l.reproductive_problem, l.results_number,
+        tech.first_name || ' ' || tech.last_name AS techdir, lp.first_name || ' ' || lp.last_name AS labpro,
+        a.name, a.gender, a.age, ra.name AS race, s.name AS specie, a.observations AS anim_obs,
+        td.description, td.ica_acronym, avg(r.string_value::float) AS res, r.result_date, ass.id AS assembly, ass.assembly_date,
+(
+SELECT avg(rc.string_value::float)
+FROM (assembly_test at2 JOIN (assembly_test c JOIN
+                        ((assembly_control ac JOIN assembly_descriptor ad
+                                ON ac.assembly_descriptor = ad.id)
+                                JOIN result rc ON ac.result = rc.id)
+                        ON c.control = ac.id)
+                ON at2.plaque = c.plaque AND c.control IS NOT NULL)
+        JOIN assembly a ON a.id = at2.assembly
+WHERE ad.name = 'C++'
+        AND at2.test = t.id
+        AND a.id = ass.id
+) AS control_pf
+FROM (result r JOIN lab_professional lp ON r.lab_professional = lp.id) JOIN (((test t JOIN
+                (((animal a JOIN ((labcase l JOIN lab_professional tech ON l.technical_director = tech.id)
+                                JOIN enterprise e ON l.enterprise = e.id)
+                        ON a.labcase = l.id) JOIN (place p JOIN place p1
+                                ON p.placed_on = p1.id) ON l.city = p.id)
+                        JOIN (race ra JOIN specie s ON ra.specie = s.id) ON a.race = ra.id)
+                ON a.id = t.animal) JOIN test_description td
+                        ON t.test_description = td.id)
+        JOIN (assembly_test at JOIN assembly ass
+                ON at.assembly = ass.id)
+        ON at.test = t.id)
+ON t.id = r.test AND r.assembly_test = at.id
+WHERE l.id = $P{labcase}
+        AND td.id = $P{testdescription}
+GROUP BY l.code, l.reception_date, e.first_name, e.numero_ica, l.sender, l.observations, p.name, p1.name,
+        l.zone, l.farm, l.owner, l.analysis_purpose, l.reproductive_problem, l.results_number, techdir, labpro,
+        a.name, a.gender, a.age, ra.name, s.name, a.observations, td.description, td.ica_acronym, r.result_date,
+        ass.id, ass.assembly_date, a.position, t.id
+ORDER BY a.position
+) AS results]]>
+	</queryString>
+	<field name="code" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="reception_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="first_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero_ica" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sender" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="observations" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="city" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="state" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="zone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="farm" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="owner" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="analysis_purpose" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="reproductive_problem" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="results_number" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="techdir" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="labpro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="gender" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="age" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="race" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="specie" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="anim_obs" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ica_acronym" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="res" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="result_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="assembly" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="assembly_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="control_pf" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pp" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="interpretation" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="252" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="62" width="143" height="13"/>
+				<textElement/>
+				<text><![CDATA[Razón social del laboratorio:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="80" width="143" height="13"/>
+				<textElement/>
+				<text><![CDATA[Prueba autorizada:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="98" width="182" height="13"/>
+				<textElement/>
+				<text><![CDATA[No de autorización del laboratorio:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="116" width="62" height="13"/>
+				<textElement/>
+				<text><![CDATA[Dirección:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="212" y="116" width="77" height="13"/>
+				<textElement/>
+				<text><![CDATA[Teléfono:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="398" y="116" width="28" height="13"/>
+				<textElement/>
+				<text><![CDATA[Fax:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="325" y="36" width="230" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[INFORME DE RESULTADOS DE DIAGNÓSTICO]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="325" y="25" width="230" height="31"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="6" y="144" width="62" height="13"/>
+				<textElement/>
+				<text><![CDATA[No. de caso:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="162" width="62" height="13"/>
+				<textElement/>
+				<text><![CDATA[Solicitante:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="180" width="182" height="13"/>
+				<textElement/>
+				<text><![CDATA[Organismo de inspección autorizado:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="198" width="73" height="13"/>
+				<textElement/>
+				<text><![CDATA[Departamento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="216" width="98" height="13"/>
+				<textElement/>
+				<text><![CDATA[Nombre de la finca:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="234" width="111" height="13"/>
+				<textElement/>
+				<text><![CDATA[Propósito del análisis:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="325" y="144" width="89" height="13"/>
+				<textElement/>
+				<text><![CDATA[Fecha de ingreso:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="263" y="162" width="62" height="13"/>
+				<textElement/>
+				<text><![CDATA[Propietario:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="364" y="180" width="101" height="13"/>
+				<textElement/>
+				<text><![CDATA[No. de autorización:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="193" y="198" width="62" height="13"/>
+				<textElement/>
+				<text><![CDATA[Municipio:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="403" y="198" width="48" height="13"/>
+				<textElement/>
+				<text><![CDATA[Vereda:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="209" y="216" width="41" height="13"/>
+				<textElement/>
+				<text><![CDATA[Especie:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="336" y="216" width="121" height="13"/>
+				<textElement/>
+				<text><![CDATA[Problema reproductivo:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="140" width="572" height="112"/>
+			</rectangle>
+			<textField>
+				<reportElement x="79" y="144" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{code}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="426" y="144" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{reception_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="79" y="162" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{sender}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="336" y="162" width="190" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{owner}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="193" y="180" width="160" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{first_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="88" y="198" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{state}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="264" y="198" width="134" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{city}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="457" y="198" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{zone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="111" y="216" width="90" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{farm}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="255" y="216" width="77" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{specie}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="465" y="216" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{reproductive_problem}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="122" y="234" width="433" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{analysis_purpose}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="472" y="180" width="93" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numero_ica}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="336" y="62" width="27" height="13"/>
+				<textElement/>
+				<text><![CDATA[No.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="336" y="75" width="190" height="1"/>
+			</line>
+			<subreport>
+				<reportElement x="0" y="0" width="570" height="139"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "res_bru_ofi_subappowner.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement x="374" y="62" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{results_number}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="232" y="5" width="100" height="20"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[RESULTADOS]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="122" y="5" width="31" height="20"/>
+				<textElement/>
+				<text><![CDATA[Sexo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="5" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Id muestra]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="163" y="5" width="46" height="20"/>
+				<textElement/>
+				<text><![CDATA[Edad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="5" width="90" height="20"/>
+				<textElement/>
+				<text><![CDATA[Vacunación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="314" y="5" width="42" height="20"/>
+				<textElement/>
+				<text><![CDATA[Raza]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="478" y="5" width="87" height="20"/>
+				<textElement/>
+				<text><![CDATA[Resultado]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="572" height="30"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="384" y="5" width="88" height="20"/>
+				<textElement/>
+				<text><![CDATA[Prueba realizada]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="11" y="3" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="122" y="3" width="31" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{gender}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="314" y="3" width="69" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{race}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="20" width="572" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="478" y="3" width="87" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{interpretation}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="387" y="3" width="80" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ica_acronym}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="220" y="3" width="90" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{anim_obs}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="163" y="3" width="45" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{age}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="5" width="220" height="13"/>
+				<textElement/>
+				<text><![CDATA[Profesional autorizado que realiza la prueba]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="23" width="220" height="13"/>
+				<textElement/>
+				<text><![CDATA[Director técnico del laboratorio autorizado]]></text>
+			</staticText>
+			<line>
+				<reportElement x="383" y="17" width="120" height="1"/>
+			</line>
+			<line>
+				<reportElement x="383" y="36" width="120" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="228" y="23" width="148" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{techdir}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="228" y="5" width="148" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{labpro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="41" width="80" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="530" y="41" width="40" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="384" y="40" width="67" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{result_date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="73">
+			<staticText>
+				<reportElement x="0" y="5" width="100" height="13"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observaciones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="23" width="572" height="26"/>
+				<textElement/>
+				<text><![CDATA[La identificación valida para el laboratorio es la que aparece en el vial. En caso de muestras repetidas la segunda será identificada con una B al final de esta (ej: 111-1 y 111-1B)
+]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="53" width="570" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{observations}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

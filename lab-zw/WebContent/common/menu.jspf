@@ -1,0 +1,17 @@
+<div id="leftcolumn" style="float: left;">
+	<div class="moduletable">
+		<h3>MENU </h3>
+		<ul class="menu">
+			<c:if test="${sections != null }">
+				<c:forEach var="section" items="${sections }">
+					<li><a id="menu" href="${section.url }"><c:out value="${section.name }"/></a></li>
+					<ul class="menu1">
+						<c:forEach var="subsection" items="${section.subsections }">
+							<li><a id="menu" href="${subsection.url }"><c:out value="${subsection.name }"/></a></li>
+						</c:forEach>
+					</ul>
+				</c:forEach>
+			</c:if>
+		</ul>
+	</div>
+</div>

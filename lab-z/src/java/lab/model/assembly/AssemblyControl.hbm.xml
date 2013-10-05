@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="lab.model.assembly.AssemblyControl" table="assembly_control">
+		<id name="id" column="id">
+			<generator class="sequence">
+				<param name="sequence">sc_assembly_control</param>
+			</generator>
+		</id>
+		<many-to-one name="testDescription" class="lab.model.test.TestDescription"
+				column="test_description"/>
+		<many-to-one name="result" class="lab.model.test.result.Result" column="result"/>
+		<many-to-one name="assemblyDescriptor" class="lab.model.assembly.AssemblyDescriptor" column="assembly_descriptor"/>
+	</class>
+</hibernate-mapping>

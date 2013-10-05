@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="lab.model.assembly.AssemblyTest" table="assembly_test">
+		<id name="id" column="id">
+			<generator class="sequence">
+				<param name="sequence">sc_assembly_test</param>
+			</generator>
+		</id>
+		<property name="row" column="row"/>
+		<property name="col" column="col"/>
+		<property name="plaque" column="plaque"/>
+		<many-to-one name="test" class="lab.model.test.Test" column="test"/>
+		<many-to-one name="control" class="lab.model.assembly.AssemblyControl" column="control"/>
+		<many-to-one name="assembly" class="lab.model.assembly.Assembly" column="assembly"/>
+		<one-to-one name="result" class="lab.model.test.result.Result" property-ref="assemblyTest"/>
+	</class>
+</hibernate-mapping>

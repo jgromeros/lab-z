@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="lab.model.test.result.resultfactor.ReferenceValue" table="reference_value">
+		<id name="id" column="id">
+			<generator class="sequence">
+				<param name="sequence">sc_reference_value</param>
+			</generator>
+		</id>
+		<property name="description" column="description"/>
+		<property name="value" column="absolute_ref_value"/>
+        <property name="unit" column="unit"/>
+        <property name="relativeValue" column="relative_ref_value"/>
+		<many-to-one name="specie" class="lab.model.animal.Specie" column="specie"/>
+		<many-to-one name="resultFactor" class="lab.model.test.result.resultfactor.ResultFactor" column="result_factor"/>
+	</class>
+</hibernate-mapping>
