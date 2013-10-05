@@ -26,7 +26,7 @@ GROUP BY a.id, at.plaque, ad.name
 ORDER BY at.plaque, ad.name;
 */
 
-SELECT *, ((results.res/results.control_pf)*100) AS pp, (CASE WHEN ((results.res/results.control_pf)*100) < 30
+/*SELECT *, ((results.res/results.control_pf)*100) AS pp, (CASE WHEN ((results.res/results.control_pf)*100) < 30
 	THEN 'Negativo' ELSE 'Positivo' END) AS interpretation FROM (
 SELECT l.code, l.reception_date, e.first_name, e.numero_ica, l.sender, p.description AS city, p1.description AS state,
 	l.zone, l.farm, l.owner, l.analysis_purpose, l.reproductive_problem, l.results_number,
@@ -66,3 +66,29 @@ GROUP BY l.code, l.reception_date, e.first_name, e.numero_ica, l.sender, p.descr
 	ass.id, ass.assembly_date, a.position, t.id
 ORDER BY a.position
 ) AS results
+*/
+
+SELECT l.reception_date, l.code, a.name AS animal, a.age, ra.name AS race,
+        a.gender, e.first_name, p.name AS city, dpt.name AS state, l.zone, l.farm, l.owner,
+        lp.first_name || ' ' || lp.last_name AS professional, s.name AS specie, td.description,
+        la.description AS area, rf._group, rf.name, rf.unit, r.string_value, r.result_date,
+        l.analysis_purpose, l.observations, rv.absolute_ref_value, rv.relative_ref_value,
+        td.show_reference_value, l.sender
+FROM (result r JOIN lab_professional lp ON r.lab_professional = lp.id)
+        JOIN (((test t JOIN ((animal a JOIN
+                        (race ra JOIN specie s ON ra.specie = s.id)
+                        ON a.race = ra.id)
+                JOIN ((labcase l
+                        JOIN (place p JOIN place dpt ON p.placed_on = dpt.id)
+                                ON l.city = p.id)
+                        JOIN enterprise e ON l.enterprise = e.id)
+                ON l.id = a.labcase)
+        ON a.id = t.animal) JOIN
+                ((test_description td JOIN result_factor rf
+                        ON td.id = rf.test_description)
+                        JOIN lab_area la ON td.lab_area = la.id)
+                ON td.id = t.test_description) LEFT JOIN reference_value rv
+                        ON rv.result_factor = rf.id AND rv.specie = s.id)
+        ON t.id = r.test AND r.result_factor = rf.id
+WHERE l.id = 100
+ORDER BY rf._group
