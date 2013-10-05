@@ -54,10 +54,12 @@ public class PrintResultsAction extends Action {
 	@Override
 	public Map<String, Object> perform(HttpServletRequest request, HttpServletResponse response,
 			Session session, Transaction tx) {
-		Labcase labcase = (Labcase) session.get(Labcase.class, Long.parseLong(request.getParameter("id")));
+		Labcase labcase = (Labcase) session.get(Labcase.class,
+				Long.parseLong(request.getParameter("id")));
 		TestDescription testDescription = (TestDescription) session.get(TestDescription.class,
 				Long.parseLong(request.getParameter("test")));
-		if (labcase.getLabProfessionalForTestDescription(testDescription) == null || labcase.getTechnicalDirector() == null){
+		if (labcase.getLabProfessionalForTestDescription(testDescription) == null ||
+				labcase.getTechnicalDirector() == null){
 			setAction(FORM);
 			//TODO Aqui hay que hacer algo
 		} else {
