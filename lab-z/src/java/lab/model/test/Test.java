@@ -27,6 +27,7 @@ public class Test extends Entity {
     private TestDescription testDescription;
     private Set<Result> results;
     private Animal animal;
+    private String observations;
 
     public Test(){
     	results = new HashSet<Result>();
@@ -96,6 +97,14 @@ public class Test extends Entity {
 			return result.getLabProfessional();
 		}
 		return null;
+	}
+
+	public String getObservations() {
+		return observations;
+	}
+
+	public void setObservations(String observations) {
+		this.observations = observations;
 	}
 
 }

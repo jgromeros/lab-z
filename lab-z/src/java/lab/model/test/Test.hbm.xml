@@ -9,6 +9,7 @@
 				<param name="sequence">sc_test</param>
 			</generator>
 		</id>
+		<property name="observations" column="observations"/>
 		<many-to-one name="testDescription" class="lab.model.test.TestDescription"
 				column="test_description"/>
  		<set name="results" table="result" lazy="false" order-by="result_factor">

@@ -99,6 +99,14 @@
 		                    </c:if>
 						</table></td></tr>
 					</c:if>
+					<tr>
+						<td colspan="2">Observaciones:</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<textarea rows="4" cols="80" name="obs_test<c:out value="${test.id }"/>"><c:out value="${test.observations }"/></textarea>
+						</td>
+					</tr>
 				</c:forEach>
 			</c:forEach>
 			<tr>
@@ -135,7 +143,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Director t&eacute;cnico del laboratorio:</td>
+				<td>Director cient&iacute;fico del laboratorio:</td>
 				<td>
 					<select name="tech_dir">
 						<option></option>
@@ -150,14 +158,6 @@
 							</c:choose>
 						</c:forEach>
 					</select>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">Observaciones:</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<textarea rows="4" cols="80" name="observations"><c:out value="${labcase.observations }"/></textarea>
 				</td>
 			</tr>
 			<tr>
