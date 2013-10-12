@@ -21,6 +21,7 @@ public class ResultFactor extends NamedEntity {
     private String group;
     private Boolean calculated;
     private Boolean computedValue;
+    private Integer numberOrder;
 
     /**
      * @param unit The unit to set.
@@ -76,6 +77,14 @@ public class ResultFactor extends NamedEntity {
 	 */
 	public Boolean getComputedValue() {
 		return computedValue;
+	}
+
+	public Integer getNumberOrder() {
+		return numberOrder;
+	}
+
+	public void setNumberOrder(Integer numberOrder) {
+		this.numberOrder = numberOrder;
 	}
 
 }

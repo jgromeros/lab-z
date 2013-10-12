@@ -16,7 +16,7 @@ import lab.model.test.result.resultfactor.ResultFactor;
  *
  * TODO
  */
-public class Result extends Entity {
+public class Result extends Entity implements Comparable<Result> {
 
     /**
      * 
@@ -112,6 +112,11 @@ public class Result extends Entity {
 	 */
 	public String getRelativeValue() {
 		return relativeValue;
+	}
+
+	@Override
+	public int compareTo(Result o) {
+		return resultFactor.getNumberOrder().compareTo(o.getResultFactor().getNumberOrder());
 	}
 
 }

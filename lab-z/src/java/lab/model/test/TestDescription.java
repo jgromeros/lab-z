@@ -6,7 +6,7 @@
  */
 package lab.model.test;
 
-import java.util.Set;
+import java.util.List;
 
 import lab.model.DescribedEntity;
 import lab.model.assembly.AssemblyType;
@@ -26,7 +26,7 @@ public class TestDescription extends DescribedEntity implements Comparable<TestD
      */
     private static final long serialVersionUID = 1L;
 
-    private Set<ResultFactor> resultFactors;
+    private List<ResultFactor> resultFactors;
     private AssemblyType assemblyType;
     private SampleType sampleType;
     private Boolean saveInBank;
@@ -35,14 +35,14 @@ public class TestDescription extends DescribedEntity implements Comparable<TestD
     /**
      * @param resultFactors The resultFactors to set.
      */
-    public void setResultFactors(Set<ResultFactor> resultFactors) {
+    public void setResultFactors(List<ResultFactor> resultFactors) {
         this.resultFactors = resultFactors;
     }
 
     /**
      * @return Returns the resultFactors.
      */
-    public Set<ResultFactor> getResultFactors() {
+    public List<ResultFactor> getResultFactors() {
         return resultFactors;
     }
 

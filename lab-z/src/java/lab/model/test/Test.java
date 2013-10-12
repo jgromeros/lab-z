@@ -3,8 +3,8 @@
  */
 package lab.model.test;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import lab.model.Entity;
 import lab.model.animal.Animal;
@@ -25,12 +25,12 @@ public class Test extends Entity {
     private static final long serialVersionUID = 1L;
     
     private TestDescription testDescription;
-    private Set<Result> results;
+    private List<Result> results;
     private Animal animal;
     private String observations;
 
     public Test(){
-    	results = new HashSet<Result>();
+    	results = new ArrayList<Result>();
     }
 
     /**
@@ -47,14 +47,14 @@ public class Test extends Entity {
     /**
      * @param results The results to set.
      */
-    public void setResults(Set<Result> results) {
+    public void setResults(List<Result> results) {
         this.results = results;
     }
 
     /**
      * @return Returns the results.
      */
-    public Set<Result> getResults() {
+    public List<Result> getResults() {
         return results;
     }
 

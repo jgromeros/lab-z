@@ -6,10 +6,11 @@ package lab.web.action;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -104,6 +105,7 @@ public class TypedResultsAction extends Action {
 							test.getResults().add(result);
 						}
 					} else {
+						Collections.sort(test.getResults());
 						for (Result result : test.getResults()){
 							if (result.getResultFactor().getId() == 64){//Leucocitos
 								leucocitos = result.getValue() == null ? null : Long.parseLong(result.getValue());
@@ -142,7 +144,7 @@ public class TypedResultsAction extends Action {
 		for (Animal animal : animals){
 			for (Test test : animal.getTests()){
 				TestDescription testDescription = test.getTestDescription();
-				Set<Result> results = test.getResults();
+				List<Result> results = test.getResults();
 				if (results.size() == 0){
 					for (ResultFactor resultFactor : testDescription.getResultFactors()){
 						Result result = new Result();

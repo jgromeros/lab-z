@@ -13,10 +13,11 @@
 		<property name="saveInBank" column="save_in_bank"/>
         <property name="doWeDoIt" column="we_do_it"/>
 		<many-to-one name="assemblyType" class="lab.model.assembly.AssemblyType" column="assembly_type"/>
-		<set name="resultFactors" table="result_factor" lazy="false" order-by="_group">
+		<list name="resultFactors" table="result_factor" lazy="false">
 			<key column="test_description"/>
+			<index column="number_order"/>
 			<one-to-many class="lab.model.test.result.resultfactor.ResultFactor"/>
-		</set>
+		</list>		
 		<many-to-one name="sampleType" class="lab.model.sample.SampleType" column="sample_type"/>
 	</class>
 </hibernate-mapping>
