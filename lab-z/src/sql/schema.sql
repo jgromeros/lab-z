@@ -205,6 +205,9 @@ CREATE TABLE result_factor(
 	test_description	INTEGER			NOT NULL,
 	name				VARCHAR(255)	NOT NULL,
 	_group				VARCHAR(255),
+	calculated			BOOLEAN			NOT NULL,
+	computed_value		BOOLEAN			NOT NULL,
+	number_order		INTEGER			NOT NULL,
 	PRIMARY KEY (id),
 	FOREIGN KEY (test_description) REFERENCES test_description
 );
@@ -293,6 +296,7 @@ CREATE TABLE prices_by_test_desc(
     id					INTEGER			NOT NULL,
     test_description	INTEGER			NOT NULL,
     price				DECIMAL(10,2)	NOT NULL,
+    tax					DECIMAL(6,2),
     valid_from			DATE			NOT NULL,
     valid_until			DATE			NOT NULL,
     PRIMARY KEY (id),

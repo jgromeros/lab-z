@@ -3,6 +3,8 @@
  */
 package lab.model.test.result.resultfactor;
 
+import java.math.BigDecimal;
+
 import lab.model.DescribedEntity;
 import lab.model.animal.Specie;
 
@@ -17,24 +19,28 @@ public class ReferenceValue extends DescribedEntity {
      */
     private static final long serialVersionUID = 1L;
 
-    private String value;
+    private BigDecimal minAbsoluteValue;
+    private BigDecimal maxAbsoluteValue;
     private Specie specie;
     private ResultFactor resultFactor;
     private String unit;
-    private String relativeValue;
+    private BigDecimal minRelativeValue;
+    private BigDecimal maxRelativeValue;
 
-	/**
-	 * @param value the value to set
-	 */
-	public void setValue(String value) {
-		this.value = value;
+	public BigDecimal getMinAbsoluteValue() {
+		return minAbsoluteValue;
 	}
 
-	/**
-	 * @return the value
-	 */
-	public String getValue() {
-		return value;
+	public void setMinAbsoluteValue(BigDecimal minAbsoluteValue) {
+		this.minAbsoluteValue = minAbsoluteValue;
+	}
+
+	public BigDecimal getMaxAbsoluteValue() {
+		return maxAbsoluteValue;
+	}
+
+	public void setMaxAbsoluteValue(BigDecimal maxAbsoluteValue) {
+		this.maxAbsoluteValue = maxAbsoluteValue;
 	}
 
 	/**
@@ -79,18 +85,20 @@ public class ReferenceValue extends DescribedEntity {
 		return unit;
 	}
 
-	/**
-	 * @param relativeValue the relativeValue to set
-	 */
-	public void setRelativeValue(String relativeValue) {
-		this.relativeValue = relativeValue;
+	public BigDecimal getMinRelativeValue() {
+		return minRelativeValue;
 	}
 
-	/**
-	 * @return the relativeValue
-	 */
-	public String getRelativeValue() {
-		return relativeValue;
+	public void setMinRelativeValue(BigDecimal minRelativeValue) {
+		this.minRelativeValue = minRelativeValue;
+	}
+
+	public BigDecimal getMaxRelativeValue() {
+		return maxRelativeValue;
+	}
+
+	public void setMaxRelativeValue(BigDecimal maxRelativeValue) {
+		this.maxRelativeValue = maxRelativeValue;
 	}
 
 }

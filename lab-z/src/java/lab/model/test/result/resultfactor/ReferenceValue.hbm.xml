@@ -10,9 +10,11 @@
 			</generator>
 		</id>
 		<property name="description" column="description"/>
-		<property name="value" column="absolute_ref_value"/>
+		<property name="minAbsoluteValue" column="min_abs_ref_value"/>
+		<property name="maxAbsoluteValue" column="max_abs_ref_value"/>
         <property name="unit" column="unit"/>
-        <property name="relativeValue" column="relative_ref_value"/>
+        <property name="minRelativeValue" column="min_rel_ref_value"/>
+        <property name="maxRelativeValue" column="max_rel_ref_value"/>
 		<many-to-one name="specie" class="lab.model.animal.Specie" column="specie"/>
 		<many-to-one name="resultFactor" class="lab.model.test.result.resultfactor.ResultFactor" column="result_factor"/>
 	</class>

@@ -2,8 +2,9 @@ SELECT l.reception_date, l.code, a.name AS animal, a.age, ra.name AS race,
         a.gender, e.first_name, p.name AS city, dpt.name AS state, l.zone, l.farm, l.owner,
         lp.first_name || ' ' || lp.last_name AS professional, s.name AS specie, td.description,
         la.description AS area, rf._group, rf.name, r.string_value, r.result_date, l.analysis_purpose,
-        l.observations, rv.absolute_ref_value, rv.relative_ref_value, td.show_reference_value, l.sender,
-	rf.calculated, rf.computed_value, r.relative_value, rf.unit
+        t.observations, rv.min_abs_ref_value, rv.max_abs_ref_value, rv.min_rel_ref_value,
+        rv.max_rel_ref_value, td.show_reference_value, l.sender, rf.calculated, rf.computed_value,
+        r.relative_value, rf.unit
 FROM (result r JOIN lab_professional lp ON r.lab_professional = lp.id)
         JOIN (((test t JOIN ((animal a JOIN
                         (race ra JOIN specie s ON ra.specie = s.id)

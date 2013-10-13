@@ -118,8 +118,9 @@
 						<c:forEach var="refvalue" items="${model.references }">
 							<tr>
 								<td><c:out value="${refvalue.description }"/></td>
-								<td><c:out value="${refvalue.value }"/></td>
-							</tr>
+								<td><c:out value="${refvalue.minAbsoluteValue}"/></td>
+								<td><c:out value="${refvalue.maxAbsoluteValue}"/></td>
+ 							</tr>
 						</c:forEach>
 					</table>
 				</td>

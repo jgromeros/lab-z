@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="copro" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ec1b81a6-5fc5-48de-aacc-5fa0fd37a520">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="10"/>
 	<parameter name="labcase" class="java.lang.Long"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/Users/juanromero/Documents/workspace/lab-zw/WebContent/reports/"]]></defaultValueExpression>
@@ -12,7 +12,8 @@
         a.gender, e.first_name, p.name AS city, dpt.name AS state, l.zone, l.farm, l.owner,
         lp.first_name || ' ' || lp.last_name AS professional, s.name AS specie, td.description,
         la.description AS area, rf._group, rf.name, rf.unit, r.string_value, r.result_date, l.analysis_purpose,
-        l.observations, rv.absolute_ref_value, rv.relative_ref_value, td.show_reference_value, l.sender
+        t.observations, rv.min_abs_ref_value, rv.max_abs_ref_value, rv.min_rel_ref_value, rv.max_rel_ref_value,
+        td.show_reference_value, l.sender
 FROM (result r JOIN lab_professional lp ON r.lab_professional = lp.id)
         JOIN (((test t JOIN ((animal a JOIN
                         (race ra JOIN specie s ON ra.specie = s.id)
@@ -55,8 +56,10 @@ ORDER BY a.id, rf._group]]>
 	<field name="result_date" class="java.sql.Date"/>
 	<field name="analysis_purpose" class="java.lang.String"/>
 	<field name="observations" class="java.lang.String"/>
-	<field name="absolute_ref_value" class="java.lang.String"/>
-	<field name="relative_ref_value" class="java.lang.String"/>
+	<field name="min_abs_ref_value" class="java.math.BigDecimal"/>
+	<field name="max_abs_ref_value" class="java.math.BigDecimal"/>
+	<field name="min_rel_ref_value" class="java.math.BigDecimal"/>
+	<field name="max_rel_ref_value" class="java.math.BigDecimal"/>
 	<field name="show_reference_value" class="java.lang.Boolean"/>
 	<field name="sender" class="java.lang.String"/>
 	<group name="GrupoAnimal" isStartNewPage="true">
@@ -215,6 +218,22 @@ ORDER BY a.id, rf._group]]>
 				</rectangle>
 			</band>
 		</groupHeader>
+		<groupFooter>
+			<band height="50">
+				<staticText>
+					<reportElement uuid="6b6cf198-bf8c-4739-8d78-22a76486910e" x="2" y="2" width="100" height="13"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Observaciones]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement uuid="8ae1ed83-5a1f-4365-be0e-026ba3c1d7c6" x="0" y="19" width="555" height="13"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{observations}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
 	</group>
 	<group name="Grupo">
 		<groupExpression><![CDATA[$F{_group}]]></groupExpression>
@@ -257,14 +276,27 @@ ORDER BY a.id, rf._group]]>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="13324e53-12d4-4d31-a226-1818655b0f85" x="160" y="5" width="250" height="13"/>
+				<reportElement uuid="13324e53-12d4-4d31-a226-1818655b0f85" x="160" y="5" width="250" height="13">
+					<printWhenExpression><![CDATA[new BigDecimal($F{string_value}).compareTo($F{min_abs_ref_value}) > 0 &&
+new BigDecimal($F{string_value}).compareTo($F{max_abs_ref_value}) < 0]]></printWhenExpression>
+				</reportElement>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{string_value}.concat(" ").concat($F{unit}==null ? "" : $F{unit})]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="7867535e-3d57-4cb8-86e7-fd41f92263a7" x="465" y="5" width="90" height="13"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{absolute_ref_value}]]></textFieldExpression>
+			<textField>
+				<reportElement uuid="51409dfc-60f5-4f22-96f8-ce13bdf35c6b" x="451" y="5" width="99" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{min_abs_ref_value}.toPlainString().concat(" - ").concat($F{max_abs_ref_value}.toPlainString())]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="c977ce14-5e64-43c6-b00c-b0a504945ef8" x="160" y="5" width="250" height="13" forecolor="#FA0505">
+					<printWhenExpression><![CDATA[new BigDecimal($F{string_value}).compareTo($F{min_abs_ref_value}) < 0 ||
+new BigDecimal($F{string_value}).compareTo($F{max_abs_ref_value}) > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{string_value}.concat(" ").concat($F{unit}==null ? "" : $F{unit})]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -297,18 +329,4 @@ ORDER BY a.id, rf._group]]>
 			</staticText>
 		</band>
 	</pageFooter>
-	<summary>
-		<band height="73">
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="8ae1ed83-5a1f-4365-be0e-026ba3c1d7c6" x="0" y="19" width="555" height="13"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{observations}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement uuid="6b6cf198-bf8c-4739-8d78-22a76486910e" x="0" y="2" width="100" height="13"/>
-				<textElement/>
-				<text><![CDATA[Observaciones]]></text>
-			</staticText>
-		</band>
-	</summary>
 </jasperReport>
