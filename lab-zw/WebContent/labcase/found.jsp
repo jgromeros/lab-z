@@ -23,12 +23,18 @@
 			<th>C&oacute;digo</th>
 			<th>Solicitante</th>
 			<th>Propietario</th>
+			<th>Acciones</th>
 		</tr>
 			<c:forEach var="labcase" items="${model.labcases }">
 				<tr>
-					<td><a href="../results/caseresult.htm?id=${labcase.id }"><c:out value="${labcase.code }"/></a></td>
+					<td><c:out value="${labcase.code }"/></td>
 					<td><c:out value="${labcase.enterpriseSender.name }"/></td>
-					<td><c:out value="${labcase.owner }"/></td>
+					<td align="center"><c:out value="${labcase.owner }"/></td>
+					<td><a href="../labcase/page1.htm?code=${labcase.code }">
+						<img alt="Editar" src="../img/edit.png" width="16" height="16"/>
+					</a>&nbsp;<a href="../results/caseresult.htm?id=${labcase.id }">
+						<img alt="Resultados" src="../img/results.png" width="16" height="16"/>
+					</a></td>
 				</tr>
 			</c:forEach>
 	</table>
