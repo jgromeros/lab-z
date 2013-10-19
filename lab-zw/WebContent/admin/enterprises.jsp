@@ -22,42 +22,38 @@
 				<tr>
 					<td>
 						<form name="form" action="enterprises.htm" method="post">
+							<p><c:out value="${model.errores }"/></p>
 							<table align="center">
 								<tr><td align="center">
-									Registre la información de la empresa
+									Listado de empresas remitentes
 								</td></tr>
-								<tr><td><table align="center">
+								<tr><td><table align="center" border="1">
 									<tr>
-										<td>Identificaci&oacute;n:</td>
-										<td>
-											<input type="text" name="idnumber" value="${enterprise.identityNumber }"
-													size="32" maxlength="16"/>
-										</td>
-										<td>Nombre:</td>
-										<td>
-											<input type="text" name="name" value="${enterprise.name }"
-													size="32" maxlength="128"/>
-										</td>
+										<th>Identificaci&oacute;n</th>
+										<th>Nombre</th>
+										<th>Direcci&oacute;n</th>
+										<th>Tel&eacute;fono</th>
+										<th>Correo electr&oacute;nico</th>
 									</tr>
-									<tr>
-										<td>Direcci&oacute;n:</td>
-										<td>
-											<input type="text" name="address" value="${enterprise.address }"
-													size="32" maxlength="255"/>
-										</td>
-										<td>Tel&eacute;fono:</td>
-										<td>
-											<input type="text" name="phone" value="${enterprise.phone }"
-													size="32" maxlength="16"/>
-										</td>
-									</tr>
-									<tr>
-										<td>Correo electr&oacute;nico:</td>
-										<td>
-											<input type="text" name="email" value="${enterprise.email }"
-													size="32" maxlength="64"/>
-										</td>
-									</tr>
+									<c:forEach var="enterprise" items="${model.enterprises }">
+										<tr>
+											<td>
+												<c:out value="${enterprise.identityNumber }"/>
+											</td>
+											<td>
+												<c:out value="${enterprise.name }"/>
+											</td>
+											<td>
+												<c:out value="${enterprise.address }"/>
+											</td>
+											<td>
+												<c:out value="${enterprise.phone }"/>
+											</td>
+											<td>
+												<c:out value="${enterprise.email }"/>
+											</td>
+										</tr>
+									</c:forEach>
 								</table></td></tr>
 								<tr align="center">
 									<td>

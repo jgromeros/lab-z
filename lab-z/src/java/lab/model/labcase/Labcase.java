@@ -14,7 +14,7 @@ import lab.model.animal.Animal;
 import lab.model.enterprise.Enterprise;
 import lab.model.person.LabProfessional;
 import lab.model.place.Place;
-import lab.model.test.TestDescription;
+import lab.model.test.Test;
 
 /**
  * @author  JuanGa  TODO
@@ -295,9 +295,9 @@ public class Labcase extends Entity {
 		return icaNumber;
 	}
 
-	public LabProfessional getLabProfessionalForTestDescription(TestDescription testDescription) {
+	public LabProfessional getLabProfessionalForTest(Test test) {
 		Animal animal = getAnimals().get(0);
-		return animal.getLabProfessionalForTestDescription(testDescription);
+		return animal.getLabProfessionalForTest(test);
 	}
 
 }

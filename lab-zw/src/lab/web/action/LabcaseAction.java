@@ -114,7 +114,7 @@ public class LabcaseAction extends Action {
 		hql.setParameter("placeType", session.get(PlaceType.class, CITY));
 		getModel().put("cities", hql.list());
 		getModel().put("sampleTypes", session.createQuery("from SampleType st order by st.description").list());
-		getModel().put("species", session.createQuery("from Specie s order by s.name").list());		
+		getModel().put("species", session.createQuery("from Specie s order by s.name").list());
 	}
 
 	public void showSecondForm(HttpServletRequest request, Session session) {

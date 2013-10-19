@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import lab.model.labcase.Labcase;
+import lab.model.test.Test;
 import lab.model.test.TestDescription;
 import lab.web.controller.LabzController;
 import net.sf.jasperreports.engine.JRException;
@@ -56,9 +57,8 @@ public class PrintResultsAction extends Action {
 			Session session, Transaction tx) {
 		Labcase labcase = (Labcase) session.get(Labcase.class,
 				Long.parseLong(request.getParameter("id")));
-		TestDescription testDescription = (TestDescription) session.get(TestDescription.class,
-				Long.parseLong(request.getParameter("test")));
-		if (labcase.getLabProfessionalForTestDescription(testDescription) == null ||
+		Test test = (Test) session.get(Test.class, Long.parseLong(request.getParameter("test")));
+		if (labcase.getLabProfessionalForTest(test) == null ||
 				labcase.getTechnicalDirector() == null){
 			setAction(FORM);
 			//TODO Aqui hay que hacer algo
@@ -67,12 +67,12 @@ public class PrintResultsAction extends Action {
 			cleanModel();
 			if (controller != null){
 				byte[] bytes = null;
-				String nombreReporte = obtenerNombreReporte(testDescription);
+				String nombreReporte = obtenerNombreReporte(test);
 				File reportFile = new File(controller.getServletContext().getRealPath(nombreReporte));
 //				File reportFile = new File(controller.getServletContext().getRealPath("reports/res_bru_ofi.jasper"));
 			    Map<String,Object> parameters = new HashMap<String,Object>();
 			    parameters.put("labcase", labcase.getId());
-			    parameters.put("testdescription", testDescription.getId());
+			    parameters.put("testNumber", test.getId());
 			    try {
 				    Connection con = ((SessionFactoryImplementor)session.getSessionFactory()).getConnectionProvider().getConnection();
 				    bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, con);
@@ -90,14 +90,14 @@ public class PrintResultsAction extends Action {
 		return getModel();
 	}
 
-	private String obtenerNombreReporte(TestDescription testDescription) {
-		if (getReports().get(testDescription.getId().toString()) == null){
-			if (testDescription.getId() == 57){//Cuadro hematico
+	private String obtenerNombreReporte(Test test) {
+		if (getReports().get(test.getTestDescription().getId().toString()) == null){
+			if (test.getTestDescription().getId() == 57){//Cuadro hematico
 				return "reports/results-cbc.jasper";
 			}
 			return "reports/results.jasper";
 		} else
-		return getReports().get(testDescription.getId().toString());
+		return getReports().get(test.getTestDescription().getId().toString());
 	}
 
 	/**

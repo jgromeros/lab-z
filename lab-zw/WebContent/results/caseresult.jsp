@@ -44,7 +44,7 @@
 				</c:if>
 				<c:if test="${(labcase.status == 'W' || labcase.status == 'F') && test.resultsSize > 0 && test.labProfessional != null}">
 					<td>
-						<a href="printresults.htm?id=${labcase.id }&test=${test.testDescription.id }">
+						<a href="printresults.htm?id=${labcase.id }&test=${test.id }">
 							Imprimir resultados
 						</a>
 					</td>

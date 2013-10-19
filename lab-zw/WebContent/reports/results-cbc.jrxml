@@ -3,7 +3,7 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="7"/>
-	<parameter name="labcase" class="java.lang.Long"/>
+	<parameter name="testNumber" class="java.lang.Long"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/Users/juanromero/Documents/workspace/lab-zw/WebContent/reports/"]]></defaultValueExpression>
 	</parameter>
@@ -31,8 +31,8 @@ FROM (result r JOIN lab_professional lp ON r.lab_professional = lp.id)
                 ON td.id = t.test_description) LEFT JOIN reference_value rv
                         ON rv.result_factor = rf.id AND rv.specie = s.id)
         ON t.id = r.test AND r.result_factor = rf.id
-WHERE l.id = $P{labcase}
-ORDER BY a.id, rf._group, rf.id]]>
+WHERE t.id = $P{testNumber}
+ORDER BY a.id, rf.number_order, rf._group, rf.id]]>
 	</queryString>
 	<field name="reception_date" class="java.sql.Date"/>
 	<field name="code" class="java.lang.String"/>

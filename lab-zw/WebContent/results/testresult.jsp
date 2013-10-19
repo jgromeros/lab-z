@@ -19,6 +19,7 @@
 <jsp:directive.include file="../common/menu.jspf"/>
 <div class="layerder">
 	<form action="registered.htm" method="post">
+		<input type="hidden" name="testdesc" value="${model.testdesc }"/>
 		<h3><c:out value="${model.testDescription }"/></h3>
 		<table>
 			<tr>
@@ -98,7 +99,6 @@
 		                       </td></tr>
 		                    </c:if>
 						</table></td></tr>
-					</c:if>
 					<tr>
 						<td colspan="2">Observaciones:</td>
 					</tr>
@@ -107,6 +107,7 @@
 							<textarea rows="4" cols="80" name="obs_test<c:out value="${test.id }"/>"><c:out value="${test.observations }"/></textarea>
 						</td>
 					</tr>
+					</c:if>
 				</c:forEach>
 			</c:forEach>
 			<tr>

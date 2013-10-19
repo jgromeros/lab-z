@@ -130,4 +130,15 @@
     <url-pattern>/bank/dimmensions.htm</url-pattern>
     <url-pattern>/bank/savelevel.htm</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>paramsController</display-name>
+    <servlet-name>paramsController</servlet-name>
+    <servlet-class>lab.web.controller.ParamsController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>paramsController</servlet-name>
+    <url-pattern>/admin/enterprise.htm</url-pattern>
+    <url-pattern>/admin/enterprises.htm</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -131,13 +131,8 @@ public class Animal extends NamedEntity {
 		}
 	}
 
-	public LabProfessional getLabProfessionalForTestDescription(TestDescription testDescription) {
-		for (Test test : getTests()){
-			if (test.getTestDescription().getId().equals(testDescription.getId())){
-				return test.getLabProfessional();
-			}
-		}
-		return null;
+	public LabProfessional getLabProfessionalForTest(Test test) {
+		return test.getLabProfessional();
 	}
 
 }

@@ -20,5 +20,5 @@ FROM (result r JOIN lab_professional lp ON r.lab_professional = lp.id)
                 ON td.id = t.test_description) LEFT JOIN reference_value rv
                         ON rv.result_factor = rf.id AND rv.specie = s.id)
         ON t.id = r.test AND r.result_factor = rf.id
-WHERE l.id = 100
-ORDER BY a.id, rf._group
+WHERE t.id = 10910
+ORDER BY a.id, rf.number_order, rf._group

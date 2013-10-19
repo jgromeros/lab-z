@@ -74,16 +74,18 @@ public abstract class LabzController extends HttpServlet {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
 		Map<String, Object> model = null;
-//		try{
+		try{
 			model = action.perform(request, response, session, tx);
 			tx.commit();
-/*		} catch (Exception e){
+		} catch (Exception e){
 			//TODO logging, y que mas? 
 			tx.rollback();
-			System.out.println("El mensaje de error: " + e.getMessage());
-		}*/
+			model = new HashMap<String, Object>();
+			model.put("errores", e.getMessage());
+			e.printStackTrace();
+		}
 		session.close();
-		return model;		
+		return model;
 	}
 
 	private String decomposeURL(String URI){
