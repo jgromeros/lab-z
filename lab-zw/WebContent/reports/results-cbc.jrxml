@@ -299,7 +299,7 @@ ORDER BY a.id, rf.number_order, rf._group, rf.id]]>
 		<band height="60">
 			<image>
 				<reportElement uuid="6f75e27d-e9e2-4126-bf2d-c14da9f14392" x="0" y="0" width="128" height="60"/>
-				<imageExpression><![CDATA["/home/juano/git/vlab/lab-zw/WebContent/img/logo.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["../img/logo.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement uuid="f5879551-50e8-47d7-8d2b-76c7e6395bed" x="167" y="23" width="311" height="16"/>

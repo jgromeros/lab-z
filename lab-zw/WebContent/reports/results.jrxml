@@ -264,7 +264,7 @@ ORDER BY a.id, rf.number_order, rf._group]]>
 			</staticText>
 			<image>
 				<reportElement uuid="3409a1fa-01dc-425d-8118-a50459f89c1f" x="0" y="0" width="128" height="60"/>
-				<imageExpression><![CDATA["/home/juano/git/vlab/lab-zw/WebContent/img/logo.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["../img/logo.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</pageHeader>
