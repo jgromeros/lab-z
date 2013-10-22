@@ -3,7 +3,7 @@
  */
 package lab.model.animal;
 
-import java.util.Set;
+import java.util.List;
 
 import lab.model.NamedEntity;
 
@@ -19,7 +19,7 @@ public class Specie extends NamedEntity {
      */
     private static final long serialVersionUID = 1L;
 
-    private Set<Race> races;
+    private List<Race> races;
 
     /**
      * @constructors
@@ -29,14 +29,14 @@ public class Specie extends NamedEntity {
     /**
      * @param races The races to set.
      */
-    public void setRaces(Set<Race> races) {
+    public void setRaces(List<Race> races) {
         this.races = races;
     }
 
     /**
      * @return Returns the races.
      */
-    public Set<Race> getRaces() {
+    public List<Race> getRaces() {
         return races;
     }
 

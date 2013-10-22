@@ -200,7 +200,7 @@ ORDER BY a.id, rf.number_order, rf._group]]>
 					<text><![CDATA[Solicitante:]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement uuid="f9bf5faf-0c13-4d3f-842f-13a94cc389f8" x="176" y="80" width="140" height="13"/>
+					<reportElement uuid="f9bf5faf-0c13-4d3f-842f-13a94cc389f8" x="147" y="80" width="259" height="13"/>
 					<textElement textAlignment="Center">
 						<font isBold="true"/>
 					</textElement>

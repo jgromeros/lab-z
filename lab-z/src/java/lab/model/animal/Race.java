@@ -10,7 +10,7 @@ import lab.model.NamedEntity;
  *
  * TODO
  */
-public class Race extends NamedEntity {
+public class Race extends NamedEntity implements Comparable<Race> {
 
     /**
      * 
@@ -37,5 +37,10 @@ public class Race extends NamedEntity {
 	public Specie getSpecie() {
 		return specie;
 	}
-    
+
+	@Override
+	public int compareTo(Race o) {
+		return this.getName().compareTo(o.getName());
+	}
+
 }

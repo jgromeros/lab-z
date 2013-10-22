@@ -140,6 +140,7 @@ public class LabcaseAction extends Action {
         Specie selectedSpecie = (Specie) session.get(Specie.class,
         		Long.parseLong(request.getParameter("specie")));
         Hibernate.initialize(selectedSpecie.getRaces());
+        Collections.sort(selectedSpecie.getRaces());
         request.getSession().setAttribute("selectedSpecie", selectedSpecie);
         String[] samplesString = request.getParameterValues("sampletype");
         List<TestDescription> testDescriptions = new ArrayList<TestDescription>();

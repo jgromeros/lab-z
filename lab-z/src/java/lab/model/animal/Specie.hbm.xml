@@ -10,9 +10,9 @@
 			</generator>
 		</id>
 		<property name="name" column="name"/>
-		<set name="races" table="race">
-            <key column="specie"/>
-            <one-to-many class="lab.model.animal.Race"/>
-        </set>
+ 		<bag name="races" table="race">
+			<key column="specie"/>
+			<one-to-many class="lab.model.animal.Race"/>
+		</bag>
 	</class>
 </hibernate-mapping>
