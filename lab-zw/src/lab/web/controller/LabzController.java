@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lab.exceptions.LabcaseException;
 import lab.model.persistence.HibernateUtil;
 import lab.web.action.Action;
 
@@ -77,8 +78,8 @@ public abstract class LabzController extends HttpServlet {
 		try{
 			model = action.perform(request, response, session, tx);
 			tx.commit();
-		} catch (Exception e){
-			//TODO logging, y que mas? 
+		} catch (LabcaseException e){
+			//TODO logging, y tratamiento excepciones conocidas para mostrar msg
 			tx.rollback();
 			model = new HashMap<String, Object>();
 			model.put("errores", e.getMessage());

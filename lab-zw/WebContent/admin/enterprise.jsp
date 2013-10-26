@@ -18,6 +18,7 @@
 
 		<jsp:directive.include file="../common/menu.jspf"/>
 		<div class="layerder">
+			<p><c:out value="${model.errores }"/></p>
 			<table align="center">
 				<tr>
 					<td>
