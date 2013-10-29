@@ -26,6 +26,7 @@ import lab.model.sample.SampleType;
 import lab.model.test.TestDescription;
 import lab.web.helper.LabcaseHelper;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -36,6 +37,8 @@ import org.hibernate.Transaction;
  *
  */
 public class LabcaseAction extends Action {
+
+    private static Logger logger = Logger.getLogger(LabcaseAction.class);
 
 	private static final Long REGION = new Long(1);
 	private static final Long CITY = new Long(2);
@@ -96,6 +99,7 @@ public class LabcaseAction extends Action {
 	}
 
 	public void showFirstForm(HttpServletRequest request, Session session){
+	    logger.info("Loading of data for new case");
 		request.getSession().removeAttribute(LABCASE);
 		if (request.getParameter("code") != null && !request.getParameter("code").isEmpty()){
 			Labcase labcase = searchLabcase(session, request.getParameter("code"));
@@ -108,6 +112,7 @@ public class LabcaseAction extends Action {
 			}
 		}
 		getModel().put("enterprises", session.createQuery("from Enterprise e order by e.lastName, e.name").list());
+		logger.debug("Enterprises loaded");
 		Query hql = session.createQuery("from Place p where p.placeType = :placeType order by p.name");
 		hql.setParameter("placeType", session.get(PlaceType.class, REGION));
 		getModel().put("regions", hql.list());
@@ -115,6 +120,7 @@ public class LabcaseAction extends Action {
 		getModel().put("cities", hql.list());
 		getModel().put("sampleTypes", session.createQuery("from SampleType st order by st.description").list());
 		getModel().put("species", session.createQuery("from Specie s order by s.name").list());
+		logger.info("Loading of data for new case finished successfully");
 	}
 
 	public void showSecondForm(HttpServletRequest request, Session session) {
