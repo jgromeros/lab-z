@@ -24,6 +24,7 @@ import lab.model.test.result.resultfactor.ReferenceValue;
 import lab.model.test.result.resultfactor.ResultFactor;
 import lab.web.helper.ResultsHelper;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -34,6 +35,8 @@ import org.hibernate.Transaction;
  *
  */
 public class TypedResultsAction extends Action {
+
+    private static Logger logger = Logger.getLogger(TypedResultsAction.class);
 
 	public static final String LISTPENDINGCASES = "listcases";
 	public static final String CASESELECTED = "caseresult";
@@ -69,6 +72,10 @@ public class TypedResultsAction extends Action {
 	 * @param session
 	 */
 	private void loadCase(HttpServletRequest request, Session session) {
+        logger.debug("loadCase with the following params:");
+        for (String paramName : request.getParameterMap().keySet()){
+            logger.debug(paramName + ": " + request.getParameterMap().get(paramName));
+        }
 		Labcase labcase = (Labcase) session.get(Labcase.class, Long.parseLong(request.getParameter("id")));
 		request.getSession().setAttribute("labcase", labcase);
 		List<Animal> animals = labcase.getAnimals();
@@ -76,6 +83,7 @@ public class TypedResultsAction extends Action {
 		for (Test test : animal.getTests()){
 			Hibernate.initialize(test.getTestDescription());
 		}
+        logger.debug("loadCase finished successfully");
 	}
 
 	/**
@@ -84,6 +92,10 @@ public class TypedResultsAction extends Action {
 	 * @param request
 	 */
 	public void loadTest(HttpServletRequest request, Session session){
+        logger.debug("loadTest with the following params:");
+        for (String paramName : request.getParameterMap().keySet()){
+            logger.debug(paramName + ": " + request.getParameterMap().get(paramName));
+        }
 		getModel().put("testdesc", Long.parseLong(request.getParameter("testdesc")));
 		List<LabProfessional> labpros = session.createQuery("from LabProfessional lp where status = 'A'").list();
 		getModel().put("labpros", labpros);
@@ -129,6 +141,7 @@ public class TypedResultsAction extends Action {
 		}
 		getModel().put("references", referenceValues);
 		request.getSession().setAttribute("labcase", l);
+        logger.debug("loadTest finished successfully");
 	}
 
 	/**
@@ -138,6 +151,10 @@ public class TypedResultsAction extends Action {
 	 * @return
 	 */
 	public void saveResult(HttpServletRequest request, Session session){
+        logger.debug("saveResult with the following params:");
+        for (String paramName : request.getParameterMap().keySet()){
+            logger.debug(paramName + ": " + request.getParameterMap().get(paramName));
+        }
 		Labcase labcase = (Labcase) request.getSession().getAttribute("labcase");
 		String testdesc = request.getParameter("testdesc");
 		List<Animal> animals = labcase.getAnimals();
@@ -232,6 +249,7 @@ public class TypedResultsAction extends Action {
 			labcase.setStatus(Labcase.WITHRESULT);
 			session.update(labcase);
 		}
+        logger.debug("saveResult finished successfully");
 	}
 
 	private List<LabProfessional> selectTechDirectors(List<LabProfessional> labpros) {

@@ -19,6 +19,7 @@ import lab.web.controller.LabzController;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.engine.SessionFactoryImplementor;
@@ -29,7 +30,9 @@ import org.hibernate.engine.SessionFactoryImplementor;
  */
 public class PrintResultsAction extends Action {
 
-	public static final String FORM = "printresults";
+    private static Logger logger = Logger.getLogger(PrintResultsAction.class);
+
+    public static final String FORM = "printresults";
 	private LabzController controller;
 	private Map<String, String> reports;
 
@@ -55,6 +58,10 @@ public class PrintResultsAction extends Action {
 	@Override
 	public Map<String, Object> perform(HttpServletRequest request, HttpServletResponse response,
 			Session session, Transaction tx) {
+        logger.debug(logger.getName() + ": perform with the following params:");
+        for (String paramName : request.getParameterMap().keySet()){
+            logger.debug(paramName + ": " + request.getParameterMap().get(paramName));
+        }
 		Labcase labcase = (Labcase) session.get(Labcase.class,
 				Long.parseLong(request.getParameter("id")));
 		Test test = (Test) session.get(Test.class, Long.parseLong(request.getParameter("test")));
@@ -87,6 +94,7 @@ public class PrintResultsAction extends Action {
 				}
 			}
 		}
+        logger.debug(logger.getName() + ": perform finished successfully");
 		return getModel();
 	}
 

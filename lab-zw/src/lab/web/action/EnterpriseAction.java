@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import lab.exceptions.LabcaseException;
 import lab.model.enterprise.Enterprise;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
@@ -18,7 +19,9 @@ import org.hibernate.exception.ConstraintViolationException;
  */
 public class EnterpriseAction extends Action {
 
-	public static final String LIST = "enterprises";
+    private static Logger logger = Logger.getLogger(EnterpriseAction.class);
+
+    public static final String LIST = "enterprises";
 	public static final String ENTERPRISE = "enterprise";
 	public static final String LIST_URL = "/lab-zw/admin/enterprises.htm";
 
@@ -30,6 +33,10 @@ public class EnterpriseAction extends Action {
 	public Map<String, Object> perform(HttpServletRequest request,
 			HttpServletResponse response, Session session, Transaction tx)
 			throws LabcaseException {
+        logger.debug(logger.getName() + ": perform with the following params:");
+        for (String paramName : request.getParameterMap().keySet()){
+            logger.debug(paramName + ": " + request.getParameterMap().get(paramName));
+        }
 		if (LIST_URL.equals(request.getRequestURI())){
 			if (request.getParameter("idnumber") != null){
 				Enterprise enterprise = new Enterprise();
@@ -54,6 +61,7 @@ public class EnterpriseAction extends Action {
 		            Long.parseLong(request.getParameter("id")));
 		    request.setAttribute("enterprise", enterprise);
 		}
+        logger.debug(logger.getName() + ": perform finished successfully");
 		return getModel();
 	}
 
