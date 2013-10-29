@@ -38,6 +38,8 @@ public class EnterpriseAction extends Action {
 				enterprise.setAddress(request.getParameter("address"));
 				enterprise.setPhone(request.getParameter("phone"));
 				enterprise.setEmail(request.getParameter("email"));
+				enterprise.setId(request.getParameter("id") == null ? null :
+				        Long.parseLong(request.getParameter("id")));
 				session.saveOrUpdate(enterprise);
 			}
 			try {
@@ -47,6 +49,10 @@ public class EnterpriseAction extends Action {
 				this.setAction(ENTERPRISE);
 				throw new LabcaseException(e.getMessage());
 			}
+		} else if (request.getParameter("id") != null) {
+		    Enterprise enterprise = (Enterprise) session.get(Enterprise.class,
+		            Long.parseLong(request.getParameter("id")));
+		    request.setAttribute("enterprise", enterprise);
 		}
 		return getModel();
 	}

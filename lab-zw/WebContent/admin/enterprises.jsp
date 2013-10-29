@@ -52,6 +52,11 @@
 											<td>
 												<c:out value="${enterprise.email }"/>
 											</td>
+											<td>
+												<a href="enterprise.htm?id=${enterprise.id }">
+													<img alt="Editar" src="../img/edit.png" width="16" height="16"/>
+												</a>
+											</td>
 										</tr>
 									</c:forEach>
 								</table></td></tr>
