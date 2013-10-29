@@ -116,8 +116,8 @@ public class LabcaseAction extends Action {
 		Query hql = session.createQuery("from Place p where p.placeType = :placeType order by p.name");
 		hql.setParameter("placeType", session.get(PlaceType.class, REGION));
 		getModel().put("regions", hql.list());
-		hql.setParameter("placeType", session.get(PlaceType.class, CITY));
-		getModel().put("cities", hql.list());
+//		hql.setParameter("placeType", session.get(PlaceType.class, CITY));
+//		getModel().put("cities", hql.list());
 		getModel().put("sampleTypes", session.createQuery("from SampleType st order by st.description").list());
 		getModel().put("species", session.createQuery("from Specie s order by s.name").list());
 		logger.info("Loading of data for new case finished successfully");

@@ -11,6 +11,25 @@
         <link rel="stylesheet" href="/lab-zw/css/lab-z.css" type="text/css" />
         <link rel="stylesheet" href="/lab-zw/css/capas.css" type="text/css" />
         <link rel="stylesheet" href="/lab-zw/css/menu.css" type="text/css" />
+
+
+		<script src="/lab-zw/js/jquery-1.10.2.min.js"></script>
+		<script>
+		    $(document).ready(function() {
+		        $('#region').change(function(event) {  
+		        var $region=$("select#region").val();
+		           $.get('ciudades.do',{regionname:$region},function(responseJson) {   
+		            var $select = $('#city');                           
+		               $select.find('option').remove();                          
+		               $.each(responseJson, function(key, value) {               
+		                   $('<option>').val(key).text(value).appendTo($select);      
+		                    });
+		            });
+		        });
+		    });          
+		</script>
+
+
         <title>Lab-z</title>
     </head>
     <body>
@@ -100,7 +119,7 @@
 							</tr>
 							<tr>
 								<td>
-									<select name="region">
+									<select name="region" id="region">
 										<option></option>
 										<c:forEach var="reg" items="${model.regions }">
 											<c:choose>
@@ -119,7 +138,7 @@
 									</select>
 								</td>
 								<td>
-									<select name="city">
+									<select name="city" id="city">
 										<option></option>
 										<c:forEach var="city" items="${model.cities }">
 											<c:choose>

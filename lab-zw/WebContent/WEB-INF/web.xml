@@ -141,4 +141,14 @@
     <url-pattern>/admin/enterprise.htm</url-pattern>
     <url-pattern>/admin/enterprises.htm</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>paramsServlet</display-name>
+    <servlet-name>paramsServlet</servlet-name>
+    <servlet-class>lab.web.servlet.ParamsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>paramsServlet</servlet-name>
+    <url-pattern>/labcase/ciudades.do</url-pattern>
+  </servlet-mapping>
 </web-app>
