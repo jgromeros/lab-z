@@ -26,7 +26,15 @@ public class TestDescription extends DescribedEntity implements Comparable<TestD
      */
     private static final long serialVersionUID = 1L;
 
+    /**
+     * The list of result parameters that are measured for the test described
+     */
     private List<ResultFactor> resultFactors;
+    /**
+     * There are several types of assembly. Each type describes a different configuration of
+     * plaques. Usually a plaque is specific to some equipment. This object describes the
+     * configuration used by this test.
+     */
     private AssemblyType assemblyType;
     private SampleType sampleType;
     private Boolean saveInBank;
