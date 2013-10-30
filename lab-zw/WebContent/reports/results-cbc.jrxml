@@ -249,7 +249,7 @@ ORDER BY a.id, rf.number_order, rf._group, rf.id]]>
 					<text><![CDATA[Valor de Referencia]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="c90bb6e1-3475-4afb-9c41-cc67c199db67" x="346" y="99" width="101" height="13"/>
+					<reportElement uuid="c90bb6e1-3475-4afb-9c41-cc67c199db67" x="374" y="99" width="76" height="13"/>
 					<textElement textAlignment="Center"/>
 					<text><![CDATA[Valor Relativo]]></text>
 				</staticText>
@@ -320,7 +320,7 @@ ORDER BY a.id, rf.number_order, rf._group, rf.id]]>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="8b53a4f0-7e8c-4f10-a769-b258e1caab45" x="358" y="5" width="90" height="13"/>
+				<reportElement uuid="8b53a4f0-7e8c-4f10-a769-b258e1caab45" x="380" y="5" width="70" height="13"/>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
@@ -338,7 +338,7 @@ new BigDecimal($F{string_value}).compareTo($F{max_abs_ref_value}) < 0)]]></print
 				<textFieldExpression><![CDATA[$F{string_value}.concat(" ").concat($F{unit}==null ? "" : $F{unit})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="54d76c75-a838-4dda-b389-ea52da022435" x="247" y="5" width="100" height="13"/>
+				<reportElement uuid="54d76c75-a838-4dda-b389-ea52da022435" x="243" y="5" width="134" height="13"/>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>

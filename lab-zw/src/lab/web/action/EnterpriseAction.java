@@ -31,7 +31,8 @@ public class EnterpriseAction extends Action {
 			HttpServletResponse response, Session session, Transaction tx)
 			throws LabcaseException {
 		if (LIST_URL.equals(request.getRequestURI())){
-			if (request.getParameter("idnumber") != null){
+			if (request.getParameter("idnumber") != null &&
+					!request.getParameter("idnumber").isEmpty()){
 				Enterprise enterprise = new Enterprise();
 				enterprise.setIdentityNumber(Long.parseLong(request.getParameter("idnumber")));
 				enterprise.setName(request.getParameter("name"));
@@ -43,9 +44,10 @@ public class EnterpriseAction extends Action {
 			try {
 				getModel().put("enterprises", session.
 						createQuery("from Enterprise e order by e.lastName, e.name").list());
+				this.setAction(LIST);
 			} catch (ConstraintViolationException e){
 				this.setAction(ENTERPRISE);
-				throw new LabcaseException(e.getMessage());
+				throw new LabcaseException("No se pudo crear la entidad. Parece que ya existe.");
 			}
 		}
 		return getModel();

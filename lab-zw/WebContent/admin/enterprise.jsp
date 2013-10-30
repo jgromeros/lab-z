@@ -11,6 +11,14 @@
         <link rel="stylesheet" href="/lab-zw/css/lab-z.css" type="text/css" />
         <link rel="stylesheet" href="/lab-zw/css/capas.css" type="text/css" />
         <link rel="stylesheet" href="/lab-zw/css/menu.css" type="text/css" />
+        <script type="text/javascript" src="/lab-zw/js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript">
+	        $("#idnumber").blur(function(){
+	            if(this.val().length == 0){
+	                $(this).after('<div class="red">Name is Required</div>');
+	            }
+	        });
+        </script>
         <title>Lab-z</title>
     </head>
     <body>
