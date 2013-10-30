@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -14,6 +15,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lab.exceptions.LabcaseException;
 import lab.model.animal.Animal;
 import lab.model.animal.Race;
 import lab.model.animal.Specie;
@@ -41,7 +43,7 @@ public class LabcaseAction extends Action {
     private static Logger logger = Logger.getLogger(LabcaseAction.class);
 
 	private static final Long REGION = new Long(1);
-	private static final Long CITY = new Long(2);
+    private static final Long CITY = new Long(2);
 	public static final String FORM1 = "page1";
 	public static final String FORM2 = "page2";
 	public static final String FORM3 = "page3";
@@ -113,6 +115,11 @@ public class LabcaseAction extends Action {
 			if (labcase != null){
 				request.getSession().setAttribute(LABCASE, labcase);
 			}
+	        Query hql = session.createQuery("from Place p where p.placeType = :placeType and " +
+	                "p.placedIn.id = :placedIn order by p.name");
+	        hql.setParameter("placeType", session.get(PlaceType.class, CITY));
+	        hql.setParameter("placedIn", labcase.getCity().getPlacedIn().getId());
+	        getModel().put("cities", hql.list());
 		}
 		getModel().put("enterprises", session.createQuery("from Enterprise e order by e.lastName, e.name").list());
 		Query hql = session.createQuery("from Place p where p.placeType = :placeType order by p.name");
@@ -153,6 +160,9 @@ public class LabcaseAction extends Action {
         Collections.sort(selectedSpecie.getRaces());
         request.getSession().setAttribute("selectedSpecie", selectedSpecie);
         String[] samplesString = request.getParameterValues("sampletype");
+        if (samplesString == null || samplesString.length < 1){
+            throw new LabcaseException("Debe seleccionar al menos una muestra");
+        }
         List<TestDescription> testDescriptions = new ArrayList<TestDescription>();
         for (int i = 0; i < samplesString.length; i++){
         	SampleType sampleType = (SampleType) session.get(SampleType.class,
@@ -177,6 +187,9 @@ public class LabcaseAction extends Action {
         }
         Labcase labcase = (Labcase) request.getSession().getAttribute(LABCASE);
         String[] testStrings = request.getParameterValues("testdesc");
+        if (testStrings == null || testStrings.length < 1){
+            throw new LabcaseException("Debe seleccionar al menos un test");
+        }
     	if (nextAnimalIndex(request.getParameter("nextAnimalIndex")) == 0){
     		labcaseHelper.initializeTests(session, labcase, testStrings);
     	}
@@ -210,7 +223,7 @@ public class LabcaseAction extends Action {
 	private void loadSenderInformation(HttpServletRequest request, Session session, Labcase labcase) {
         labcase.setOwner(request.getParameter("owner"));
         labcase.setEnterpriseSender((Enterprise) session.get(Enterprise.class,
-        		new Long(request.getParameter("enterprise"))));
+                LabcaseUtil.dealWithLongParameter(request, "enterprise")));
         labcase.setSender(request.getParameter("sender"));
     }
 

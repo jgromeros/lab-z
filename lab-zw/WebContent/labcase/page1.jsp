@@ -11,24 +11,25 @@
         <link rel="stylesheet" href="/lab-zw/css/lab-z.css" type="text/css" />
         <link rel="stylesheet" href="/lab-zw/css/capas.css" type="text/css" />
         <link rel="stylesheet" href="/lab-zw/css/menu.css" type="text/css" />
-
-
 		<script src="/lab-zw/js/jquery-1.10.2.min.js"></script>
+		<script src="/lab-zw/js/jquery.validate.min.js"></script>
 		<script>
 		    $(document).ready(function() {
-		        $('#region').change(function(event) {  
+		        $('#region').change(function(event) {
 		        var $region=$("select#region").val();
-		           $.get('ciudades.do',{regionname:$region},function(responseJson) {   
-		            var $select = $('#city');                           
-		               $select.find('option').remove();                          
-		               $.each(responseJson, function(key, value) {               
-		                   $('<option>').val(key).text(value).appendTo($select);      
+		           $.get('ciudades.do',{regionname:$region},function(responseJson) {
+		            var $select = $('#city');
+		               $select.find('option').remove();
+		               $.each(responseJson, function(key, value) {
+		                   $('<option>').val(key).text(value).appendTo($select);
 		                    });
 		            });
 		        });
-		    });          
+		    });
 		</script>
-
+		<script>
+		    $("#labcase1Form").validate();
+		</script>
 
         <title>Lab-z</title>
     </head>
@@ -40,7 +41,7 @@
 	<table align="center">
 		<tr>
 			<td>
-				<form name="form" action="page2.htm" method="post">
+				<form id="labcase1Form" name="form" action="page2.htm" method="post">
 					<table align="center">
 						<tr><td align="center">
 							Registre la información del caso de laboratorio
@@ -49,7 +50,7 @@
 							<tr>
 								<td>Entidad solicitante:</td>
 								<td>
-									<select name="enterprise">
+									<select id="enterprise" name="enterprise" required>
 										<option></option>
 										<c:forEach var="enterprise" items="${model.enterprises }">
 											<c:choose>
@@ -88,11 +89,12 @@
 							<tr>
 								<td>Número de animales</td>
 								<td>
-									<input type="text" name="number" size="4" value="${labcase.totalOfAnimals }"/>
+									<input type="text" id="animalNumber" name="number" size="4"
+											value="${labcase.totalOfAnimals }" required/>
 								</td>
 			    				<td>Especie</td>
 									<td>
-										<select name="specie">
+										<select id="specie" name="specie" required>
 											<option></option>
 											<c:forEach var="spec" items="${model.species }">
 												<c:choose>
@@ -119,7 +121,7 @@
 							</tr>
 							<tr>
 								<td>
-									<select name="region" id="region">
+									<select name="region" id="region" required>
 										<option></option>
 										<c:forEach var="reg" items="${model.regions }">
 											<c:choose>
@@ -138,7 +140,7 @@
 									</select>
 								</td>
 								<td>
-									<select name="city" id="city">
+									<select name="city" id="city" required>
 										<option></option>
 										<c:forEach var="city" items="${model.cities }">
 											<c:choose>

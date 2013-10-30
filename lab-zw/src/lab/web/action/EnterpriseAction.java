@@ -40,12 +40,13 @@ public class EnterpriseAction extends Action {
 		if (LIST_URL.equals(request.getRequestURI())){
 			if (request.getParameter("idnumber") != null){
 				Enterprise enterprise = new Enterprise();
-				enterprise.setIdentityNumber(Long.parseLong(request.getParameter("idnumber")));
+				enterprise.setIdentityNumber(request.getParameter("idnumber").isEmpty() ? null :
+				        Long.parseLong(request.getParameter("idnumber")));
 				enterprise.setName(request.getParameter("name"));
 				enterprise.setAddress(request.getParameter("address"));
 				enterprise.setPhone(request.getParameter("phone"));
 				enterprise.setEmail(request.getParameter("email"));
-				enterprise.setId(request.getParameter("id") == null ? null :
+				enterprise.setId(request.getParameter("id").isEmpty() ? null :
 				        Long.parseLong(request.getParameter("id")));
 				session.saveOrUpdate(enterprise);
 			}

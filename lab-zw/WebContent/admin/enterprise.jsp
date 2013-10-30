@@ -11,6 +11,11 @@
         <link rel="stylesheet" href="/lab-zw/css/lab-z.css" type="text/css" />
         <link rel="stylesheet" href="/lab-zw/css/capas.css" type="text/css" />
         <link rel="stylesheet" href="/lab-zw/css/menu.css" type="text/css" />
+		<script src="/lab-zw/js/jquery.validate.min.js"></script>
+		<script>
+		    $("#enterpriseForm").validate();
+		</script>
+
         <title>Lab-z</title>
     </head>
     <body>
@@ -22,7 +27,7 @@
 			<table align="center">
 				<tr>
 					<td>
-						<form name="form" action="enterprises.htm" method="post">
+						<form id="enterpriseForm" name="enterpriseForm" action="enterprises.htm" method="post">
 							<input type="hidden" name="id" value="${enterprise.id }"/>
 							<table align="center">
 								<tr><td align="center">
@@ -32,38 +37,38 @@
 									<tr>
 										<td>Identificaci&oacute;n:</td>
 										<td>
-											<input type="text" name="idnumber" value="${enterprise.identityNumber }"
-													size="32" maxlength="16"/>
+											<input type="text" id="idnumber" name="idnumber"
+													value="${enterprise.identityNumber }" size="32" maxlength="16"/>
 										</td>
 										<td>Nombre:</td>
 										<td>
-											<input type="text" name="name" value="${enterprise.name }"
-													size="32" maxlength="128"/>
+											<input type="text" id="name" name="name"
+													value="${enterprise.name }" size="32" maxlength="128" required/>
 										</td>
 									</tr>
 									<tr>
 										<td>Direcci&oacute;n:</td>
 										<td>
-											<input type="text" name="address" value="${enterprise.address }"
-													size="32" maxlength="255"/>
+											<input type="text" id="address" name="address"
+													value="${enterprise.address }" size="32" maxlength="255"/>
 										</td>
 										<td>Tel&eacute;fono:</td>
 										<td>
-											<input type="text" name="phone" value="${enterprise.phone }"
-													size="32" maxlength="16"/>
+											<input type="text" id="phone" name="phone"
+													value="${enterprise.phone }" size="32" maxlength="16"/>
 										</td>
 									</tr>
 									<tr>
 										<td>Correo electr&oacute;nico:</td>
 										<td>
-											<input type="text" name="email" value="${enterprise.email }"
-													size="32" maxlength="64"/>
+											<input type="text" id="email" name="email"
+													value="${enterprise.email }" size="32" maxlength="64"/>
 										</td>
 									</tr>
 								</table></td></tr>
 								<tr align="center">
 									<td>
-										<input type="submit" name="action" value="Guardar"/>
+										<input type="submit" id="saveAction" name="action" value="Guardar"/>
 									</td>
 								</tr>
 							</table>

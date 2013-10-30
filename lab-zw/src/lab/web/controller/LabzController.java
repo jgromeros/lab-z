@@ -17,7 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import lab.exceptions.LabcaseException;
 import lab.model.persistence.HibernateUtil;
 import lab.web.action.Action;
+import lab.web.action.EnterpriseAction;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -25,6 +27,8 @@ import org.hibernate.Transaction;
  * Servlet implementation class LabzController
  */
 public abstract class LabzController extends HttpServlet {
+
+    private static Logger logger = Logger.getLogger(LabzController.class);
 
 	private static final long serialVersionUID = 1L;
 	protected Map<String, Action> actions;
@@ -79,11 +83,11 @@ public abstract class LabzController extends HttpServlet {
 			model = action.perform(request, response, session, tx);
 			tx.commit();
 		} catch (LabcaseException e){
-			//TODO logging, y tratamiento excepciones conocidas para mostrar msg
+		    logger.debug(logger.getName() + ": Exception occured on lab stuff.");
+            logger.debug(logger.getName() + ": " + e.getStackTrace());
 			tx.rollback();
 			model = new HashMap<String, Object>();
 			model.put("errores", e.getMessage());
-			e.printStackTrace();
 		}
 		session.close();
 		return model;
