@@ -15,13 +15,12 @@
     </head>
     <body>
         <c:import url="/common/header.jspf"/>
-
-<jsp:directive.include file="../common/menu.jspf"/>
-<div class="layerder">
-	<p>Resultados registrados. Desea imprimirlo ahora?</p>
-	<input type="submit" name="action" value="Si"/>
-	<input type="submit" name="action" value="No"/>
-
+		<jsp:directive.include file="../common/menu.jspf"/>
+		<div class="layerder">
+			<p>Resultados registrados exitosamente.</p>
+			<a href="printresults.htm?id=${model.labcase }&test=${model.test }">
+					Imprimir resultados
+			</a>
         </div>
         <c:import url="/common/footer.jspf"/>
     </body>

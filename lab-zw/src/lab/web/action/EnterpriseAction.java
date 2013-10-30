@@ -60,7 +60,7 @@ public class EnterpriseAction extends Action {
 		} else if (request.getParameter("id") != null) {
 		    Enterprise enterprise = (Enterprise) session.get(Enterprise.class,
 		            Long.parseLong(request.getParameter("id")));
-		    request.setAttribute("enterprise", enterprise);
+		    getModel().put("enterprise", enterprise);
 		}
         logger.debug(logger.getName() + ": perform finished successfully");
 		return getModel();

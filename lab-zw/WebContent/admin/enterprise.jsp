@@ -28,7 +28,7 @@
 				<tr>
 					<td>
 						<form id="enterpriseForm" name="enterpriseForm" action="enterprises.htm" method="post">
-							<input type="hidden" name="id" value="${enterprise.id }"/>
+							<input type="hidden" name="id" value="${model.enterprise.id }"/>
 							<table align="center">
 								<tr><td align="center">
 									Registre la información de la empresa
@@ -38,31 +38,31 @@
 										<td>Identificaci&oacute;n:</td>
 										<td>
 											<input type="text" id="idnumber" name="idnumber"
-													value="${enterprise.identityNumber }" size="32" maxlength="16"/>
+													value="${model.enterprise.identityNumber }" size="32" maxlength="16"/>
 										</td>
 										<td>Nombre:</td>
 										<td>
 											<input type="text" id="name" name="name"
-													value="${enterprise.name }" size="32" maxlength="128" required/>
+													value="${model.enterprise.name }" size="32" maxlength="128" required/>
 										</td>
 									</tr>
 									<tr>
 										<td>Direcci&oacute;n:</td>
 										<td>
 											<input type="text" id="address" name="address"
-													value="${enterprise.address }" size="32" maxlength="255"/>
+													value="${model.enterprise.address }" size="32" maxlength="255"/>
 										</td>
 										<td>Tel&eacute;fono:</td>
 										<td>
 											<input type="text" id="phone" name="phone"
-													value="${enterprise.phone }" size="32" maxlength="16"/>
+													value="${model.enterprise.phone }" size="32" maxlength="16"/>
 										</td>
 									</tr>
 									<tr>
 										<td>Correo electr&oacute;nico:</td>
 										<td>
 											<input type="text" id="email" name="email"
-													value="${enterprise.email }" size="32" maxlength="64"/>
+													value="${model.enterprise.email }" size="32" maxlength="64"/>
 										</td>
 									</tr>
 								</table></td></tr>

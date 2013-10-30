@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import lab.exceptions.LabcaseException;
 import lab.model.persistence.HibernateUtil;
 import lab.web.action.Action;
-import lab.web.action.EnterpriseAction;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -83,8 +82,8 @@ public abstract class LabzController extends HttpServlet {
 			model = action.perform(request, response, session, tx);
 			tx.commit();
 		} catch (LabcaseException e){
-		    logger.debug(logger.getName() + ": Exception occured on lab stuff.");
-            logger.debug(logger.getName() + ": " + e.getStackTrace());
+		    logger.error(logger.getName() + ": Exception occured on lab stuff.");
+            logger.error(logger.getName() + ": " + e.getStackTrace());
 			tx.rollback();
 			model = new HashMap<String, Object>();
 			model.put("errores", e.getMessage());
@@ -110,11 +109,9 @@ public abstract class LabzController extends HttpServlet {
 		try {
 			rd.forward(request, response);
 		} catch (ServletException e) {
-			// TODO Hacer logging de esto
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		} catch (IOException e) {
-			// TODO Hacer logging de esto
-			e.printStackTrace();
+		    logger.error(e.getStackTrace());
 		}
 	}
 
@@ -127,9 +124,8 @@ public abstract class LabzController extends HttpServlet {
 		    ouputStream.flush();
 		    ouputStream.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		    logger.error(e.getStackTrace());
+	    }
 	}
 
 	/**
