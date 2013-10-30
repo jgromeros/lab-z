@@ -31,6 +31,7 @@
 				<tr>
 					<td>
 						<form name="form" action="enterprises.htm" method="post">
+							<input type="hidden" name="id" value="${enterprise.id }"/>
 							<table align="center">
 								<tr><td align="center">
 									Registre la información de la empresa

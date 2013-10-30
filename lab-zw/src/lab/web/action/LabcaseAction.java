@@ -26,6 +26,7 @@ import lab.model.sample.SampleType;
 import lab.model.test.TestDescription;
 import lab.web.helper.LabcaseHelper;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -36,6 +37,8 @@ import org.hibernate.Transaction;
  *
  */
 public class LabcaseAction extends Action {
+
+    private static Logger logger = Logger.getLogger(LabcaseAction.class);
 
 	private static final Long REGION = new Long(1);
 	private static final Long CITY = new Long(2);
@@ -96,6 +99,10 @@ public class LabcaseAction extends Action {
 	}
 
 	public void showFirstForm(HttpServletRequest request, Session session){
+	    logger.debug("showFirstForm with the following params:");
+	    for (String paramName : request.getParameterMap().keySet()){
+	        logger.debug(paramName + ": " + request.getParameterMap().get(paramName));
+	    }
 		request.getSession().removeAttribute(LABCASE);
 		if (request.getParameter("code") != null && !request.getParameter("code").isEmpty()){
 			Labcase labcase = searchLabcase(session, request.getParameter("code"));
@@ -111,13 +118,16 @@ public class LabcaseAction extends Action {
 		Query hql = session.createQuery("from Place p where p.placeType = :placeType order by p.name");
 		hql.setParameter("placeType", session.get(PlaceType.class, REGION));
 		getModel().put("regions", hql.list());
-		hql.setParameter("placeType", session.get(PlaceType.class, CITY));
-		getModel().put("cities", hql.list());
 		getModel().put("sampleTypes", session.createQuery("from SampleType st order by st.description").list());
 		getModel().put("species", session.createQuery("from Specie s order by s.name").list());
+		logger.debug("showFirstForm finished successfully");
 	}
 
 	public void showSecondForm(HttpServletRequest request, Session session) {
+        logger.debug("showSecondForm with the following params:");
+        for (String paramName : request.getParameterMap().keySet()){
+            logger.debug(paramName + ": " + request.getParameterMap().get(paramName)[0]);
+        }
         Labcase labcase = (Labcase) request.getSession().getAttribute(LABCASE);
         if (labcase == null)
         	labcase = new Labcase();
@@ -157,9 +167,14 @@ public class LabcaseAction extends Action {
         	Collections.sort(testDescriptions);
         }
         getModel().put("testDescriptions", testDescriptions);
+        logger.debug("showSecondForm finished successfully");
 	}
 
 	public void showThirdForm(HttpServletRequest request, Session session){
+        logger.debug("showThirdForm with the following params:");
+        for (String paramName : request.getParameterMap().keySet()){
+            logger.debug(paramName + ": " + request.getParameterMap().get(paramName));
+        }
         Labcase labcase = (Labcase) request.getSession().getAttribute(LABCASE);
         String[] testStrings = request.getParameterValues("testdesc");
     	if (nextAnimalIndex(request.getParameter("nextAnimalIndex")) == 0){
@@ -168,9 +183,14 @@ public class LabcaseAction extends Action {
     	getModel().put("nextAnimalIndex", nextAnimalIndex(request.getParameter("nextAnimalIndex")));
     	getModel().put("endAnimalIndex", endAnimalIndex(request.getParameter("nextAnimalIndex"),
     			labcase.getAnimals().size()));
+        logger.debug("showThirdForm finished successfully");
 	}
 
 	public void saveLabcase(HttpServletRequest request, Session session) {
+        logger.debug("saveLabcase with the following params:");
+        for (String paramName : request.getParameterMap().keySet()){
+            logger.debug(paramName + ": " + request.getParameterMap().get(paramName));
+        }
         Labcase labcase = (Labcase) request.getSession().getAttribute(LABCASE);
         saveLabcase(request, session, labcase);
         if (nextAnimalIndex(request.getParameter("nextAnimalIndex")) < labcase.getAnimals().size()){
@@ -184,6 +204,7 @@ public class LabcaseAction extends Action {
         	labcase.setStatus(Labcase.SAVED);
             request.getSession().removeAttribute(LABCASE);
         }
+        logger.debug("saveLabcase finished successfully");
 	}
 
 	private void loadSenderInformation(HttpServletRequest request, Session session, Labcase labcase) {
@@ -322,7 +343,12 @@ public class LabcaseAction extends Action {
     }
 
     private void labcasesToClose(HttpServletRequest request, Session session) {
+        logger.debug("labcasesToClose with the following params:");
+        for (String paramName : request.getParameterMap().keySet()){
+            logger.debug(paramName + ": " + request.getParameterMap().get(paramName));
+        }
     	getModel().put("labcasesToFinish", labcasesToClose(session));
+        logger.debug("labcasesToClose finished successfully");
     }
 
     private List<Labcase> labcasesToClose(Session session) {
@@ -333,10 +359,15 @@ public class LabcaseAction extends Action {
     }
 
 	private void closeLabcases(HttpServletRequest request, Session session) {
+        logger.debug("closeLabcases with the following params:");
+        for (String paramName : request.getParameterMap().keySet()){
+            logger.debug(paramName + ": " + request.getParameterMap().get(paramName));
+        }
 		for (Labcase labcase : labcasesToClose(session)){
 			labcase.setStatus(Labcase.FINISHED);
 		    session.saveOrUpdate(labcase);
 		}
+        logger.debug("closeLabcases finished successfully");
 	}
 
 }
