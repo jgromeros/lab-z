@@ -11,6 +11,11 @@
         <link rel="stylesheet" href="/lab-zw/css/lab-z.css" type="text/css" />
         <link rel="stylesheet" href="/lab-zw/css/capas.css" type="text/css" />
         <link rel="stylesheet" href="/lab-zw/css/menu.css" type="text/css" />
+		<script src="/lab-zw/js/jquery.validate.min.js"></script>
+		<script>
+		    $("#labcase3Form").validate();
+		</script>
+
         <title>Lab-z</title>
     </head>
     <body>
@@ -21,7 +26,7 @@
 	<table align="center">
 		<tr>
 			<td>
-				<form name="forma" action="done.htm" method="post">
+				<form id="labcase3Form" name="forma" action="done.htm" method="post">
 					<table align="center">
 						<tr>
 							<td align="center">Digite aqui la información de cada animal</td>
@@ -37,12 +42,11 @@
 							<c:forEach var="i" begin="${model.nextAnimalIndex }" end="${model.endAnimalIndex }">
 				    			<tr>
 									<td>
-										<input type="text" name="animalname"
-											size="16" maxlength="32"
-											value="${labcase.animals[i].name }"/>
+										<input type="text" id="animalname" name="animalname"
+											size="16" maxlength="32" value="${labcase.animals[i].name }" required/>
 									</td>
 									<td>
-										<select name="gender">
+										<select id="gender" name="gender" required>
 											<option></option>
 											<c:choose>
 												<c:when test="${labcase.animals[i].gender == 'M' }">

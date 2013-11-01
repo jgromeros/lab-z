@@ -162,6 +162,7 @@ public class TypedResultsAction extends Action {
 			for (Test test : animal.getTests()){
 				if (test.getTestDescription().getId() == Long.parseLong(testdesc)){
 					Hibernate.initialize(test);
+                    getModel().put("test", test.getId());
 					TestDescription testDescription = test.getTestDescription();
 					List<Result> results = test.getResults();
 					if (results.size() == 0){
@@ -249,6 +250,7 @@ public class TypedResultsAction extends Action {
 			labcase.setStatus(Labcase.WITHRESULT);
 			session.update(labcase);
 		}
+		getModel().put("labcase", labcase.getId());
         logger.debug("saveResult finished successfully");
 	}
 

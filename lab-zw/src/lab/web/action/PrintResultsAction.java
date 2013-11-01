@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import lab.model.labcase.Labcase;
 import lab.model.test.Test;
-import lab.model.test.TestDescription;
 import lab.web.controller.LabzController;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
@@ -68,29 +67,23 @@ public class PrintResultsAction extends Action {
 		if (labcase.getLabProfessionalForTest(test) == null ||
 				labcase.getTechnicalDirector() == null){
 			setAction(FORM);
-			//TODO Aqui hay que hacer algo
 		} else {
-//			setAction("mockpage");
 			cleanModel();
 			if (controller != null){
 				byte[] bytes = null;
 				String nombreReporte = obtenerNombreReporte(test);
 				File reportFile = new File(controller.getServletContext().getRealPath(nombreReporte));
-//				File reportFile = new File(controller.getServletContext().getRealPath("reports/res_bru_ofi.jasper"));
 			    Map<String,Object> parameters = new HashMap<String,Object>();
 			    parameters.put("labcase", labcase.getId());
 			    parameters.put("testNumber", test.getId());
 			    try {
 				    Connection con = ((SessionFactoryImplementor)session.getSessionFactory()).getConnectionProvider().getConnection();
 				    bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, con);
-//					bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, session.connection());
 					getModel().put("report", bytes);
 				} catch (JRException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+                    logger.error(logger.getName() + ": " + e.getStackTrace());
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				    logger.error(logger.getName() + ": " + e.getStackTrace());
 				}
 			}
 		}

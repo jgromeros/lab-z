@@ -41,12 +41,13 @@ public class EnterpriseAction extends Action {
 			if (request.getParameter("idnumber") != null &&
 					!request.getParameter("idnumber").isEmpty()){
 				Enterprise enterprise = new Enterprise();
-				enterprise.setIdentityNumber(Long.parseLong(request.getParameter("idnumber")));
+				enterprise.setIdentityNumber(request.getParameter("idnumber").isEmpty() ? null :
+				        Long.parseLong(request.getParameter("idnumber")));
 				enterprise.setName(request.getParameter("name"));
 				enterprise.setAddress(request.getParameter("address"));
 				enterprise.setPhone(request.getParameter("phone"));
 				enterprise.setEmail(request.getParameter("email"));
-				enterprise.setId(request.getParameter("id") == null ? null :
+				enterprise.setId(request.getParameter("id").isEmpty() ? null :
 				        Long.parseLong(request.getParameter("id")));
 				session.saveOrUpdate(enterprise);
 			}
@@ -61,7 +62,7 @@ public class EnterpriseAction extends Action {
 		} else if (request.getParameter("id") != null) {
 		    Enterprise enterprise = (Enterprise) session.get(Enterprise.class,
 		            Long.parseLong(request.getParameter("id")));
-		    request.setAttribute("enterprise", enterprise);
+		    getModel().put("enterprise", enterprise);
 		}
         logger.debug(logger.getName() + ": perform finished successfully");
 		return getModel();

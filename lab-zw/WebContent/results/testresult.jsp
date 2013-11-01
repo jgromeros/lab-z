@@ -11,6 +11,11 @@
         <link rel="stylesheet" href="/lab-zw/css/lab-z.css" type="text/css" />
         <link rel="stylesheet" href="/lab-zw/css/capas.css" type="text/css" />
         <link rel="stylesheet" href="/lab-zw/css/menu.css" type="text/css" />
+		<script src="/lab-zw/js/jquery.validate.min.js"></script>
+		<script>
+		    $("#resultsForm").validate();
+		</script>
+
         <title>Lab-z</title>
     </head>
     <body>
@@ -18,7 +23,7 @@
 
 <jsp:directive.include file="../common/menu.jspf"/>
 <div class="layerder">
-	<form action="registered.htm" method="post">
+	<form id="resultsForm" action="registered.htm" method="post">
 		<input type="hidden" name="testdesc" value="${model.testdesc }"/>
 		<h3><c:out value="${model.testDescription }"/></h3>
 		<table>
@@ -93,11 +98,6 @@
 									</table>
 								</td>
 							</tr>
-			                <c:if test="${test.testDescription.id == 57}">
-		                       <tr><td align="center">
-		                           <input type="submit" name="action" value="Calcular"/>
-		                       </td></tr>
-		                    </c:if>
 						</table></td></tr>
 					<tr>
 						<td colspan="2">Observaciones:</td>
@@ -129,7 +129,7 @@
 			<tr>
 				<td>Profesional que realiza la prueba:</td>
 				<td>
-					<select name="lab_professional">
+					<select id="labProfessional" name="lab_professional" required>
 						<option></option>
 						<c:forEach var="labpro" items="${model.labpros }">
 							<c:choose>
@@ -147,7 +147,7 @@
 			<tr>
 				<td>Director cient&iacute;fico del laboratorio:</td>
 				<td>
-					<select name="tech_dir">
+					<select id="techDir" name="tech_dir" required>
 						<option></option>
 						<c:forEach var="td" items="${model.techdirectors }">
 							<c:choose>
@@ -164,7 +164,7 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="submit" name="action" value="Guardar"/>
+					<input type="submit" id="guardarAction" name="action" value="Guardar"/>
 				</td>
 			</tr>
 		</table>
