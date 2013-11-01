@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="copro" language="groovy" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e25db974-5923-42a1-b47f-9f4be28bcc53">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="7"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="testNumber" class="java.lang.Long"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/Users/juanromero/Documents/workspace/lab-zw/WebContent/reports/"]]></defaultValueExpression>
@@ -261,16 +261,16 @@ ORDER BY a.id, rf.number_order, rf._group, rf.id]]>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="50">
+			<band height="36">
 				<staticText>
-					<reportElement uuid="76cdcd1c-7e01-4e57-a7f7-0de53db92f17" x="10" y="4" width="100" height="13"/>
+					<reportElement uuid="76cdcd1c-7e01-4e57-a7f7-0de53db92f17" x="10" y="2" width="100" height="13"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[Observaciones]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement uuid="18b6d7c8-d8ea-4573-8119-6334a960cd6a" x="0" y="23" width="555" height="13"/>
+					<reportElement uuid="18b6d7c8-d8ea-4573-8119-6334a960cd6a" x="0" y="17" width="555" height="13"/>
 					<textElement/>
 					<textFieldExpression><![CDATA[$F{observations}]]></textFieldExpression>
 				</textField>
@@ -280,10 +280,10 @@ ORDER BY a.id, rf.number_order, rf._group, rf.id]]>
 	<group name="Grupo">
 		<groupExpression><![CDATA[$F{_group}]]></groupExpression>
 		<groupHeader>
-			<band height="23">
+			<band height="18">
 				<printWhenExpression><![CDATA[$F{_group} != null]]></printWhenExpression>
 				<textField isBlankWhenNull="true">
-					<reportElement uuid="3b39157a-cf2d-4b3e-9d92-9e305d057916" x="15" y="5" width="252" height="13"/>
+					<reportElement uuid="3b39157a-cf2d-4b3e-9d92-9e305d057916" x="15" y="2" width="252" height="13"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
@@ -311,23 +311,23 @@ ORDER BY a.id, rf.number_order, rf._group, rf.id]]>
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="21" splitType="Stretch">
+		<band height="17" splitType="Stretch">
 			<textField>
-				<reportElement uuid="742a4c6f-f55d-4353-ace4-7f1d86fb191b" x="0" y="5" width="130" height="13"/>
+				<reportElement uuid="742a4c6f-f55d-4353-ace4-7f1d86fb191b" x="0" y="2" width="130" height="13"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="8b53a4f0-7e8c-4f10-a769-b258e1caab45" x="380" y="5" width="70" height="13"/>
+				<reportElement uuid="8b53a4f0-7e8c-4f10-a769-b258e1caab45" x="380" y="2" width="70" height="13"/>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{relative_value}.concat("%")]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement uuid="097e431f-8257-4c7e-a648-1df3ee63e41d" x="130" y="5" width="110" height="13">
+				<reportElement uuid="097e431f-8257-4c7e-a648-1df3ee63e41d" x="130" y="2" width="110" height="13">
 					<printWhenExpression><![CDATA[$F{min_abs_ref_value} == null || (
 new BigDecimal($F{string_value}).compareTo($F{min_abs_ref_value}) >= 0 &&
 new BigDecimal($F{string_value}).compareTo($F{max_abs_ref_value}) <= 0)]]></printWhenExpression>
@@ -338,21 +338,21 @@ new BigDecimal($F{string_value}).compareTo($F{max_abs_ref_value}) <= 0)]]></prin
 				<textFieldExpression><![CDATA[$F{string_value}.concat(" ").concat($F{unit}==null ? "" : $F{unit})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="54d76c75-a838-4dda-b389-ea52da022435" x="243" y="5" width="134" height="13"/>
+				<reportElement uuid="54d76c75-a838-4dda-b389-ea52da022435" x="243" y="2" width="134" height="13"/>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{min_abs_ref_value}.toPlainString().concat(" - ").concat($F{max_abs_ref_value}.toPlainString())]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="a9014f23-d3b1-4472-af07-a8cb68fbc7a1" x="455" y="5" width="100" height="13"/>
+				<reportElement uuid="a9014f23-d3b1-4472-af07-a8cb68fbc7a1" x="455" y="2" width="100" height="13"/>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{min_rel_ref_value}.toPlainString().concat(" - ").concat($F{max_rel_ref_value}.toPlainString())]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement uuid="067445ca-9655-4830-80d8-917696374744" x="130" y="5" width="110" height="13" forecolor="#FA0505">
+				<reportElement uuid="067445ca-9655-4830-80d8-917696374744" x="130" y="2" width="110" height="13" forecolor="#FA0505">
 					<printWhenExpression><![CDATA[$F{min_abs_ref_value} != null && (
 new BigDecimal($F{string_value}).compareTo($F{min_abs_ref_value}) < 0 ||
 new BigDecimal($F{string_value}).compareTo($F{max_abs_ref_value}) > 0)]]></printWhenExpression>
@@ -365,29 +365,29 @@ new BigDecimal($F{string_value}).compareTo($F{max_abs_ref_value}) > 0)]]></print
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="42" splitType="Stretch">
+		<band height="32" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="b0b4e8e8-41b1-40fe-985f-976473386ef1" x="4" y="4" width="550" height="13"/>
+				<reportElement uuid="b0b4e8e8-41b1-40fe-985f-976473386ef1" x="4" y="2" width="550" height="13"/>
 				<textElement/>
 				<text><![CDATA[Resultado válido únicamente para la muestra analizada]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="f1ff6bdf-7cfb-4eb7-bbe0-fbbf0d81fe88" x="435" y="25" width="80" height="13"/>
+				<reportElement uuid="f1ff6bdf-7cfb-4eb7-bbe0-fbbf0d81fe88" x="435" y="16" width="80" height="13"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="f9ffe7a2-438d-4baf-9c10-9667c51e0562" x="0" y="25" width="176" height="13"/>
+				<reportElement uuid="f9ffe7a2-438d-4baf-9c10-9667c51e0562" x="0" y="16" width="176" height="13"/>
 				<textElement/>
 				<text><![CDATA[Profesional que realiza la prueba:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="c75e0a9d-16d1-4023-966c-5197cee25afc" x="188" y="25" width="183" height="13"/>
+				<reportElement uuid="c75e0a9d-16d1-4023-966c-5197cee25afc" x="188" y="16" width="183" height="13"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{professional}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement uuid="c0812923-05b3-4d87-bc39-b4ef1aa17cb6" x="514" y="25" width="40" height="13"/>
+				<reportElement uuid="c0812923-05b3-4d87-bc39-b4ef1aa17cb6" x="514" y="16" width="40" height="13"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
