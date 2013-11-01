@@ -329,8 +329,8 @@ ORDER BY a.id, rf.number_order, rf._group, rf.id]]>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement uuid="097e431f-8257-4c7e-a648-1df3ee63e41d" x="130" y="5" width="110" height="13">
 					<printWhenExpression><![CDATA[$F{min_abs_ref_value} == null || (
-new BigDecimal($F{string_value}).compareTo($F{min_abs_ref_value}) > 0 &&
-new BigDecimal($F{string_value}).compareTo($F{max_abs_ref_value}) < 0)]]></printWhenExpression>
+new BigDecimal($F{string_value}).compareTo($F{min_abs_ref_value}) >= 0 &&
+new BigDecimal($F{string_value}).compareTo($F{max_abs_ref_value}) <= 0)]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right">
 					<font size="9" isUnderline="false"/>

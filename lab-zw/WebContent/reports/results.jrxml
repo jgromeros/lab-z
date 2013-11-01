@@ -278,8 +278,8 @@ ORDER BY a.id, rf.number_order, rf._group]]>
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="13324e53-12d4-4d31-a226-1818655b0f85" x="160" y="4" width="280" height="13">
 					<printWhenExpression><![CDATA[$F{min_abs_ref_value} == null || (
-new BigDecimal($F{string_value}).compareTo($F{min_abs_ref_value}) > 0 &&
-new BigDecimal($F{string_value}).compareTo($F{max_abs_ref_value}) < 0)]]></printWhenExpression>
+new BigDecimal($F{string_value}).compareTo($F{min_abs_ref_value}) >= 0 &&
+new BigDecimal($F{string_value}).compareTo($F{max_abs_ref_value}) <= 0)]]></printWhenExpression>
 				</reportElement>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{string_value}.concat(" ").concat($F{unit}==null ? "" : $F{unit})]]></textFieldExpression>
