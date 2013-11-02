@@ -24,7 +24,7 @@ public class ResultsHelper {
 	 * @return
 	 */
 	public List<Labcase> listPendingCases(Session session) {
-		Query hql = session.createQuery("from Labcase where state in (:status1, :status2)");
+		Query hql = session.createQuery("from Labcase where state in (:status1, :status2) order by code");
 		hql.setParameter("status1", Labcase.SAVED);
 		hql.setParameter("status2", Labcase.WITHRESULT);
 		List<Labcase> pendingCases = hql.list();
