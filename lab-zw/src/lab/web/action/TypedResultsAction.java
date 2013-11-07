@@ -168,15 +168,6 @@ public class TypedResultsAction extends Action {
 					if (results.size() == 0){
 						for (ResultFactor resultFactor : testDescription.getResultFactors()){
 							Result result = new Result();
-							if(request.getParameter("action").equals("Calcular")){
-								if (resultFactor.getComputedValue() == true && resultFactor.getCalculated() == true){
-									result.setRelativeValue(request.getParameter("test" + test.getId() + "relativefactor" + resultFactor.getId()));
-									result.setValue("16,66");
-								}
-								if (resultFactor.getCalculated() == true && resultFactor.getComputedValue() == false){
-									result.setValue("1300");
-								}
-							}
 							result.setResultFactor(resultFactor);
 							result.setResultDate(new Date());
 							result.setValue(request.getParameter("test" + test.getId() + "factor" + resultFactor.getId()));
@@ -230,8 +221,8 @@ public class TypedResultsAction extends Action {
 									}
 								} else if (result.getResultFactor().getCalculated() && result.getResultFactor().getComputedValue()){
 									result.setRelativeValue(request.getParameter("test" + test.getId() + "relativefactor" + result.getResultFactor().getId()));
-									BigDecimal valor = new BigDecimal(result.getRelativeValue());
-									valor = (valor.multiply(new BigDecimal(leucocitos))).divide(new BigDecimal(100));
+									BigDecimal valor = new BigDecimal(result.getRelativeValue(), new MathContext(4));
+									valor = (valor.multiply(new BigDecimal(leucocitos))).divide(new BigDecimal(100), new MathContext(4));
 									result.setValue(valor.toPlainString());
 								}
 								session.saveOrUpdate(result);
