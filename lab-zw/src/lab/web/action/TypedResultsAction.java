@@ -106,7 +106,7 @@ public class TypedResultsAction extends Action {
 			for (Test t : animal.getTests()){
 				if (t.getTestDescription().getId().equals(getModel().get("testdesc"))){
 					test = t;
-					Long leucocitos = null;
+					Double leucocitos = null;
 					if (test.getResults().size() == 0){
 						for (ResultFactor rf : test.getTestDescription().getResultFactors()){
 							Result result = new Result();
@@ -119,7 +119,7 @@ public class TypedResultsAction extends Action {
 						Collections.sort(test.getResults());
 						for (Result result : test.getResults()){
 							if (result.getResultFactor().getId() == 64){//Leucocitos
-								leucocitos = result.getValue() == null ? null : Long.parseLong(result.getValue());
+								leucocitos = result.getValue() == null ? null : Double.parseDouble(result.getValue());
 							}
 							if (result.getResultFactor().getComputedValue() == true && result.getResultFactor().getCalculated() == true
 									&& result.getValue() != null){
