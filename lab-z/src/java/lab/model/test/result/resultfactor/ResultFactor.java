@@ -12,9 +12,6 @@ import lab.model.NamedEntity;
  */
 public class ResultFactor extends NamedEntity {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
     
     private String unit;
@@ -22,59 +19,36 @@ public class ResultFactor extends NamedEntity {
     private Boolean calculated;
     private Boolean computedValue;
     private Integer numberOrder;
+    private String valueType;
 
-    /**
-     * @param unit The unit to set.
-     */
     public void setUnit(String unit) {
         this.unit = unit;
     }
 
-    /**
-     * @return Returns the unit.
-     */
     public String getUnit() {
         return unit;
     }
 
-    /**
-	 * @param group the group to set
-	 */
 	public void setGroup(String group) {
 		this.group = group;
 	}
 
-	/**
-	 * @return the group
-	 */
 	public String getGroup() {
 		return group;
 	}
 
-	/**
-	 * @param calculated the calculated to set
-	 */
 	public void setCalculated(Boolean calculated) {
 		this.calculated = calculated;
 	}
 
-	/**
-	 * @return the calculated
-	 */
 	public Boolean getCalculated() {
 		return calculated;
 	}
 
-	/**
-	 * @param computedValue the computedValue to set
-	 */
 	public void setComputedValue(Boolean computedValue) {
 		this.computedValue = computedValue;
 	}
 
-	/**
-	 * @return the computedValue
-	 */
 	public Boolean getComputedValue() {
 		return computedValue;
 	}
@@ -86,5 +60,13 @@ public class ResultFactor extends NamedEntity {
 	public void setNumberOrder(Integer numberOrder) {
 		this.numberOrder = numberOrder;
 	}
+
+    public String getValueType() {
+        return valueType;
+    }
+
+    public void setValueType(String valueType) {
+        this.valueType = valueType;
+    }
 
 }

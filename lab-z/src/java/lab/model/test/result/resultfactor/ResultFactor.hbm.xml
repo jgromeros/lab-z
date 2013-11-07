@@ -14,6 +14,7 @@
 		<property name="group" column="_group"/>
         <property name="calculated" column="calculated"/>
         <property name="computedValue" column="computed_value"/>
+        <property name="valueType" column="value_type"/>
         <property name="numberOrder" type="int" insert="false" update="false">
             <column name="number_order"/>
         </property>

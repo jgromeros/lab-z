@@ -208,6 +208,7 @@ CREATE TABLE result_factor(
 	calculated			BOOLEAN			NOT NULL,
 	computed_value		BOOLEAN			NOT NULL,
 	number_order		INTEGER			NOT NULL,
+	value_type			CHAR(1) 		NOT NULL CHECK(value_type IN 'I'/*Integer*/, 'D'/*Decimal*/, 'T'/*Text*/),
 	PRIMARY KEY (id),
 	FOREIGN KEY (test_description) REFERENCES test_description
 );

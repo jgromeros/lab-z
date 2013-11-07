@@ -59,11 +59,15 @@
 													    <c:when test="${result.resultFactor.calculated == true}">
 															<input type="text" value="<c:out value="${result.value }"/>" readonly="readonly"
 																	name="test<c:out value="${test.id }"/>factor<c:out value="${result.resultFactor.id }"/>"/>
-													   </c:when>
-													   <c:otherwise>
+													    </c:when>
+                                                        <c:when test="${ result.resultFactor.valueType =='T' }">
+                                                            <textarea name="test<c:out value="${test.id }"/>factor<c:out value="${result.resultFactor.id }"/>"
+                                                                    rows="10" cols="80"><c:out value="${result.value }"/></textarea>
+                                                        </c:when>
+													    <c:otherwise>
                                                             <input type="text" value="<c:out value="${result.value }"/>"
                                                                     name="test<c:out value="${test.id }"/>factor<c:out value="${result.resultFactor.id }"/>"/>
-													   </c:otherwise>
+													    </c:otherwise>
 													</c:choose>
 												</td>
 												<td><c:out value="${result.resultFactor.unit }"/></td>
@@ -126,6 +130,7 @@
 					</table>
 				</td>
 			</tr>
+            <tr><td><table>
 			<tr>
 				<td>Profesional que realiza la prueba:</td>
 				<td>
@@ -167,6 +172,7 @@
 					<input type="submit" id="guardarAction" name="action" value="Guardar"/>
 				</td>
 			</tr>
+           </table></tr></tr>
 		</table>
 	</form>
 
