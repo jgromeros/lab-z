@@ -32,28 +32,27 @@
 		<tr>
 			<td colspan="2">Seleccione al que desee registrarle los resultados</td>
 		</tr>
-		<tr>
-			<c:forEach var="animal" items="${labcase.animals }">
-				<c:set var="animal1" value="${animal }"/>
-			</c:forEach>
-			<c:forEach var="test" items="${animal1.tests }">
+		<c:forEach var="animal" items="${labcase.animals }">
+			<c:set var="animal1" value="${animal }"/>
+		</c:forEach>
+		<c:forEach var="test" items="${animal1.tests }">
+            <tr>
                 <c:if test="${labcase.status == 'S' || labcase.status == 'W'}">
-					<td>
-						<a href="testresult.htm?testdesc=<c:out value="${test.testDescription.id }"/>"><c:out value="${test.testDescription.description }"/></a>
-					</td>
-				</c:if>
-				<c:if test="${(labcase.status == 'W' || labcase.status == 'F') && test.resultsSize > 0 && test.labProfessional != null}">
-					<td>
-						<a href="printresults.htm?id=${labcase.id }&test=${test.id }">
-							Imprimir resultados
-						</a>
-					</td>
-				</c:if>
-			</c:forEach>
-		</tr>
+    				<td>
+    					<a href="testresult.htm?testdesc=<c:out value="${test.testDescription.id }"/>"><c:out value="${test.testDescription.description }"/></a>
+    				</td>
+    			</c:if>
+    			<c:if test="${(labcase.status == 'W' || labcase.status == 'F') && test.resultsSize > 0 && test.labProfessional != null}">
+    				<td>
+    					<a href="printresults.htm?id=${labcase.id }&test=${test.id }">
+    						Imprimir resultados
+    					</a>
+    				</td>
+    			</c:if>
+            </tr>
+		</c:forEach>
 	</table>
-
-        </div>
-        <c:import url="/common/footer.jspf"/>
+    </div>
+    <c:import url="/common/footer.jspf"/>
     </body>
 </html>

@@ -15,9 +15,9 @@
 		<property name="observations" column="observations"/>
 		<many-to-one name="race" class="lab.model.animal.Race"
 				column="race"/>
-		<set name="tests" table="test" lazy="false">
+		<bag name="tests" table="test" lazy="false">
 			<key column="animal"/>
 			<one-to-many class="lab.model.test.Test"/>
-		</set>
+		</bag>
 	</class>
 </hibernate-mapping>

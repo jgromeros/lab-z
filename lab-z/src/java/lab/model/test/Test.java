@@ -19,9 +19,6 @@ import lab.model.test.result.Result;
  */
 public class Test extends Entity {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
     
     private TestDescription testDescription;
@@ -44,44 +41,26 @@ public class Test extends Entity {
     	return 0;
     }
 
-    /**
-     * @param results The results to set.
-     */
     public void setResults(List<Result> results) {
         this.results = results;
     }
 
-    /**
-     * @return Returns the results.
-     */
     public List<Result> getResults() {
         return results;
     }
 
-    /**
-     * @param testDescription The testDescription to set.
-     */
     public void setTestDescription(TestDescription testDescription) {
         this.testDescription = testDescription;
     }
 
-    /**
-     * @return Returns the testDescription.
-     */
     public TestDescription getTestDescription() {
         return testDescription;
     }
 
-	/**
-	 * @param animal the animal to set
-	 */
 	public void setAnimal(Animal animal) {
 		this.animal = animal;
 	}
 
-	/**
-	 * @return the animal
-	 */
 	public Animal getAnimal() {
 		return animal;
 	}

@@ -3,8 +3,8 @@
  */
 package lab.web.helper;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 
 import lab.model.animal.Animal;
 import lab.model.labcase.Labcase;
@@ -48,7 +48,7 @@ public class LabcaseHelper {
     public void initializeTests(Session session, Labcase labcase, String[] testStrings) {
         for (Animal animal : labcase.getAnimals()){
         	if (animal.getTests() == null){
-        		animal.setTests(new HashSet<Test>());
+        		animal.setTests(new ArrayList<Test>());
         	}
     		for (int i = 0; i < testStrings.length; i ++){
     			boolean added = false;
