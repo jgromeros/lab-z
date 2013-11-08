@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="lab.model.test.TestPrice" table="prices_by_test_desc">
+		<id name="id" column="id">
+			<generator class="sequence">
+				<param name="sequence">sc_prices_by_test_desc</param>
+			</generator>
+		</id>
+		<property name="price" column="price"/>
+        <property name="tax" column="tax"/>
+        <property name="validFrom" column="valid_from"/>
+        <property name="validUntil" column="valid_until"/>
+		<many-to-one name="testDescription" class="lab.model.test.TestDescription"
+				column="test_description"/>
+	</class>
+</hibernate-mapping>
