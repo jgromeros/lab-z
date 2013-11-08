@@ -37,15 +37,18 @@
 		</c:forEach>
 		<c:forEach var="test" items="${animal1.tests }">
             <tr>
-                <c:if test="${labcase.status == 'S' || labcase.status == 'W'}">
+            	<td><c:out value="${test.testDescription.description }"/></td>
+                <c:if test="${labcase.status == 'S' || labcase.status == 'W' }">
     				<td>
-    					<a href="testresult.htm?testdesc=<c:out value="${test.testDescription.id }"/>"><c:out value="${test.testDescription.description }"/></a>
+    					<a href="testresult.htm?testdesc=<c:out value="${test.testDescription.id }"/>">
+    						<img alt="Editar" src="../img/edit.png" width="16" height="16"/>
+    					</a>
     				</td>
     			</c:if>
     			<c:if test="${(labcase.status == 'W' || labcase.status == 'F') && test.resultsSize > 0 && test.labProfessional != null}">
     				<td>
     					<a href="printresults.htm?id=${labcase.id }&test=${test.id }">
-    						Imprimir resultados
+    						<img alt="Imprimir" src="../img/print.png" width="16" height="16"/>
     					</a>
     				</td>
     			</c:if>
