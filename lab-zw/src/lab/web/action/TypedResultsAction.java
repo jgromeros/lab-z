@@ -229,7 +229,7 @@ public class TypedResultsAction extends Action {
 							}
 						}
 					}
-					if (request.getParameter("obs_test" + test.getId())!= null && !request.getParameter("obs_test" + test.getId()).isEmpty()){
+					if (request.getParameter("obs_test" + test.getId())!= null){
 						test.setObservations(request.getParameter("obs_test" + test.getId()));
 					}
 					session.update(test);
