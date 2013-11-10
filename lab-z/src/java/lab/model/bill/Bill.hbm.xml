@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="lab.model.bill.Bill" table="bill">
+		<id name="id" column="id">
+			<generator class="sequence">
+				<param name="sequence">sc_bill</param>
+			</generator>
+		</id>
+		<property name="billNumber" column="bill_number"/>
+        <property name="billDate" column="bill_date"/>
+        <property name="totalBeforeTaxes" column="total_before_taxes"/>
+        <property name="totalAfterTaxes" column="total_after_taxes"/>
+		<many-to-one name="client" class="lab.model.enterprise.Enterprise"
+				column="client"/>
+ 		<bag name="billedTests" table="test" lazy="false">
+			<key column="invoice"/>
+			<one-to-many class="lab.model.test.Test"/>
+		</bag>
+	</class>
+</hibernate-mapping>

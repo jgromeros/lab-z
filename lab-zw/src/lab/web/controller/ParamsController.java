@@ -2,6 +2,7 @@ package lab.web.controller;
 
 import javax.servlet.ServletException;
 
+import lab.web.action.BillingAction;
 import lab.web.action.EnterpriseAction;
 
 /**
@@ -13,16 +14,20 @@ import lab.web.action.EnterpriseAction;
  */
 public class ParamsController extends LabzController {
 
-	private String enterpriseActionPath = "admin"; 
+	private static String ENTERPRISE_ACTION_PATH = "admin"; 
+	private static String BILL_ACTION_PATH = "admin/bill"; 
 
 	@Override
 	public void init() throws ServletException {
-		EnterpriseAction enterpriseAction = new EnterpriseAction(enterpriseActionPath,
+		EnterpriseAction enterpriseAction = new EnterpriseAction(ENTERPRISE_ACTION_PATH,
 				EnterpriseAction.ENTERPRISE);
 		actions.put(enterpriseAction.nameToString(), enterpriseAction);
-		EnterpriseAction listEnterpriseAction = new EnterpriseAction(enterpriseActionPath,
+		EnterpriseAction listEnterpriseAction = new EnterpriseAction(ENTERPRISE_ACTION_PATH,
 				EnterpriseAction.LIST);
 		actions.put(listEnterpriseAction.nameToString(), listEnterpriseAction);
+		BillingAction selectBillingAction = new BillingAction(BILL_ACTION_PATH,
+				BillingAction.SELECT);
+		actions.put(selectBillingAction.nameToString(), selectBillingAction);
 	}
 
 }
