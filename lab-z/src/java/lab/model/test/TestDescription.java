@@ -6,8 +6,11 @@
  */
 package lab.model.test;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
+import lab.exceptions.LabcaseException;
 import lab.model.DescribedEntity;
 import lab.model.assembly.AssemblyType;
 import lab.model.sample.SampleType;
@@ -17,7 +20,6 @@ import lab.model.test.result.resultfactor.ResultFactor;
  * @author  JuanGa
  * This persistent class save the description of each test that can be applied
  *   
- * TODO
  */
 public class TestDescription extends DescribedEntity implements Comparable<TestDescription> {
 
@@ -39,80 +41,69 @@ public class TestDescription extends DescribedEntity implements Comparable<TestD
     private SampleType sampleType;
     private Boolean saveInBank;
     private Boolean doWeDoIt;
+    private List<TestPrice> prices;
 
-    /**
-     * @param resultFactors The resultFactors to set.
-     */
+    @Override
+    public int compareTo(TestDescription o) {
+        return this.getDescription().compareTo(o.getDescription().toString());
+    }
+
+    public BigDecimal currentPrice() throws LabcaseException{
+        Date now = new Date();
+        for (TestPrice price : prices){
+            if (now.after(price.getValidFrom()) && now.before(price.getValidUntil())){
+                return price.getPrice();
+            }
+        }
+        throw new LabcaseException("No existe precio definido para examen");
+    }
+
     public void setResultFactors(List<ResultFactor> resultFactors) {
         this.resultFactors = resultFactors;
     }
 
-    /**
-     * @return Returns the resultFactors.
-     */
     public List<ResultFactor> getResultFactors() {
         return resultFactors;
     }
 
-	/**
-	 * @param assemblyType the assemblyType to set
-	 */
 	public void setAssemblyType(AssemblyType assemblyType) {
 		this.assemblyType = assemblyType;
 	}
 
-	/**
-	 * @return the assemblyType
-	 */
 	public AssemblyType getAssemblyType() {
 		return assemblyType;
 	}
 
-	/**
-	 * @param sampleType the sampleType to set
-	 */
 	public void setSampleType(SampleType sampleType) {
 		this.sampleType = sampleType;
 	}
 
-	/**
-	 * @return the sampleType
-	 */
 	public SampleType getSampleType() {
 		return sampleType;
 	}
 
-	/**
-	 * @param saveInBank the saveInBank to set
-	 */
 	public void setSaveInBank(Boolean saveInBank) {
 		this.saveInBank = saveInBank;
 	}
 
-	/**
-	 * @return the saveInBank
-	 */
 	public Boolean getSaveInBank() {
 		return saveInBank;
 	}
 
-	/**
-	 * @param doWeDoIt the doWeDoIt to set
-	 */
 	public void setDoWeDoIt(Boolean doWeDoIt) {
 		this.doWeDoIt = doWeDoIt;
 	}
 
-	/**
-	 * @return the doWeDoIt
-	 */
 	public Boolean getDoWeDoIt() {
 		return doWeDoIt;
 	}
 
-	@Override
-	public int compareTo(TestDescription o) {
-		return this.getDescription().compareTo(o.getDescription().toString());
-	}
+    public List<TestPrice> getPrices() {
+        return prices;
+    }
+
+    public void setPrices(List<TestPrice> prices) {
+        this.prices = prices;
+    }
 
 }

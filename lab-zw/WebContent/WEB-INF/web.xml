@@ -141,6 +141,7 @@
     <url-pattern>/admin/enterprise.htm</url-pattern>
     <url-pattern>/admin/enterprises.htm</url-pattern>
     <url-pattern>/admin/bill/selecting.htm</url-pattern>
+    <url-pattern>/admin/bill/billed.htm</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>

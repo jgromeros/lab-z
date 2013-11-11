@@ -24,7 +24,7 @@ public class Bill extends Entity {
 	private Enterprise client;
 	private BigDecimal totalBeforeTaxes;
 	private BigDecimal totalAfterTaxes;
-	private List<Test> billedTests;
+	private List<BillDetail> billedDetails;
 
 	public Integer getBillNumber() {
 		return billNumber;
@@ -66,12 +66,12 @@ public class Bill extends Entity {
 		this.totalAfterTaxes = totalAfterTaxes;
 	}
 
-	public List<Test> getBilledTests() {
-		return billedTests;
+	public List<BillDetail> getBilledTests() {
+		return billedDetails;
 	}
 
-	public void setBilledTests(List<Test> billedTests) {
-		this.billedTests = billedTests;
+	public void setBilledDetails(List<BillDetail> billedDetails) {
+		this.billedDetails = billedDetails;
 	}
 
 }

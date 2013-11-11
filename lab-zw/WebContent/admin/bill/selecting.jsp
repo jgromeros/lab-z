@@ -25,10 +25,30 @@
 		            var $div = $('#labcases');
 		               $div.find('input').remove();
 		               $div.find('label').remove();
-		               $.each(responseJson, function(key, value) {
-		                   $('<input type="checkbox" checked="checked">').appendTo($div);
-		                   $('<label>' + key + ': ' + value + '</label>').appendTo($div);
-		                    });
+		               $div.find('td').remove();
+		               $div.find('tr').remove();
+		               var $header_row = $('<tr>').appendTo($div);
+		               $('<th></th>').appendTo($header_row);
+		               $('<th>Caso</th>').appendTo($header_row);
+		               $('<th>Fecha</th>').appendTo($header_row);
+		               $('<th>Remitente</th>').appendTo($header_row);
+		               $('<th>Paciente</th>').appendTo($header_row);
+		               $('<th>Observaciones</th>').appendTo($header_row);
+		               $('<th>Valor</th>').appendTo($header_row);
+		               $('<th>Descuento</th>').appendTo($header_row);
+		               $header_row.appendTo($div);
+		               $.each(responseJson, function() {
+		            	   var $row = $('<tr></tr>');
+		                   $('<td><input type="checkbox" id="selected" name="selected" checked="checked" value="' + this.testId + '"></td>').appendTo($row);
+		                   $('<td>' + this.labcaseCode + '</td>').appendTo($row);
+		                   $('<td>' + this.receptionDate + '</td>').appendTo($row);
+		                   $('<td>' + this.sender + '</td>').appendTo($row);
+		                   $('<td>' + this.patientName + '</td>').appendTo($row);
+		                   $('<td>' + this.comment + '</td>').appendTo($row);
+		                   $('<td>' + this.price + '</td>').appendTo($row);
+		                   $('<td><input type="text" id="test' + this.testId + '" name="test' + this.testId + '" size="8"/></td>').appendTo($row);
+		            	   $row.appendTo($div);
+	                    });
 		            });
 		        });
 		    });
@@ -96,10 +116,10 @@
 									<tr>
 										<td>
 											<table>
-												<tr><td>
+												<tr><td><table>
 													<div id="labcases">
 													</div>
-												</td></tr>
+												</table></td></tr>
 											</table>
 										</td>
 

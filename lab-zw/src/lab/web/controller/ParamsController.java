@@ -28,6 +28,9 @@ public class ParamsController extends LabzController {
 		BillingAction selectBillingAction = new BillingAction(BILL_ACTION_PATH,
 				BillingAction.SELECT);
 		actions.put(selectBillingAction.nameToString(), selectBillingAction);
+        BillingAction saveBillAction = new BillingAction(BILL_ACTION_PATH,
+                BillingAction.SAVE);
+        actions.put(saveBillAction.nameToString(), saveBillAction);
 	}
 
 }

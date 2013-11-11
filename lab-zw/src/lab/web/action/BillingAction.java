@@ -20,6 +20,7 @@ public class BillingAction extends Action {
     private static Logger logger = Logger.getLogger(BillingAction.class);
 
     public static final String SELECT = "selecting";
+    public static final String SAVE = "billed";
 
 	public BillingAction(String actionPath, String action) {
 		super(actionPath, action);
@@ -33,8 +34,12 @@ public class BillingAction extends Action {
         for (String paramName : request.getParameterMap().keySet()){
             logger.debug(paramName + ": " + request.getParameterMap().get(paramName));
         }
-		getModel().put("enterprises", session.
-				createQuery("from Enterprise e order by e.lastName, e.name").list());
+        if (request.getRequestURI().contains(SELECT)){
+    		getModel().put("enterprises", session.
+    				createQuery("from Enterprise e order by e.lastName, e.name").list());
+        } else if (request.getRequestURI().contains(SAVE)){
+            String[] selectedTests = request.getParameterValues("selected");
+        }
         logger.debug(logger.getName() + ": perform finished successfully");
 		return getModel();
 	}

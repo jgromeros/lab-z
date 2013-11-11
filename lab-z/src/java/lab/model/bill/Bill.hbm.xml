@@ -15,9 +15,9 @@
         <property name="totalAfterTaxes" column="total_after_taxes"/>
 		<many-to-one name="client" class="lab.model.enterprise.Enterprise"
 				column="client"/>
- 		<bag name="billedTests" table="test" lazy="false">
-			<key column="invoice"/>
-			<one-to-many class="lab.model.test.Test"/>
+ 		<bag name="billedDetails" table="bill_detail" lazy="false">
+			<key column="bill"/>
+			<one-to-many class="lab.model.bill.BillDetail"/>
 		</bag>
 	</class>
 </hibernate-mapping>
