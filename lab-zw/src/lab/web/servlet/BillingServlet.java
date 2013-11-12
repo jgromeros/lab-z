@@ -41,9 +41,12 @@ public class BillingServlet extends HttpServlet {
         try {
 	        hql.setParameter("begin", df.parse(beginString));
 	        hql.setParameter("end", df.parse(endString));
-        } catch (HibernateException | ParseException e) {
+        } catch (HibernateException e) {
 	        // TODO Auto-generated catch block
 	        e.printStackTrace();
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
         List<BillDetailDto> billDetails = new ArrayList<BillDetailDto>();
         for (Labcase labcase: (List<Labcase>)hql.list()){
