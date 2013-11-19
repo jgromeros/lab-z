@@ -17,7 +17,11 @@
 			<key column="test_description"/>
 			<index column="number_order"/>
 			<one-to-many class="lab.model.test.result.resultfactor.ResultFactor"/>
-		</list>		
+		</list>
 		<many-to-one name="sampleType" class="lab.model.sample.SampleType" column="sample_type"/>
+ 		<bag name="prices" table="prices_by_test_desc" lazy="true">
+			<key column="test_description"/>
+			<one-to-many class="lab.model.test.TestPrice"/>
+		</bag>
 	</class>
 </hibernate-mapping>

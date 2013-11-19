@@ -38,11 +38,15 @@ public class ParamsServlet extends HttpServlet {
             cities.put(place.getId().toString(), place.getName());
         }
         tx.commit();
+        sendJsonResponse(response, cities);
+    }
+
+    private void sendJsonResponse(HttpServletResponse response, Object object) throws IOException {
         String json = null ;
-        json = new Gson().toJson(cities);
+        json = new Gson().toJson(object);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(json);
+        response.getWriter().write(json);    	
     }
 
 }

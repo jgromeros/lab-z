@@ -170,9 +170,12 @@ CREATE TABLE test(
 	id					INTEGER			NOT NULL,
 	animal				INTEGER			/*NOT NULL*/,
 	test_description	INTEGER			NOT NULL,
+	observations		TEXT,
+	invoice				INTEGER,
 	PRIMARY KEY (id),
 	FOREIGN KEY (animal) REFERENCES animal,
-	FOREIGN KEY (test_description) REFERENCES test_description
+	FOREIGN KEY (test_description) REFERENCES test_description,
+	FOREIGN KEY (invoice) REFERENCE invoice
 );
 
 CREATE SEQUENCE sc_assembly_descriptor;
@@ -303,4 +306,17 @@ CREATE TABLE prices_by_test_desc(
     PRIMARY KEY (id),
     FOREIGN KEY (test_description) REFERENCES test_description,
     CHECK (valid_from < valid_until)
+);
+
+CREATE SEQUENCE sc_invoice;
+CREATE TABLE invoice(
+	id					INTEGER			NOT NULL,
+	invoice_number		INTEGER			NOT NULL,
+	invoice_date		DATE			NOT NULL,
+	client				INTEGER			NOT NULL,
+	total_before_taxes	DECIMAL(12,2)	NOT NULL,
+	total_after_taxes	DECIMAL(12,2)	NOT NULL,
+	PRIMARY KEY (id),
+	UNIQUE (invoice_number),
+	FOREIGN KEY (client) REFERENCES enterprise
 );

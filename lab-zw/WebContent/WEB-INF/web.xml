@@ -140,6 +140,8 @@
     <servlet-name>paramsController</servlet-name>
     <url-pattern>/admin/enterprise.htm</url-pattern>
     <url-pattern>/admin/enterprises.htm</url-pattern>
+    <url-pattern>/admin/bill/selecting.htm</url-pattern>
+    <url-pattern>/admin/bill/billed.htm</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -150,5 +152,15 @@
   <servlet-mapping>
     <servlet-name>paramsServlet</servlet-name>
     <url-pattern>/labcase/ciudades.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>billingServlet</display-name>
+    <servlet-name>billingServlet</servlet-name>
+    <servlet-class>lab.web.servlet.BillingServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>billingServlet</servlet-name>
+    <url-pattern>/admin/bill/clientcases.do</url-pattern>
   </servlet-mapping>
 </web-app>
