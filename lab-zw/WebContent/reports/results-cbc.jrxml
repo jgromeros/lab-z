@@ -242,14 +242,14 @@ ORDER BY a.id, rf.number_order, rf._group, rf.id]]>
 					<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="08f27622-e735-47fc-831e-e894540e125f" x="453" y="99" width="101" height="13">
+					<reportElement uuid="08f27622-e735-47fc-831e-e894540e125f" x="465" y="99" width="101" height="13">
 						<printWhenExpression><![CDATA[$F{show_reference_value} == true]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Center"/>
 					<text><![CDATA[Valor de Referencia]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="c90bb6e1-3475-4afb-9c41-cc67c199db67" x="374" y="99" width="76" height="13"/>
+					<reportElement uuid="c90bb6e1-3475-4afb-9c41-cc67c199db67" x="386" y="99" width="76" height="13"/>
 					<textElement textAlignment="Center"/>
 					<text><![CDATA[Valor Relativo]]></text>
 				</staticText>
@@ -320,7 +320,11 @@ ORDER BY a.id, rf.number_order, rf._group, rf.id]]>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="8b53a4f0-7e8c-4f10-a769-b258e1caab45" x="380" y="2" width="70" height="13"/>
+				<reportElement uuid="8b53a4f0-7e8c-4f10-a769-b258e1caab45" x="380" y="2" width="90" height="13">
+					<printWhenExpression><![CDATA[$F{min_rel_ref_value} == null || (
+new BigDecimal($F{relative_value}).compareTo($F{min_rel_ref_value}) >= 0 &&
+new BigDecimal($F{relative_value}).compareTo($F{max_rel_ref_value}) <= 0)]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
@@ -345,7 +349,7 @@ new BigDecimal($F{string_value}).compareTo($F{max_abs_ref_value}) <= 0)]]></prin
 				<textFieldExpression><![CDATA[$F{min_abs_ref_value}.toPlainString().concat(" - ").concat($F{max_abs_ref_value}.toPlainString())]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="a9014f23-d3b1-4472-af07-a8cb68fbc7a1" x="455" y="2" width="100" height="13"/>
+				<reportElement uuid="a9014f23-d3b1-4472-af07-a8cb68fbc7a1" x="472" y="2" width="100" height="13"/>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
@@ -361,6 +365,17 @@ new BigDecimal($F{string_value}).compareTo($F{max_abs_ref_value}) > 0)]]></print
 					<font size="9" isUnderline="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{string_value}.concat(" ").concat($F{unit}==null ? "" : $F{unit})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c66695f5-cdac-4eed-a24c-2319bcc1c33d" x="380" y="2" width="90" height="13" forecolor="#FA0505">
+					<printWhenExpression><![CDATA[$F{min_rel_ref_value} != null && (
+new BigDecimal($F{relative_value}).compareTo($F{min_rel_ref_value}) < 0 ||
+new BigDecimal($F{relative_value}).compareTo($F{max_rel_ref_value}) > 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="9" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{relative_value}.concat("%")]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
