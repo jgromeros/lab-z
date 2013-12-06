@@ -31,7 +31,7 @@
 		               $('<th></th>').appendTo($header_row);
 		               $('<th>Caso</th>').appendTo($header_row);
 		               $('<th>Fecha</th>').appendTo($header_row);
-		               $('<th>Remitente</th>').appendTo($header_row);
+		               $('<th>Prueba</th>').appendTo($header_row);
 		               $('<th>Paciente</th>').appendTo($header_row);
 		               $('<th>Observaciones</th>').appendTo($header_row);
 		               $('<th>Valor</th>').appendTo($header_row);
@@ -42,9 +42,9 @@
 		                   $('<td><input type="checkbox" id="selected" name="selected" checked="checked" value="' + this.testId + '"></td>').appendTo($row);
 		                   $('<td>' + this.labcaseCode + '</td>').appendTo($row);
 		                   $('<td>' + this.receptionDate + '</td>').appendTo($row);
-		                   $('<td>' + this.sender + '</td>').appendTo($row);
+		                   $('<td>' + this.testDescription + '</td>').appendTo($row);
 		                   $('<td>' + this.patientName + '</td>').appendTo($row);
-		                   $('<td>' + this.comment + '</td>').appendTo($row);
+		                   $('<td class="limited">' + this.comment + '</td>').appendTo($row);
 		                   $('<td>' + this.price + '</td>').appendTo($row);
 		                   $('<td><input type="text" id="test' + this.testId + '" name="test' + this.testId + '" size="8"/></td>').appendTo($row);
 		            	   $row.appendTo($div);
@@ -113,18 +113,17 @@
 										</td>
 									</tr>
 
-									<tr>
-										<td>
-											<table>
-												<tr><td><table>
-													<div id="labcases">
-													</div>
-												</table></td></tr>
-											</table>
-										</td>
-
-									</tr>
 								</table></td></tr>
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <tr><td><table>
+                                                <div id="labcases">
+                                                </div>
+                                            </table></td></tr>
+                                        </table>
+                                    </td>
+                                </tr>
 								<tr align="center">
 									<td>
 										<input type="submit" id="generateAction" name="action" value="Generar"/>

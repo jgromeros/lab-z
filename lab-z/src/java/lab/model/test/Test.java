@@ -12,19 +12,23 @@ import lab.model.person.LabProfessional;
 import lab.model.test.result.Result;
 
 /**
- * @author JuanGa
- * This class saves each test that have been applied
- *
- * TODO
+ * This class saves each test that have been applied. It saves also the results for the test.
+ * It can only have one of two status: 'R' for registered and 'C' for cancelled
+ * @author Juano
  */
 public class Test extends Entity {
 
     private static final long serialVersionUID = 1L;
-    
+
+    public static final String REGISTERED = "R";
+    public static final String CANCELLED = "C";
+
     private TestDescription testDescription;
     private List<Result> results;
     private Animal animal;
     private String observations;
+    private String status;
+    private Boolean applyDiscount;
 
     public Test(){
     	results = new ArrayList<Result>();
@@ -85,5 +89,21 @@ public class Test extends Entity {
 	public void setObservations(String observations) {
 		this.observations = observations;
 	}
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Boolean getApplyDiscount() {
+        return applyDiscount;
+    }
+
+    public void setApplyDiscount(Boolean applyDiscount) {
+        this.applyDiscount = applyDiscount;
+    }
 
 }

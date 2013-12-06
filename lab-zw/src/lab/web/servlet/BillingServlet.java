@@ -55,10 +55,10 @@ public class BillingServlet extends HttpServlet {
                     BillDetailDto billDetail = new BillDetailDto();
                     billDetail.setLabcaseCode(labcase.getCode());
                     billDetail.setComment(labcase.getAnalysisPurpose());
-                    billDetail.setReceptionDate(labcase.getReceptionDate());
-                    billDetail.setSender(labcase.getSender());
+                    billDetail.setReceptionDate(df.format(labcase.getReceptionDate()));
                     billDetail.setPatientName(animal.getName());
                     billDetail.setTestId(test.getId());
+                    billDetail.setTestDescription(test.getTestDescription().getDescription());
                     billDetail.setPrice(test.getTestDescription().currentPrice());
                     billDetails.add(billDetail);
                 }

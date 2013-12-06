@@ -42,6 +42,7 @@ public class TypedResultsAction extends Action {
 	public static final String CASESELECTED = "caseresult";
 	public static final String TESTSELECTED = "testresult";
 	public static final String REGISTERED = "registered";
+    public static final String CANCEL = "cancel";
 
 	public TypedResultsAction(String actionPath, String action) {
 		super(actionPath, action);
@@ -76,10 +77,16 @@ public class TypedResultsAction extends Action {
         for (String paramName : request.getParameterMap().keySet()){
             logger.debug(paramName + ": " + request.getParameterMap().get(paramName));
         }
-		Labcase labcase = (Labcase) session.get(Labcase.class, Long.parseLong(request.getParameter("id")));
+		Labcase labcase = (Labcase) session.get(Labcase.class,
+		        Long.parseLong(request.getParameter("id")));
 		request.getSession().setAttribute("labcase", labcase);
 		List<Animal> animals = labcase.getAnimals();
 		Animal animal = animals.get(0);
+		if (CANCEL.equals(request.getParameter("action"))) {
+	        Test test = (Test) session.get(Test.class,
+	                Long.parseLong(request.getParameter("test")));
+	        test.setStatus(Test.CANCELLED);
+		}
 		for (Test test : animal.getTests()){
 			Hibernate.initialize(test.getTestDescription());
 		}
