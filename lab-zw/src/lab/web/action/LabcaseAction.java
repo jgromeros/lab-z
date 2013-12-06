@@ -189,6 +189,8 @@ public class LabcaseAction extends Action {
         if (testStrings == null || testStrings.length < 1){
             throw new LabcaseException("Debe seleccionar al menos un test");
         }
+        String[] counterSampleStrings = request.getParameterValues("countersample");
+        String[] discountStrings = request.getParameterValues("discount");
     	if (nextAnimalIndex(request.getParameter("nextAnimalIndex")) == 0){
     		labcaseHelper.initializeTests(session, labcase, testStrings);
     	}

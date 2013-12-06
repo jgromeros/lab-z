@@ -11,6 +11,12 @@
         <link rel="stylesheet" href="/lab-zw/css/lab-z.css" type="text/css" />
         <link rel="stylesheet" href="/lab-zw/css/capas.css" type="text/css" />
         <link rel="stylesheet" href="/lab-zw/css/menu.css" type="text/css" />
+        <script src="/lab-zw/js/jquery-1.10.2.min.js"></script>
+        <script>
+            $(document).ready(function() {
+            	
+            }
+        </script>
         <title>Lab-z</title>
     </head>
     <body>
@@ -28,7 +34,12 @@
 						</tr>
 						<tr><td><table align="center">
 							<tr>
-								<td>Examen</td>
+								<th>Examen</th>
+                                <th>Contramuestra</th>
+                                <th>Descuento</th>
+                                <th>Examen</th>
+                                <th>Contramuestra</th>
+                                <th>Descuento</th>
 							</tr>
 							<c:set var="i" value="1"/>
 							<c:forEach var="td" items="${model.testDescriptions }">
@@ -55,6 +66,12 @@
 											</c:otherwise>
 										</c:choose>
 									</td>
+                                    <td align="center">
+                                        <input type="checkbox" name="countersample" value="${td.id }"/>
+                                    </td>
+                                    <td align="center">
+                                        <input type="checkbox" name="discount" value="${td.id }"/>
+                                    </td>
 								<c:if test="${i%2 != 0}">
 								</tr>
 								</c:if>

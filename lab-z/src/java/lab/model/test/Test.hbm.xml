@@ -11,6 +11,7 @@
 		</id>
 		<property name="observations" column="observations"/>
         <property name="status" column="status"/>
+        <property name="counterSample" column="counter_sample"/>
         <property name="applyDiscount" column="apply_discount"/>
 		<many-to-one name="testDescription" class="lab.model.test.TestDescription"
 				column="test_description"/>

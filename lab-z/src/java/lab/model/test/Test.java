@@ -28,6 +28,7 @@ public class Test extends Entity {
     private Animal animal;
     private String observations;
     private String status;
+    private Boolean counterSample;
     private Boolean applyDiscount;
 
     public Test(){
@@ -35,7 +36,8 @@ public class Test extends Entity {
     }
 
     /**
-     * Metodo para retornar el numero de resultados, pues se evalua esto para permitir impresion de reportes.
+     * Metodo para retornar el numero de resultados, pues se evalua esto para permitir
+     * impresion de reportes.
      * @return
      */
     public int getResultsSize() {
@@ -96,6 +98,14 @@ public class Test extends Entity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Boolean getCounterSample() {
+        return counterSample;
+    }
+
+    public void setCounterSample(Boolean counterSample) {
+        this.counterSample = counterSample;
     }
 
     public Boolean getApplyDiscount() {
