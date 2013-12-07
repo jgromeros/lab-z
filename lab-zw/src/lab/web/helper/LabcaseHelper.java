@@ -61,6 +61,7 @@ public class LabcaseHelper {
 	    			Test test = new Test();
 	    			test.setTestDescription((TestDescription)session.get(TestDescription.class,
 	    					Long.parseLong(testStrings[i])));
+	    			test.setStatus(Test.REGISTERED);
 	               	animal.getTests().add(test);
     			}
     		}

@@ -5,3 +5,7 @@ td.title{
 	background-color: navy;
 	color: white;
 }
+
+td.limited {
+	width: 30%;
+}

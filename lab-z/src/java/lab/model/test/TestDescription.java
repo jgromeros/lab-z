@@ -15,6 +15,7 @@ import lab.model.DescribedEntity;
 import lab.model.assembly.AssemblyType;
 import lab.model.sample.SampleType;
 import lab.model.test.result.resultfactor.ResultFactor;
+import lab.util.LabcaseUtils;
 
 /**
  * @author  JuanGa
@@ -48,6 +49,11 @@ public class TestDescription extends DescribedEntity implements Comparable<TestD
         return this.getDescription().compareTo(o.getDescription().toString());
     }
 
+    /**
+     * Returns the price that is currently valid
+     * @return
+     * @throws LabcaseException if this TestDescription do not has a price currently
+     */
     public BigDecimal currentPrice() throws LabcaseException{
         Date now = new Date();
         for (TestPrice price : prices){
@@ -55,7 +61,8 @@ public class TestDescription extends DescribedEntity implements Comparable<TestD
                 return price.getPrice();
             }
         }
-        throw new LabcaseException("No existe precio definido para examen");
+        throw new LabcaseException(LabcaseUtils.createMessage(
+                "No existe precio definido para examen {0}", this.getDescription()));
     }
 
     public void setResultFactors(List<ResultFactor> resultFactors) {

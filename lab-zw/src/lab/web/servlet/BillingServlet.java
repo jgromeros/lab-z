@@ -41,9 +41,12 @@ public class BillingServlet extends HttpServlet {
         try {
 	        hql.setParameter("begin", df.parse(beginString));
 	        hql.setParameter("end", df.parse(endString));
-        } catch (HibernateException | ParseException e) {
+        } catch (HibernateException e) {
 	        // TODO Auto-generated catch block
 	        e.printStackTrace();
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
         List<BillDetailDto> billDetails = new ArrayList<BillDetailDto>();
         for (Labcase labcase: (List<Labcase>)hql.list()){
@@ -52,10 +55,10 @@ public class BillingServlet extends HttpServlet {
                     BillDetailDto billDetail = new BillDetailDto();
                     billDetail.setLabcaseCode(labcase.getCode());
                     billDetail.setComment(labcase.getAnalysisPurpose());
-                    billDetail.setReceptionDate(labcase.getReceptionDate());
-                    billDetail.setSender(labcase.getSender());
+                    billDetail.setReceptionDate(df.format(labcase.getReceptionDate()));
                     billDetail.setPatientName(animal.getName());
                     billDetail.setTestId(test.getId());
+                    billDetail.setTestDescription(test.getTestDescription().getDescription());
                     billDetail.setPrice(test.getTestDescription().currentPrice());
                     billDetails.add(billDetail);
                 }

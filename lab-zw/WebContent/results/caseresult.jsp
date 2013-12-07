@@ -38,20 +38,30 @@
 		<c:forEach var="test" items="${animal1.tests }">
             <tr>
             	<td><c:out value="${test.testDescription.description }"/></td>
-                <c:if test="${labcase.status == 'S' || labcase.status == 'W' }">
+                <c:if test="${test.status != 'C' && (labcase.status == 'S' || labcase.status == 'W') }">
     				<td>
     					<a href="testresult.htm?testdesc=<c:out value="${test.testDescription.id }"/>">
     						<img alt="Editar" src="../img/edit.png" width="16" height="16"/>
     					</a>
     				</td>
     			</c:if>
-    			<c:if test="${(labcase.status == 'W' || labcase.status == 'F') && test.resultsSize > 0 && test.labProfessional != null}">
+    			<c:if test="${test.status != 'C' && (labcase.status == 'W' || labcase.status == 'F') && test.resultsSize > 0 && test.labProfessional != null}">
     				<td>
     					<a href="printresults.htm?id=${labcase.id }&test=${test.id }">
     						<img alt="Imprimir" src="../img/print.png" width="16" height="16"/>
     					</a>
     				</td>
     			</c:if>
+    			<c:if test="${(labcase.status != 'F' && test.status != 'C')}">
+    				<td>
+    					<a href="caseresult.htm?action=cancel&id=${labcase.id }&test=${test.id }">
+    						<img alt="Cancelar" src="../img/cancel.png" width="16" height="16"/>
+    					</a>
+    				</td>
+    			</c:if>
+                <c:if test="${test.status == 'C'}">
+                    <td>Cancelado</td>
+                </c:if>
             </tr>
 		</c:forEach>
 	</table>

@@ -1,14 +1,13 @@
 package lab.dto;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 public class BillDetailDto {
 
     private String labcaseCode;
     private Long testId;
-    private Date receptionDate;
-    private String sender;
+    private String testDescription;
+    private String receptionDate;
     private String patientName;
     private BigDecimal price;
     private String comment;
@@ -29,20 +28,20 @@ public class BillDetailDto {
         this.testId = testId;
     }
 
-    public Date getReceptionDate() {
+    public String getTestDescription() {
+        return testDescription;
+    }
+
+    public void setTestDescription(String testDescription) {
+        this.testDescription = testDescription;
+    }
+
+    public String getReceptionDate() {
         return receptionDate;
     }
 
-    public void setReceptionDate(Date receptionDate) {
+    public void setReceptionDate(String receptionDate) {
         this.receptionDate = receptionDate;
-    }
-
-    public String getSender() {
-        return sender;
-    }
-
-    public void setSender(String sender) {
-        this.sender = sender;
     }
 
     public String getPatientName() {
