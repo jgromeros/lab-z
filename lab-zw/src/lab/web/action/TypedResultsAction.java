@@ -81,12 +81,18 @@ public class TypedResultsAction extends Action {
 		        Long.parseLong(request.getParameter("id")));
 		request.getSession().setAttribute("labcase", labcase);
 		List<Animal> animals = labcase.getAnimals();
-		Animal animal = animals.get(0);
 		if (CANCEL.equals(request.getParameter("action"))) {
-	        Test test = (Test) session.get(Test.class,
-	                Long.parseLong(request.getParameter("test")));
-	        test.setStatus(Test.CANCELLED);
+	        TestDescription td = (TestDescription) session.get(TestDescription.class,
+	                Long.parseLong(request.getParameter("testdesc")));
+	        for (Animal animal : animals){
+	            for (Test test : animal.getTests()){
+	                if (td.getId().equals(test.getTestDescription().getId())){
+	                    test.setStatus(Test.CANCELLED);
+	                }
+	            }
+	        }
 		}
+        Animal animal = animals.get(0);
 		for (Test test : animal.getTests()){
 			Hibernate.initialize(test.getTestDescription());
 		}

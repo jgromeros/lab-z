@@ -54,7 +54,7 @@
     			</c:if>
     			<c:if test="${(labcase.status != 'F' && test.status != 'C')}">
     				<td>
-    					<a href="caseresult.htm?action=cancel&id=${labcase.id }&test=${test.id }">
+    					<a href="caseresult.htm?action=cancel&id=${labcase.id }&testdesc=${test.testDescription.id }">
     						<img alt="Cancelar" src="../img/cancel.png" width="16" height="16"/>
     					</a>
     				</td>

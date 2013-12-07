@@ -62,6 +62,8 @@ public class LabcaseHelper {
 	    			test.setTestDescription((TestDescription)session.get(TestDescription.class,
 	    					Long.parseLong(testStrings[i])));
 	    			test.setStatus(Test.REGISTERED);
+	    			test.setApplyDiscount(Boolean.FALSE);
+	    			test.setCounterSample(Boolean.FALSE);
 	               	animal.getTests().add(test);
     			}
     		}
