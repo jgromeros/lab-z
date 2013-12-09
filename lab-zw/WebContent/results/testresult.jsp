@@ -63,7 +63,16 @@
 			</tr>
 			<c:forEach var="animal" items="${labcase.animals }">
 				<c:forEach var="test" items="${animal.tests }">
-					<c:if test="${test.testDescription.id == model.testdesc}">
+                    <c:if test="${test.testDescription.id == model.testdesc && test.status == 'C'}">
+                        <tr><td><table border="1">
+                            <tr>
+                                <th>
+                                    <c:out value="${animal.name }"/>&nbsp Cancelado
+                                </th>
+                            </tr>
+                        </table></td></tr>
+                    </c:if>
+					<c:if test="${test.testDescription.id == model.testdesc && test.status != 'C'}">
 						<c:set var="testForLabProfessional" value="${test }"/>
 						<tr><td><table border="1">
 							<tr>
