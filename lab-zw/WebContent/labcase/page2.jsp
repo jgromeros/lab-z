@@ -35,10 +35,8 @@
 						<tr><td><table align="center">
 							<tr>
 								<th>Examen</th>
-                                <th>Contramuestra</th>
                                 <th>Descuento</th>
                                 <th>Examen</th>
-                                <th>Contramuestra</th>
                                 <th>Descuento</th>
 							</tr>
 							<c:set var="i" value="1"/>
@@ -66,9 +64,6 @@
 											</c:otherwise>
 										</c:choose>
 									</td>
-                                    <td align="center">
-                                        <input type="checkbox" name="countersample" value="${td.id }"/>
-                                    </td>
                                     <td align="center">
                                         <input type="checkbox" name="discount" value="${td.id }"/>
                                     </td>

@@ -67,7 +67,7 @@
                         <tr><td><table border="1">
                             <tr>
                                 <th>
-                                    <c:out value="${animal.name }"/>&nbsp Cancelado
+                                    <c:out value="${animal.name }"/>&nbsp; &nbsp; Cancelado
                                 </th>
                             </tr>
                         </table></td></tr>

@@ -33,11 +33,14 @@
 						</tr>
 						<tr><td><table align="center">
 							<tr>
-			    				<td>Identificación</td>
-			    				<td>Sexo</td>
-			    				<td>Edad</td>
-			    				<td>Raza</td>
-			    				<td>Observaciones</td>
+			    				<th>Identificación</th>
+			    				<th>Sexo</th>
+			    				<th>Edad</th>
+			    				<th>Raza</th>
+			    				<th>Observaciones</th>
+                                <c:forEach  var="test" items="${labcase.animals[0].tests }">
+                                    <td><c:out value="${test.testDescription.description }"/></td>
+                                </c:forEach>
 			    			</tr>
 							<c:forEach var="i" begin="${model.nextAnimalIndex }" end="${model.endAnimalIndex }">
 				    			<tr>
@@ -89,8 +92,11 @@
 										</select>
 									</td>
 									<td>
-										<textarea name="notes" rows="1" cols="50"><c:out value="${labcase.animals[i].observations }"/></textarea>
+										<textarea name="notes" rows="1" cols="30"><c:out value="${labcase.animals[i].observations }"/></textarea>
 									</td>
+                                    <c:forEach  var="test" items="${labcase.animals[i].tests }">
+                                        <td><input type="checkbox" name="countersample"></td>
+                                    </c:forEach>
 								</tr>
 							</c:forEach>
 						</table></td></tr>

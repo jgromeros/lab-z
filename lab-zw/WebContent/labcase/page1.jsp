@@ -68,7 +68,8 @@
 										</c:forEach>
 									</select>
 									<a href="../admin/enterprise.htm">
-										<img alt="Agregar" src="../img/add.png" width="16" height="16"/>
+										<img alt="Agregar" title="Agregar"
+                                                src="../img/add.png" width="16" height="16"/>
 									</a>
 								</td>
 							</tr>
