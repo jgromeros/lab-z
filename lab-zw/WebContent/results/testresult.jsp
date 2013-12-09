@@ -11,11 +11,39 @@
         <link rel="stylesheet" href="/lab-zw/css/lab-z.css" type="text/css" />
         <link rel="stylesheet" href="/lab-zw/css/capas.css" type="text/css" />
         <link rel="stylesheet" href="/lab-zw/css/menu.css" type="text/css" />
+        <link rel="stylesheet" href="/lab-zw/css/jquery-ui.css" type="text/css" />
+        <script src="/lab-zw/js/jquery-1.10.2.min.js"></script>
+        <script src="/lab-zw/js/jquery-ui.min.js"></script>
 		<script src="/lab-zw/js/jquery.validate.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $( "#dialog-confirm" ).dialog({
+                    resizable: false,
+                    height:140,
+                    modal: true,
+                    autoOpen: false,
+                });
+
+                $( ".cancel" ).click(function(e) {
+    	            e.preventDefault();
+    	            var hrefAttribute = $(this).attr("href");
+    	        	$( "#dialog-confirm" ).dialog({
+                        buttons: {
+                            "Cancelar Prueba": function() {
+                            	window.location.href = hrefAttribute;
+                            },
+                            "No cancelar": function() {
+                              $( this ).dialog( "close" );
+                            }
+                          }
+    	        	});
+            	  	$( "#dialog-confirm" ).dialog( "open" );
+            	});
+	        });
+        </script>
 		<script>
 		    $("#resultsForm").validate();
 		</script>
-
         <title>Lab-z</title>
     </head>
     <body>
@@ -24,6 +52,9 @@
 <jsp:directive.include file="../common/menu.jspf"/>
 <div class="layerder">
 	<form id="resultsForm" action="registered.htm" method="post">
+        <div id="dialog-confirm" title="Empty the recycle bin?">
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Está seguro que desea cancelar esta prueba? No podrá deshacer este cambio</p>
+        </div>
 		<input type="hidden" name="testdesc" value="${model.testdesc }"/>
 		<h3><c:out value="${model.testDescription }"/></h3>
 		<table>
@@ -36,7 +67,12 @@
 						<c:set var="testForLabProfessional" value="${test }"/>
 						<tr><td><table border="1">
 							<tr>
-								<th><c:out value="${animal.name }"/></th>
+								<th>
+                                    <c:out value="${animal.name }"/>
+                                    <a class="cancel" href="testresult.htm?action=cancel&id=${test.id }&testdesc=${test.testDescription.id }">
+                						<img alt="Cancelar" src="../img/cancel.png" width="16" height="16"/>
+    					            </a>
+                                </th>
 							</tr>
 							<tr>
 								<td colspan="2">

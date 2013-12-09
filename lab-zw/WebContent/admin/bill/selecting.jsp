@@ -27,7 +27,8 @@
 		               $div.find('label').remove();
 		               $div.find('td').remove();
 		               $div.find('tr').remove();
-		               var $header_row = $('<tr>').appendTo($div);
+		               var $cases_table = $('<table id="cases_table">').appendTo($div);
+		               var $header_row = $('<tr>').appendTo($cases_table);
 		               $('<th></th>').appendTo($header_row);
 		               $('<th>Caso</th>').appendTo($header_row);
 		               $('<th>Fecha</th>').appendTo($header_row);
@@ -36,7 +37,7 @@
 		               $('<th>Observaciones</th>').appendTo($header_row);
 		               $('<th>Valor</th>').appendTo($header_row);
 		               $('<th>Descuento</th>').appendTo($header_row);
-		               $header_row.appendTo($div);
+		               $header_row.appendTo($cases_table);
 		               $.each(responseJson, function() {
 		            	   var $row = $('<tr></tr>');
 		                   $('<td><input type="checkbox" id="selected" name="selected" checked="checked" value="' + this.testId + '"></td>').appendTo($row);
@@ -47,8 +48,9 @@
 		                   $('<td class="limited">' + this.comment + '</td>').appendTo($row);
 		                   $('<td>' + this.price + '</td>').appendTo($row);
 		                   $('<td><input type="text" id="test' + this.testId + '" name="test' + this.testId + '" size="8"/></td>').appendTo($row);
-		            	   $row.appendTo($div);
+		            	   $row.appendTo($cases_table);
 	                    });
+		    		    $("#cases_table tr:even").css("background-color", "#EEEEEE");
 		            });
 		        });
 		    });
@@ -62,7 +64,6 @@
 		<script>
 		    $("#billingForm").validate();
 		</script>
-
         <title>Lab-z</title>
     </head>
     <body>
@@ -117,10 +118,8 @@
                                 <tr>
                                     <td>
                                         <table>
-                                            <tr><td><table>
-                                                <div id="labcases">
-                                                </div>
-                                            </table></td></tr>
+                                            <div id="labcases">
+                                            </div>
                                         </table>
                                     </td>
                                 </tr>

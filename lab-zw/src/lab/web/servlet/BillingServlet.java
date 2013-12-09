@@ -52,23 +52,21 @@ public class BillingServlet extends HttpServlet {
         for (Labcase labcase: (List<Labcase>)hql.list()){
             for (Animal animal : labcase.getAnimals()){
                 for (Test test : animal.getTests()){
-                    BillDetailDto billDetail = new BillDetailDto();
-                    billDetail.setLabcaseCode(labcase.getCode());
-                    billDetail.setComment(labcase.getAnalysisPurpose());
-                    billDetail.setReceptionDate(df.format(labcase.getReceptionDate()));
-                    billDetail.setPatientName(animal.getName());
-                    billDetail.setTestId(test.getId());
-                    billDetail.setTestDescription(test.getTestDescription().getDescription());
-                    billDetail.setPrice(test.getTestDescription().currentPrice());
-                    billDetails.add(billDetail);
+                    if (!Test.CANCELLED.equals(test.getStatus())){
+                        BillDetailDto billDetail = new BillDetailDto();
+                        billDetail.setLabcaseCode(labcase.getCode());
+                        billDetail.setComment(labcase.getAnalysisPurpose());
+                        billDetail.setReceptionDate(df.format(labcase.getReceptionDate()));
+                        billDetail.setPatientName(animal.getName());
+                        billDetail.setTestId(test.getId());
+                        billDetail.setTestDescription(test.getTestDescription().getDescription());
+                        billDetail.setPrice(test.getTestDescription().currentPrice());
+                        billDetails.add(billDetail);
+                    }
                 }
             }
         }
-//        Map<String, String> labcasesMap = new HashMap<String, String>();
-//        for (Labcase labcase: (List<Labcase>)hql.list()){
-//        	labcasesMap.put(labcase.getCode(), labcase.getSender());
-//        }
-//        tx.commit();
+        tx.commit();
         sendJsonResponse(response, billDetails);
     }
 

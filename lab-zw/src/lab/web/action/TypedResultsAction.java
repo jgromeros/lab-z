@@ -110,6 +110,11 @@ public class TypedResultsAction extends Action {
             logger.debug(paramName + ": " + request.getParameterMap().get(paramName));
         }
 		getModel().put("testdesc", Long.parseLong(request.getParameter("testdesc")));
+        if (CANCEL.equals(request.getParameter("action"))) {
+            cancelIndividualTest(session, Long.parseLong(request.getParameter("id")));
+            logger.debug("loadTest finished successfully");
+            return;
+        }
 		List<LabProfessional> labpros = session.createQuery("from LabProfessional lp where status = 'A'").list();
 		getModel().put("labpros", labpros);
 		getModel().put("techdirectors", selectTechDirectors(labpros));
@@ -282,4 +287,11 @@ public class TypedResultsAction extends Action {
 		}
 
 	}
+
+	private void cancelIndividualTest(Session session, Long id) {
+        Test test = (Test) session.get(Test.class, id);
+        test.setStatus(Test.CANCELLED);
+        session.update(test);
+	}
+
 }
