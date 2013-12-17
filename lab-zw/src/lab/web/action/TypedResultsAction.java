@@ -67,8 +67,8 @@ public class TypedResultsAction extends Action {
 	}
 
 	/**
-	 * Method to show the selected labcase. It shows the tests to the Model, so the user can select which
-	 * result to fill in this run. 
+	 * Method to show the selected labcase. It shows the tests to the Model, so the user can
+	 * select which result to fill in this run. 
 	 * @param request
 	 * @param session
 	 */
@@ -114,11 +114,13 @@ public class TypedResultsAction extends Action {
             cancelIndividualTest(session, Long.parseLong(request.getParameter("id")));
             logger.debug("loadTest finished successfully");
         }
-		List<LabProfessional> labpros = session.createQuery("from LabProfessional lp where status = 'A'").list();
+		List<LabProfessional> labpros =
+		        session.createQuery("from LabProfessional lp where status = 'A'").list();
 		getModel().put("labpros", labpros);
 		getModel().put("techdirectors", selectTechDirectors(labpros));
 		Test test = null;
-		Labcase l = (Labcase) session.get(Labcase.class, ((Labcase)request.getSession().getAttribute("labcase")).getId());
+		Labcase l = (Labcase) session.get(Labcase.class,
+		        ((Labcase)request.getSession().getAttribute("labcase")).getId());
 		Boolean showSaveButton = Boolean.FALSE;
 		for (Animal animal : l.getAnimals()){
 			for (Test t : animal.getTests()){
@@ -134,11 +136,14 @@ public class TypedResultsAction extends Action {
 						Collections.sort(test.getResults());
 						for (Result result : test.getResults()){
 							if (result.getResultFactor().getId() == 64){//Leucocitos
-								leucocitos = result.getValue() == null ? null : Double.parseDouble(result.getValue());
+								leucocitos = result.getValue() == null ? null :
+								        Double.parseDouble(result.getValue());
 							}
-							if (result.getResultFactor().getComputedValue() == true && result.getResultFactor().getCalculated() == true
-									&& result.getValue() != null){
-								result.setRelativeValue("" + ((Double.parseDouble(result.getValue()) * 100)/ leucocitos));
+							if (result.getResultFactor().getComputedValue() == true &&
+							        result.getResultFactor().getCalculated() == true &&
+							        result.getValue() != null){
+								result.setRelativeValue("" + ((Double.
+								        parseDouble(result.getValue()) * 100) / leucocitos));
 								result.setValue(result.getValue());
 							}
 						}
@@ -149,7 +154,8 @@ public class TypedResultsAction extends Action {
 		getModel().put("showSaveButton", showSaveButton);
 		getModel().put("testDescription", test.getTestDescription().getDescription());
 		List<ReferenceValue> referenceValues = new ArrayList<ReferenceValue>();
-		Query hql = session.createQuery("from ReferenceValue rv where rv.resultFactor = :resultFactor and specie = :specie");
+		Query hql = session.createQuery("from ReferenceValue rv " +
+				"where rv.resultFactor = :resultFactor and specie = :specie");
 		hql.setParameter("specie", l.getAnimals().get(0).getRace().getSpecie());
 		for (ResultFactor rf : test.getTestDescription().getResultFactors()){
 			hql.setParameter("resultFactor", rf);
@@ -186,7 +192,8 @@ public class TypedResultsAction extends Action {
 							Result result = new Result();
 							result.setResultFactor(resultFactor);
 							result.setResultDate(new Date());
-							result.setValue(request.getParameter("test" + test.getId() + "factor" + resultFactor.getId()));
+							result.setValue(request.getParameter("test" + test.getId() +
+							        "factor" + resultFactor.getId()));
 							session.save(result);
 							results.add(result);
 						}
@@ -197,8 +204,10 @@ public class TypedResultsAction extends Action {
 						double hemoglobina = 0;
 						for (Result result : results){
 							if (test.getTestDescription().getId() == 57){//Cuadro hematico
-								if (!result.getResultFactor().getComputedValue() && !result.getResultFactor().getCalculated()){
-									result.setValue(request.getParameter("test" + test.getId() + "factor" + result.getResultFactor().getId()));
+								if (!result.getResultFactor().getComputedValue() &&
+								        !result.getResultFactor().getCalculated()){
+									result.setValue(request.getParameter("test" + test.getId() +
+									        "factor" + result.getResultFactor().getId()));
 									if (result.getResultFactor().getId() == 64){//Leucocitos
 										leucocitos = Double.parseDouble(result.getValue());
 									} else if (result.getResultFactor().getId() == 58){//Hematies
@@ -224,21 +233,30 @@ public class TypedResultsAction extends Action {
 						//Iteracion para los valores calculados
 						if (test.getTestDescription().getId() == 57){//Cuadro hematico
 							for (Result result : results){
-								if (result.getResultFactor().getCalculated() && !result.getResultFactor().getComputedValue()){
+								if (result.getResultFactor().getCalculated() &&
+								        !result.getResultFactor().getComputedValue()){
 									if (result.getResultFactor().getId() == 61){//VCM
-										BigDecimal valor = new BigDecimal((hematocrito * 10)/hematies, new MathContext(4));
+										BigDecimal valor = new BigDecimal(
+										        (hematocrito * 10)/hematies, new MathContext(4));
 										result.setValue(valor.toPlainString());
 									} else if (result.getResultFactor().getId() == 62){//HCM
-										BigDecimal valor = new BigDecimal((hemoglobina * 10)/hematies, new MathContext(4));
+										BigDecimal valor = new BigDecimal(
+										        (hemoglobina * 10)/hematies, new MathContext(4));
 										result.setValue(valor.toPlainString());
 									} else if (result.getResultFactor().getId() == 63){//CCMH
-										BigDecimal valor = new BigDecimal((hemoglobina * 100)/hematocrito, new MathContext(4));
+										BigDecimal valor = new BigDecimal(
+										        (hemoglobina * 100)/hematocrito, new MathContext(4));
 										result.setValue(valor.toPlainString());
 									}
-								} else if (result.getResultFactor().getCalculated() && result.getResultFactor().getComputedValue()){
-									result.setRelativeValue(request.getParameter("test" + test.getId() + "relativefactor" + result.getResultFactor().getId()));
-									BigDecimal valor = new BigDecimal(result.getRelativeValue(), new MathContext(4));
-									valor = (valor.multiply(new BigDecimal(leucocitos))).divide(new BigDecimal(100), new MathContext(4));
+								} else if (result.getResultFactor().getCalculated() &&
+								        result.getResultFactor().getComputedValue()){
+									result.setRelativeValue(request.getParameter("test" +
+									        test.getId() + "relativefactor" +
+									        result.getResultFactor().getId()));
+									BigDecimal valor = new BigDecimal(result.getRelativeValue(),
+									        new MathContext(4));
+									valor = (valor.multiply(new BigDecimal(leucocitos))).
+									        divide(new BigDecimal(100), new MathContext(4));
 									result.setValue(valor.toPlainString());
 								}
 								session.saveOrUpdate(result);
@@ -272,7 +290,8 @@ public class TypedResultsAction extends Action {
 	}
 
 	private void updateLabcaseData(HttpServletRequest request, Session session, Labcase labcase) {
-		if (request.getParameter("observations")!= null && !request.getParameter("observations").isEmpty()){
+		if (request.getParameter("observations")!= null &&
+		        !request.getParameter("observations").isEmpty()){
 			labcase.setObservations(request.getParameter("observations"));
 		}
 		labcase.setLabProfessional((LabProfessional) session.get(LabProfessional.class,
@@ -280,7 +299,8 @@ public class TypedResultsAction extends Action {
 		labcase.setTechnicalDirector((LabProfessional) session.get(LabProfessional.class,
 				Long.parseLong(request.getParameter("tech_dir"))));
 		if (labcase.getIcaNumber() == null){
-			int icaNumber = (Integer) session.createSQLQuery("SELECT numero_foliado(1)").uniqueResult();
+			int icaNumber = (Integer) session.
+			        createSQLQuery("SELECT numero_foliado(1)").uniqueResult();
 			labcase.setIcaNumber(icaNumber);
 		}
 
