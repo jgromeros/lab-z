@@ -4,7 +4,6 @@
 package lab.model.animal;
 
 import java.util.List;
-import java.util.Set;
 
 import lab.model.NamedEntity;
 import lab.model.person.LabProfessional;

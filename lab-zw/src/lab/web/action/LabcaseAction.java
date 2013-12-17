@@ -24,6 +24,7 @@ import lab.model.labcase.Labcase;
 import lab.model.place.Place;
 import lab.model.place.PlaceType;
 import lab.model.sample.SampleType;
+import lab.model.test.Test;
 import lab.model.test.TestDescription;
 import lab.web.helper.LabcaseHelper;
 
@@ -191,7 +192,7 @@ public class LabcaseAction extends Action {
         }
         String[] discountStrings = request.getParameterValues("discount");
     	if (nextAnimalIndex(request.getParameter("nextAnimalIndex")) == 0){
-    		labcaseHelper.initializeTests(session, labcase, testStrings);
+    		labcaseHelper.initializeTests(session, labcase, testStrings, discountStrings);
     	}
     	getModel().put("nextAnimalIndex", nextAnimalIndex(request.getParameter("nextAnimalIndex")));
     	getModel().put("endAnimalIndex", endAnimalIndex(request.getParameter("nextAnimalIndex"),
@@ -205,6 +206,8 @@ public class LabcaseAction extends Action {
             logger.debug(paramName + ": " + request.getParameterMap().get(paramName));
         }
         Labcase labcase = (Labcase) request.getSession().getAttribute(LABCASE);
+        String[] counterSampleStrings = request.getParameterValues("countersample");
+        updateCounterSamples(labcase, counterSampleStrings);
         saveLabcase(request, session, labcase);
         if (nextAnimalIndex(request.getParameter("nextAnimalIndex")) < labcase.getAnimals().size()){
         	getModel().put("nextAnimalIndex", nextAnimalIndex(request.getParameter("nextAnimalIndex")));
@@ -220,7 +223,7 @@ public class LabcaseAction extends Action {
         logger.debug("saveLabcase finished successfully");
 	}
 
-	private void loadSenderInformation(HttpServletRequest request, Session session, Labcase labcase) {
+    private void loadSenderInformation(HttpServletRequest request, Session session, Labcase labcase) {
         labcase.setOwner(request.getParameter("owner"));
         labcase.setEnterpriseSender((Enterprise) session.get(Enterprise.class,
                 LabcaseUtil.dealWithLongParameter(request, "enterprise")));
@@ -382,5 +385,23 @@ public class LabcaseAction extends Action {
 		}
         logger.debug("closeLabcases finished successfully");
 	}
+
+	/**
+	 * Updates labcases setting the counter samples to true when apply. ie. when the index
+	 * of the animal in the list, and the id of the test description is in the list.
+	 * @param labcase
+	 * @param counterSampleStrings
+	 */
+    private void updateCounterSamples(Labcase labcase, String[] counterSampleStrings) {
+        for (String counterSampleString : counterSampleStrings){
+            String[] counterSample = counterSampleString.split("-");
+            Animal animal = labcase.getAnimals().get(Integer.valueOf(counterSample[0]));
+            for (Test test : animal.getTests()){
+                if (Long.valueOf(counterSample[1]).equals(test.getTestDescription().getId())){
+                    test.setCounterSample(Boolean.TRUE);
+                }
+            }
+        }
+    }
 
 }

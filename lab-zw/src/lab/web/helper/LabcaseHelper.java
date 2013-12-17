@@ -45,24 +45,38 @@ public class LabcaseHelper {
     	session.saveOrUpdate(animal);
     }
 
-    public void initializeTests(Session session, Labcase labcase, String[] testStrings) {
+    /**
+     * M&eacute;todo para crear los tests durante la creaci&oacute;n de un nuevo caso
+     * @param session
+     * @param labcase
+     * @param testStrings El listado de tests a crear
+     * @param discountStrings El listado de tests que se marcar&aacute;n para aplicar descuento
+     */
+    public void initializeTests(Session session, Labcase labcase, String[] testStrings,
+            String[] discountStrings) {
         for (Animal animal : labcase.getAnimals()){
         	if (animal.getTests() == null){
         		animal.setTests(new ArrayList<Test>());
         	}
-    		for (int i = 0; i < testStrings.length; i ++){
+    		for (String testString : testStrings){
     			boolean added = false;
     			for(Test t : animal.getTests()){
-    				if (t.getTestDescription().getId().equals(Long.parseLong(testStrings[i]))){
+    				if (t.getTestDescription().getId().equals(Long.parseLong(testString))){
     					added = true;
     				}
     			}
     			if (!added){
 	    			Test test = new Test();
 	    			test.setTestDescription((TestDescription)session.get(TestDescription.class,
-	    					Long.parseLong(testStrings[i])));
+	    					Long.parseLong(testString)));
 	    			test.setStatus(Test.REGISTERED);
-	    			test.setApplyDiscount(Boolean.FALSE);
+	    			for (String discount : discountStrings){
+                        test.setApplyDiscount(Boolean.FALSE);
+	    			    if (discount.equals(testString)){
+	                        test.setApplyDiscount(Boolean.TRUE);
+	                        break;
+	    			    }
+	    			}
 	    			test.setCounterSample(Boolean.FALSE);
 	               	animal.getTests().add(test);
     			}
