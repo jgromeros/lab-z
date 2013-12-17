@@ -165,22 +165,6 @@
 					</c:if>
 				</c:forEach>
 			</c:forEach>
-			<tr>
-				<td colspan="2">
-					<table>
-						<tr>
-							<th colspan="2">Valores de referencia</th>
-						</tr>
-						<c:forEach var="refvalue" items="${model.references }">
-							<tr>
-								<td><c:out value="${refvalue.description }"/></td>
-								<td><c:out value="${refvalue.minAbsoluteValue}"/></td>
-								<td><c:out value="${refvalue.maxAbsoluteValue}"/></td>
- 							</tr>
-						</c:forEach>
-					</table>
-				</td>
-			</tr>
             <c:if test="${model.showSaveButton }">
                 <tr><td>
                 <table>

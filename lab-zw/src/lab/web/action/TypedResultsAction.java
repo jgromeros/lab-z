@@ -113,7 +113,6 @@ public class TypedResultsAction extends Action {
         if (CANCEL.equals(request.getParameter("action"))) {
             cancelIndividualTest(session, Long.parseLong(request.getParameter("id")));
             logger.debug("loadTest finished successfully");
-            return;
         }
 		List<LabProfessional> labpros = session.createQuery("from LabProfessional lp where status = 'A'").list();
 		getModel().put("labpros", labpros);
