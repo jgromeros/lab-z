@@ -52,7 +52,7 @@
 <jsp:directive.include file="../common/menu.jspf"/>
 <div class="layerder">
 	<form id="resultsForm" action="registered.htm" method="post">
-        <div id="dialog-confirm" title="Empty the recycle bin?">
+        <div id="dialog-confirm" title="Cancelar Prueba?">
             <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Está seguro que desea cancelar esta prueba? No podrá deshacer este cambio</p>
         </div>
 		<input type="hidden" name="testdesc" value="${model.testdesc }"/>
@@ -77,10 +77,16 @@
 						<tr><td><table border="1">
 							<tr>
 								<th>
-                                    <c:out value="${animal.name }"/>
-                                    <a class="cancel" href="testresult.htm?action=cancel&id=${test.id }&testdesc=${test.testDescription.id }">
-                						<img alt="Cancelar" src="../img/cancel.png" width="16" height="16"/>
-    					            </a>
+                                    <table width="100%"><tr>
+                                        <td align="center" width="95%">
+                                            <c:out value="${animal.name }"/>
+                                        </td>
+                                        <td align="left">
+                                            <a class="cancel" href="testresult.htm?action=cancel&id=${test.id }&testdesc=${test.testDescription.id }">
+                						        <img alt="Cancelar" src="../img/cancel.png" width="45" height="12"/>
+    					                    </a>
+                                        </td></tr>
+                                    </table>
                                 </th>
 							</tr>
 							<tr>
@@ -175,49 +181,52 @@
 					</table>
 				</td>
 			</tr>
-            <tr><td><table>
-			<tr>
-				<td>Profesional que realiza la prueba:</td>
-				<td>
-					<select id="labProfessional" name="lab_professional" required>
-						<option></option>
-						<c:forEach var="labpro" items="${model.labpros }">
-							<c:choose>
-								<c:when test="${testForLabProfessional.labProfessional.id == labpro.id }">
-									<option value="${labpro.id }" selected="selected"><c:out value="${labpro }"/></option>
-								</c:when>
-								<c:otherwise>
-									<option value="${labpro.id }"><c:out value="${labpro }"/></option>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td>Director cient&iacute;fico del laboratorio:</td>
-				<td>
-					<select id="techDir" name="tech_dir" required>
-						<option></option>
-						<c:forEach var="td" items="${model.techdirectors }">
-							<c:choose>
-								<c:when test="${labcase.technicalDirector.id == td.id }">
-									<option value="${td.id }" selected="selected"><c:out value="${td }"/></option>
-								</c:when>
-								<c:otherwise>
-									<option value="${td.id }"><c:out value="${td }"/></option>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input type="submit" id="guardarAction" name="action" value="Guardar"/>
-				</td>
-			</tr>
-           </table></tr></tr>
+            <c:if test="${model.showSaveButton }">
+                <tr><td>
+                <table>
+    			<tr>
+    				<td>Profesional que realiza la prueba:</td>
+    				<td>
+    					<select id="labProfessional" name="lab_professional" required>
+    						<option></option>
+    						<c:forEach var="labpro" items="${model.labpros }">
+    							<c:choose>
+    								<c:when test="${testForLabProfessional.labProfessional.id == labpro.id }">
+    									<option value="${labpro.id }" selected="selected"><c:out value="${labpro }"/></option>
+    								</c:when>
+    								<c:otherwise>
+    									<option value="${labpro.id }"><c:out value="${labpro }"/></option>
+    								</c:otherwise>
+    							</c:choose>
+    						</c:forEach>
+    					</select>
+    				</td>
+    			</tr>
+    			<tr>
+    				<td>Director cient&iacute;fico del laboratorio:</td>
+    				<td>
+    					<select id="techDir" name="tech_dir" required>
+    						<option></option>
+    						<c:forEach var="td" items="${model.techdirectors }">
+    							<c:choose>
+    								<c:when test="${labcase.technicalDirector.id == td.id }">
+    									<option value="${td.id }" selected="selected"><c:out value="${td }"/></option>
+    								</c:when>
+    								<c:otherwise>
+    									<option value="${td.id }"><c:out value="${td }"/></option>
+    								</c:otherwise>
+    							</c:choose>
+    						</c:forEach>
+    					</select>
+    				</td>
+    			</tr>
+    			<tr>
+    				<td>
+    					<input type="submit" id="guardarAction" name="action" value="Guardar"/>
+    				</td>
+    			</tr>
+               </table></td></tr>
+           </c:if>
 		</table>
 	</form>
 

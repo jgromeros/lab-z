@@ -47,7 +47,7 @@
 
 <jsp:directive.include file="../common/menu.jspf"/>
 <div class="layerder">
-    <div id="dialog-confirm" title="Empty the recycle bin?">
+    <div id="dialog-confirm" title="Cancelar Prueba?">
         <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Está seguro que desea cancelar esta prueba? No podrá deshacer este cambio</p>
     </div>
 	<table>
@@ -81,13 +81,6 @@
     				<td>
     					<a href="printresults.htm?id=${labcase.id }&test=${test.id }">
     						<img alt="Imprimir" src="../img/print.png" width="16" height="16"/>
-    					</a>
-    				</td>
-    			</c:if>
-    			<c:if test="${labcase.status != 'F'}">
-    				<td>
-    					<a class="cancel" href="caseresult.htm?action=cancel&id=${labcase.id }&testdesc=${test.testDescription.id }">
-    						<img alt="Cancelar" src="../img/cancel.png" width="16" height="16"/>
     					</a>
     				</td>
     			</c:if>

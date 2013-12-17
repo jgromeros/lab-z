@@ -120,19 +120,17 @@ public class TypedResultsAction extends Action {
 		getModel().put("techdirectors", selectTechDirectors(labpros));
 		Test test = null;
 		Labcase l = (Labcase) session.get(Labcase.class, ((Labcase)request.getSession().getAttribute("labcase")).getId());
+		Boolean showSaveButton = Boolean.FALSE;
 		for (Animal animal : l.getAnimals()){
 			for (Test t : animal.getTests()){
 				if (t.getTestDescription().getId().equals(getModel().get("testdesc"))){
+				    if (!Test.CANCELLED.equals(t.getStatus())){
+				        showSaveButton = Boolean.TRUE;
+				    }
 					test = t;
 					Double leucocitos = null;
 					if (test.getResults().size() == 0){
-						for (ResultFactor rf : test.getTestDescription().getResultFactors()){
-							Result result = new Result();
-							result.setResultFactor(rf);
-							result.setResultDate(new Date());
-							session.save(result);
-							test.getResults().add(result);
-						}
+					    createEmptyResults(session, test);
 					} else {
 						Collections.sort(test.getResults());
 						for (Result result : test.getResults()){
@@ -149,6 +147,7 @@ public class TypedResultsAction extends Action {
 				}
 			}
 		}
+		getModel().put("showSaveButton", showSaveButton);
 		getModel().put("testDescription", test.getTestDescription().getDescription());
 		List<ReferenceValue> referenceValues = new ArrayList<ReferenceValue>();
 		Query hql = session.createQuery("from ReferenceValue rv where rv.resultFactor = :resultFactor and specie = :specie");
@@ -162,7 +161,7 @@ public class TypedResultsAction extends Action {
         logger.debug("loadTest finished successfully");
 	}
 
-	/**
+    /**
 	 * Method to retrieve the information of the results of a test and persist it
 	 * @param request
 	 * @param response
@@ -288,10 +287,30 @@ public class TypedResultsAction extends Action {
 
 	}
 
+	/**
+	 * Assigns cancelled status to the test identified by id
+	 * @param session
+	 * @param id
+	 */
 	private void cancelIndividualTest(Session session, Long id) {
         Test test = (Test) session.get(Test.class, id);
         test.setStatus(Test.CANCELLED);
         session.update(test);
 	}
+
+	/**
+	 * Creates empty results for a test and persist them
+	 * @param session
+	 * @param test
+	 */
+    private void createEmptyResults(Session session, Test test) {
+        for (ResultFactor rf : test.getTestDescription().getResultFactors()){
+            Result result = new Result();
+            result.setResultFactor(rf);
+            result.setResultDate(new Date());
+            session.save(result);
+            test.getResults().add(result);
+        }
+    }
 
 }
