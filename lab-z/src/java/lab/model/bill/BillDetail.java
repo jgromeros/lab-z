@@ -18,8 +18,28 @@ public class BillDetail extends Entity {
 	private Bill bill;
 	private Test test;
 	private BigDecimal price;
-	private BigDecimal discount;
-	
+	private BigDecimal tax;
+
+	/**
+	 * Compute the total value with taxes.
+	 * Preconditions:
+	 * - The tax saved is the value of the taxes, not the percentage.
+	 * @return the price with taxes applied
+	 */
+    public BigDecimal computeTotalPrice() {
+        return tax == null ? price : price.add(computeTax());
+    }
+
+    /**
+     * Compute the tax for this detail
+     * @return
+     */
+    private BigDecimal computeTax() {
+        tax = price.multiply(test.getTestDescription().currentPrice().getTax()).
+                divide(new BigDecimal(100));
+        return tax;
+    }
+
     public Bill getBill() {
     	return bill;
     }
@@ -43,13 +63,13 @@ public class BillDetail extends Entity {
     public void setPrice(BigDecimal price) {
     	this.price = price;
     }
-	
-    public BigDecimal getDiscount() {
-    	return discount;
+
+    public BigDecimal getTax() {
+        return tax;
     }
-	
-    public void setDiscount(BigDecimal discount) {
-    	this.discount = discount;
+
+    public void setTax(BigDecimal tax) {
+        this.tax = tax;
     }
 
 }

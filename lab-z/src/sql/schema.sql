@@ -171,11 +171,11 @@ CREATE TABLE test(
 	animal				INTEGER			/*NOT NULL*/,
 	test_description	INTEGER			NOT NULL,
 	observations		TEXT,
-	invoice				INTEGER,
+	apply_discount		BOOLEAN			DEFAULT FALSE,
+	counter_sample		BOOLEAN			NOT NULL DEFAULT FALSE,
 	PRIMARY KEY (id),
 	FOREIGN KEY (animal) REFERENCES animal,
-	FOREIGN KEY (test_description) REFERENCES test_description,
-	FOREIGN KEY (invoice) REFERENCE invoice
+	FOREIGN KEY (test_description) REFERENCES test_description
 );
 
 CREATE SEQUENCE sc_assembly_descriptor;
@@ -308,15 +308,28 @@ CREATE TABLE prices_by_test_desc(
     CHECK (valid_from < valid_until)
 );
 
-CREATE SEQUENCE sc_invoice;
-CREATE TABLE invoice(
+CREATE SEQUENCE sc_bill;
+CREATE TABLE bill(
 	id					INTEGER			NOT NULL,
-	invoice_number		INTEGER			NOT NULL,
-	invoice_date		DATE			NOT NULL,
+	bill_number			INTEGER			NOT NULL,
+	bill_date			DATE			NOT NULL,
 	client				INTEGER			NOT NULL,
 	total_before_taxes	DECIMAL(12,2)	NOT NULL,
 	total_after_taxes	DECIMAL(12,2)	NOT NULL,
 	PRIMARY KEY (id),
-	UNIQUE (invoice_number),
+	UNIQUE (bill_number),
 	FOREIGN KEY (client) REFERENCES enterprise
+);
+
+CREATE SEQUENCE sc_bill_detail;
+CREATE TABLE bill_detail(
+	id					INTEGER			NOT NULL,
+	price				DECIMAL(12,2)	NOT NULL,
+	tax					DECIMAL(6,2)	NOT NULL,
+	test				INTEGER			NOT NULL,
+	bill				INTEGER			NOT NULL,
+	PRIMARY KEY (id),
+	UNIQUE(test),
+	FOREIGN KEY (test) REFERENCES test,
+	FOREIGN KEY (bill) REFERENCES bill
 );

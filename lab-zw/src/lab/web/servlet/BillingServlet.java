@@ -30,7 +30,7 @@ public class BillingServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String enterprise = request.getParameter("enterprise");
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy"); 
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String beginString = request.getParameter("begin");
         String endString = request.getParameter("end");
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -50,32 +50,48 @@ public class BillingServlet extends HttpServlet {
         }
         List<BillDetailDto> billDetails = new ArrayList<BillDetailDto>();
         for (Labcase labcase: (List<Labcase>)hql.list()){
-            for (Animal animal : labcase.getAnimals()){
-                for (Test test : animal.getTests()){
-                    if (!Test.CANCELLED.equals(test.getStatus())){
-                        BillDetailDto billDetail = new BillDetailDto();
-                        billDetail.setLabcaseCode(labcase.getCode());
-                        billDetail.setComment(labcase.getAnalysisPurpose());
-                        billDetail.setReceptionDate(df.format(labcase.getReceptionDate()));
-                        billDetail.setPatientName(animal.getName());
-                        billDetail.setTestId(test.getId());
-                        billDetail.setTestDescription(test.getTestDescription().getDescription());
-                        billDetail.setPrice(test.getTestDescription().currentPrice());
-                        billDetails.add(billDetail);
-                    }
-                }
-            }
+            mapBillDetails(billDetails, labcase, df);
         }
         tx.commit();
         sendJsonResponse(response, billDetails);
     }
 
+    /**
+     * 
+     * @param response
+     * @param object
+     * @throws IOException
+     */
     private void sendJsonResponse(HttpServletResponse response, Object object) throws IOException {
         String json = null ;
         json = new Gson().toJson(object);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json);    	
+    }
+
+    /**
+     * Retorna un arreglo de detalles para factura. Los valores los toma del labcase
+     * @param billDetails
+     * @param labcase
+     * @param df
+     */
+    private void mapBillDetails(List<BillDetailDto> billDetails, Labcase labcase, DateFormat df) {
+        for (Animal animal : labcase.getAnimals()){
+            for (Test test : animal.getTests()){
+                if (!Test.CANCELLED.equals(test.getStatus())){
+                    BillDetailDto billDetail = new BillDetailDto();
+                    billDetail.setLabcaseCode(labcase.getCode());
+                    billDetail.setComment(labcase.getAnalysisPurpose());
+                    billDetail.setReceptionDate(df.format(labcase.getReceptionDate()));
+                    billDetail.setPatientName(animal.getName());
+                    billDetail.setTestId(test.getId());
+                    billDetail.setTestDescription(test.getTestDescription().getDescription());
+                    billDetail.setPrice(test.getTestDescription().currentPrice().getPrice());
+                    billDetails.add(billDetail);
+                }
+            }
+        }
     }
 
 }

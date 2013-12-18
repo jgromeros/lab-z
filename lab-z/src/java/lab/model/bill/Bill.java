@@ -1,12 +1,12 @@
 package lab.model.bill;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import lab.model.Entity;
 import lab.model.enterprise.Enterprise;
-import lab.model.test.Test;
 
 /**
  * This class represents an invoice. It is not a real invoice. It is just the
@@ -25,6 +25,39 @@ public class Bill extends Entity {
 	private BigDecimal totalBeforeTaxes;
 	private BigDecimal totalAfterTaxes;
 	private List<BillDetail> billedDetails;
+
+	public Bill() {
+	}
+
+	/**
+	 * Constructor that defaults date to today and creates an empty list of bill details.
+	 * @param client
+	 */
+	public Bill(Enterprise client) {
+	    this.client = client;
+	    this.billDate = new Date();
+	    this.billedDetails = new ArrayList<BillDetail>();
+	}
+
+	/**
+	 * Compute the sum of the prices of the details of this bill before including taxes
+	 */
+    public void computeTotalBeforeTaxes() {
+        totalBeforeTaxes = new BigDecimal(0);
+        for (BillDetail billDetail : billedDetails){
+            totalBeforeTaxes = totalBeforeTaxes.add(billDetail.getPrice());
+        }
+    }
+
+    /**
+     * Compute the sum of the prices of the details of this bill with taxes
+     */
+    public void computeTotalAfterTaxes() {
+        totalAfterTaxes = new BigDecimal(0);
+        for (BillDetail billDetail : billedDetails){
+            totalAfterTaxes = totalAfterTaxes.add(billDetail.computeTotalPrice());
+        }
+    }
 
 	public Integer getBillNumber() {
 		return billNumber;
@@ -54,19 +87,19 @@ public class Bill extends Entity {
 		return totalBeforeTaxes;
 	}
 
-	public void setTotalBeforeTaxes(BigDecimal totalBeforeTaxes) {
-		this.totalBeforeTaxes = totalBeforeTaxes;
-	}
+    public void setTotalBeforeTaxes(BigDecimal totalBeforeTaxes) {
+        this.totalBeforeTaxes = totalBeforeTaxes;
+    }
 
-	public BigDecimal getTotalAfterTaxes() {
+    public BigDecimal getTotalAfterTaxes() {
 		return totalAfterTaxes;
 	}
 
-	public void setTotalAfterTaxes(BigDecimal totalAfterTaxes) {
-		this.totalAfterTaxes = totalAfterTaxes;
-	}
+    public void setTotalAfterTaxes(BigDecimal totalAfterTaxes) {
+        this.totalAfterTaxes = totalAfterTaxes;
+    }
 
-	public List<BillDetail> getBilledTests() {
+    public List<BillDetail> getBilledDetails() {
 		return billedDetails;
 	}
 

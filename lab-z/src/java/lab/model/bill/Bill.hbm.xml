@@ -15,7 +15,7 @@
         <property name="totalAfterTaxes" column="total_after_taxes"/>
 		<many-to-one name="client" class="lab.model.enterprise.Enterprise"
 				column="client"/>
- 		<bag name="billedDetails" table="bill_detail" lazy="false">
+ 		<bag name="billedDetails" table="bill_detail" lazy="false" cascade="all">
 			<key column="bill"/>
 			<one-to-many class="lab.model.bill.BillDetail"/>
 		</bag>

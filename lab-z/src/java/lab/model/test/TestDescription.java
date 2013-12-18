@@ -54,11 +54,11 @@ public class TestDescription extends DescribedEntity implements Comparable<TestD
      * @return
      * @throws LabcaseException if this TestDescription do not has a price currently
      */
-    public BigDecimal currentPrice() throws LabcaseException{
+    public TestPrice currentPrice() throws LabcaseException{
         Date now = new Date();
         for (TestPrice price : prices){
             if (now.after(price.getValidFrom()) && now.before(price.getValidUntil())){
-                return price.getPrice();
+                return price;
             }
         }
         throw new LabcaseException(LabcaseUtils.createMessage(

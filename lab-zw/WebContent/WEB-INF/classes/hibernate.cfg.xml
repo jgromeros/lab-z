@@ -45,5 +45,7 @@
 		<mapping resource="lab/model/person/LabProfessional.hbm.xml"/>
 		<mapping resource="lab/model/bank/BankPlace.hbm.xml"/>
 		<mapping resource="lab/model/test/TestPrice.hbm.xml"/>
+        <mapping resource="lab/model/bill/Bill.hbm.xml"/>
+        <mapping resource="lab/model/bill/BillDetail.hbm.xml"/>
 	</session-factory>
 </hibernate-configuration>
