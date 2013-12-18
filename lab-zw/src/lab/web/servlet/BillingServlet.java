@@ -14,10 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import lab.dto.BillDetailDto;
 import lab.model.animal.Animal;
+import lab.model.bill.BillDetail;
 import lab.model.labcase.Labcase;
 import lab.model.persistence.HibernateUtil;
 import lab.model.test.Test;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -26,6 +28,8 @@ import org.hibernate.Transaction;
 import com.google.gson.Gson;
 
 public class BillingServlet extends HttpServlet {
+
+    private static Logger logger = Logger.getLogger(BillingServlet.class);
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -42,15 +46,13 @@ public class BillingServlet extends HttpServlet {
 	        hql.setParameter("begin", df.parse(beginString));
 	        hql.setParameter("end", df.parse(endString));
         } catch (HibernateException e) {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
+            logger.error(e.getStackTrace());
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error(e.getStackTrace());
         }
         List<BillDetailDto> billDetails = new ArrayList<BillDetailDto>();
         for (Labcase labcase: (List<Labcase>)hql.list()){
-            mapBillDetails(billDetails, labcase, df);
+            mapBillDetails(session, billDetails, labcase, df);
         }
         tx.commit();
         sendJsonResponse(response, billDetails);
@@ -76,19 +78,25 @@ public class BillingServlet extends HttpServlet {
      * @param labcase
      * @param df
      */
-    private void mapBillDetails(List<BillDetailDto> billDetails, Labcase labcase, DateFormat df) {
+    private void mapBillDetails(Session session, List<BillDetailDto> billDetails,
+            Labcase labcase, DateFormat df) {
         for (Animal animal : labcase.getAnimals()){
             for (Test test : animal.getTests()){
                 if (!Test.CANCELLED.equals(test.getStatus())){
-                    BillDetailDto billDetail = new BillDetailDto();
-                    billDetail.setLabcaseCode(labcase.getCode());
-                    billDetail.setComment(labcase.getAnalysisPurpose());
-                    billDetail.setReceptionDate(df.format(labcase.getReceptionDate()));
-                    billDetail.setPatientName(animal.getName());
-                    billDetail.setTestId(test.getId());
-                    billDetail.setTestDescription(test.getTestDescription().getDescription());
-                    billDetail.setPrice(test.getTestDescription().currentPrice().getPrice());
-                    billDetails.add(billDetail);
+                    Query query = session.createQuery("from BillDetail bd where bd.test = :test");
+                    query.setParameter("test", test);
+                    BillDetail detail = (BillDetail) query.uniqueResult();
+                    if (detail == null){
+                        BillDetailDto billDetail = new BillDetailDto();
+                        billDetail.setLabcaseCode(labcase.getCode());
+                        billDetail.setComment(labcase.getAnalysisPurpose());
+                        billDetail.setReceptionDate(df.format(labcase.getReceptionDate()));
+                        billDetail.setPatientName(animal.getName());
+                        billDetail.setTestId(test.getId());
+                        billDetail.setTestDescription(test.getTestDescription().getDescription());
+                        billDetail.setPrice(test.getTestDescription().currentPrice().getPrice());
+                        billDetails.add(billDetail);
+                    }
                 }
             }
         }
