@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import lab.dto.BillDetailDto;
 import lab.model.animal.Animal;
+import lab.model.bill.Bill;
 import lab.model.bill.BillDetail;
 import lab.model.labcase.Labcase;
 import lab.model.persistence.HibernateUtil;
@@ -83,8 +84,10 @@ public class BillingServlet extends HttpServlet {
         for (Animal animal : labcase.getAnimals()){
             for (Test test : animal.getTests()){
                 if (!Test.CANCELLED.equals(test.getStatus())){
-                    Query query = session.createQuery("from BillDetail bd where bd.test = :test");
+                    Query query = session.createQuery("from BillDetail bd where bd.test = :test" +
+                    		" and bd.bill.status != :cancelledStatus");
                     query.setParameter("test", test);
+                    query.setParameter("cancelledStatus", Bill.CANCELLED);
                     BillDetail detail = (BillDetail) query.uniqueResult();
                     if (detail == null){
                         BillDetailDto billDetail = new BillDetailDto();

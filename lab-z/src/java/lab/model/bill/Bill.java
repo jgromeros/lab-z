@@ -19,12 +19,16 @@ public class Bill extends Entity {
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer billNumber;
+	public static final String VALID = "V";
+    public static final String CANCELLED = "C";
+
+    private Integer billNumber;
 	private Date billDate;
 	private Enterprise client;
 	private BigDecimal totalBeforeTaxes;
 	private BigDecimal totalAfterTaxes;
 	private List<BillDetail> billedDetails;
+	private String status;
 
 	public Bill() {
 	}
@@ -37,6 +41,7 @@ public class Bill extends Entity {
 	    this.client = client;
 	    this.billDate = new Date();
 	    this.billedDetails = new ArrayList<BillDetail>();
+	    this.status = VALID;
 	}
 
 	/**
@@ -106,5 +111,13 @@ public class Bill extends Entity {
 	public void setBilledDetails(List<BillDetail> billedDetails) {
 		this.billedDetails = billedDetails;
 	}
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
 }

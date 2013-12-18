@@ -13,6 +13,7 @@
         <property name="billDate" column="bill_date"/>
         <property name="totalBeforeTaxes" column="total_before_taxes"/>
         <property name="totalAfterTaxes" column="total_after_taxes"/>
+        <property name="status" column="status"/>
 		<many-to-one name="client" class="lab.model.enterprise.Enterprise"
 				column="client"/>
  		<bag name="billedDetails" table="bill_detail" lazy="false" cascade="all">

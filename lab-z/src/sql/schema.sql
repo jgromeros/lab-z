@@ -171,6 +171,7 @@ CREATE TABLE test(
 	animal				INTEGER			/*NOT NULL*/,
 	test_description	INTEGER			NOT NULL,
 	observations		TEXT,
+	status				CHAR(1)			NOT NULL CHECK(status IN ('R'/*Registered*/, 'C'/*Cancelled*/)),
 	apply_discount		BOOLEAN			DEFAULT FALSE,
 	counter_sample		BOOLEAN			NOT NULL DEFAULT FALSE,
 	PRIMARY KEY (id),
@@ -316,6 +317,7 @@ CREATE TABLE bill(
 	client				INTEGER			NOT NULL,
 	total_before_taxes	DECIMAL(12,2)	NOT NULL,
 	total_after_taxes	DECIMAL(12,2)	NOT NULL,
+	status				CHAR(1)			NOT NULL CHECK(status IN ('V'/*Valid*/, 'C'/*Cancelled*/)),
 	PRIMARY KEY (id),
 	UNIQUE (bill_number),
 	FOREIGN KEY (client) REFERENCES enterprise
@@ -329,7 +331,6 @@ CREATE TABLE bill_detail(
 	test				INTEGER			NOT NULL,
 	bill				INTEGER			NOT NULL,
 	PRIMARY KEY (id),
-	UNIQUE(test),
 	FOREIGN KEY (test) REFERENCES test,
 	FOREIGN KEY (bill) REFERENCES bill
 );
