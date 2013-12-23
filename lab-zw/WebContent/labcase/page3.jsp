@@ -23,7 +23,8 @@
 
 <jsp:directive.include file="../common/menu.jspf"/>
 <div class="layerder">
-	<table align="center">
+    <p><c:out value="${model.errores }"/></p>
+    <table align="center">
 		<tr>
 			<td>
 				<form id="labcase3Form" name="forma" action="done.htm" method="post">

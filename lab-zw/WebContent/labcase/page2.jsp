@@ -24,6 +24,7 @@
 
         <jsp:directive.include file="../common/menu.jspf"/>
         <div class="layerder">
+            <p><c:out value="${model.errores }"/></p>
         	<table align="center">
         		<tr>
         			<td>
@@ -32,6 +33,23 @@
         						<tr>
         							<td align="center">Seleccione las pruebas a realizar</td>
         						</tr>
+
+                                    <tr><td><table>
+                                        <tr>
+                                            <th>Perfil</th>
+                                            <th>Descuento</th>
+                                        </tr>
+                                        <c:forEach var="tp" items="${model.profiles }">
+                                            <tr><td>
+                                                <input type="checkbox" name="profile" value="${tp.id }"/>
+                                                <c:out value="${tp.description }"/>
+                                            </td>
+                                            <td align="center">
+                                                <input type="checkbox" name="discount" value="${td.id }"/>
+                                            </td></tr>
+                                        </c:forEach>
+                                    </table></td></tr>
+
         						<tr><td><table align="center">
         							<tr>
         								<th>Examen</th>
@@ -57,7 +75,7 @@
         											<c:when test="${selected == true }">
         												<input type="checkbox" name="testdesc"
         														value="${td.id }" checked="checked"/>
-        													<c:out value="${td.description }"/>
+    											        <c:out value="${td.description }"/>
         											</c:when>
         											<c:otherwise>
         												<input type="checkbox" name="testdesc" value="${td.id }"/>

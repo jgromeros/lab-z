@@ -177,6 +177,8 @@ public class LabcaseAction extends Action {
         	Collections.sort(testDescriptions);
         }
         getModel().put("testDescriptions", testDescriptions);
+        getModel().put("profiles", session.
+                createQuery("from TestProfile tp order by tp.description").list());
         logger.debug("showSecondForm finished successfully");
 	}
 
@@ -187,12 +189,15 @@ public class LabcaseAction extends Action {
         }
         Labcase labcase = (Labcase) request.getSession().getAttribute(LABCASE);
         String[] testStrings = request.getParameterValues("testdesc");
-        if (testStrings == null || testStrings.length < 1){
+        String[] profileStrings = request.getParameterValues("profile");
+        if ((testStrings == null || testStrings.length < 1) &&
+                (profileStrings == null || profileStrings.length < 1)) {
             throw new LabcaseException("Debe seleccionar al menos un test");
         }
         String[] discountStrings = request.getParameterValues("discount");
     	if (nextAnimalIndex(request.getParameter("nextAnimalIndex")) == 0){
-    		labcaseHelper.initializeTests(session, labcase, testStrings, discountStrings);
+    		labcaseHelper.initializeTests(session, labcase, testStrings, profileStrings,
+    		        discountStrings);
     	}
     	getModel().put("nextAnimalIndex", nextAnimalIndex(request.getParameter("nextAnimalIndex")));
     	getModel().put("endAnimalIndex", endAnimalIndex(request.getParameter("nextAnimalIndex"),
@@ -393,12 +398,14 @@ public class LabcaseAction extends Action {
 	 * @param counterSampleStrings
 	 */
     private void updateCounterSamples(Labcase labcase, String[] counterSampleStrings) {
-        for (String counterSampleString : counterSampleStrings){
-            String[] counterSample = counterSampleString.split("-");
-            Animal animal = labcase.getAnimals().get(Integer.valueOf(counterSample[0]));
-            for (Test test : animal.getTests()){
-                if (Long.valueOf(counterSample[1]).equals(test.getTestDescription().getId())){
-                    test.setCounterSample(Boolean.TRUE);
+        if (counterSampleStrings != null){
+            for (String counterSampleString : counterSampleStrings){
+                String[] counterSample = counterSampleString.split("-");
+                Animal animal = labcase.getAnimals().get(Integer.valueOf(counterSample[0]));
+                for (Test test : animal.getTests()){
+                    if (Long.valueOf(counterSample[1]).equals(test.getTestDescription().getId())){
+                        test.setCounterSample(Boolean.TRUE);
+                    }
                 }
             }
         }

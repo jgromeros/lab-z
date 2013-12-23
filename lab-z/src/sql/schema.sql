@@ -147,6 +147,14 @@ CREATE TABLE assembly_type(
 	PRIMARY KEY (id)
 );
 
+CREATE SEQUENCE sc_test_profile;
+CREATE TABLE test_profile(
+	id					INTEGER 		NOT NULL,
+	description			VARCHAR(255)	NOT NULL,
+	PRIMARY KEY (id),
+	UNIQUE (description)
+);
+
 CREATE SEQUENCE sc_test_description;
 CREATE TABLE test_description(
 	id					INTEGER			NOT NULL,
@@ -163,6 +171,14 @@ CREATE TABLE test_description(
 	FOREIGN KEY (sample_type) REFERENCES sample_type,
 	FOREIGN KEY (lab_area) REFERENCES lab_area,
 	FOREIGN KEY (assembly_type) REFERENCES assembly_type
+);
+
+CREATE TABLE test_description_profile(
+	test_profile		INTEGER			NOT NULL,
+	test_description	INTEGER			NOT NULL,
+	PRIMARY KEY (test_profile, test_description),
+	FOREIGN KEY (test_profile) REFERENCES test_profile,
+	FOREIGN KEY (test_description) REFERENCES test_description
 );
 
 CREATE SEQUENCE sc_test;
@@ -299,14 +315,20 @@ CREATE TABLE authorization_codes(
 CREATE SEQUENCE sc_prices_by_test_desc;
 CREATE TABLE prices_by_test_desc(
     id					INTEGER			NOT NULL,
-    test_description	INTEGER			NOT NULL,
+    test_description	INTEGER,
     price				DECIMAL(10,2)	NOT NULL,
     tax					DECIMAL(6,2),
     valid_from			DATE			NOT NULL,
     valid_until			DATE			NOT NULL,
+    test_profile		INTEGER,
     PRIMARY KEY (id),
     FOREIGN KEY (test_description) REFERENCES test_description,
+    FOREIGN KEY (test_profile) REFERENCES test_profile,
     CHECK (valid_from < valid_until)
+    CHECK ((test_description IS NOT NULL AND
+			test_profile IS NULL) OR
+			(test_description IS NULL AND
+			test_profile IS NOT NULL))
 );
 
 CREATE SEQUENCE sc_bill;
