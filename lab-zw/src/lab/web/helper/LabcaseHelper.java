@@ -89,7 +89,8 @@ public class LabcaseHelper {
                     }
                     if (!added){
                         animal.getTests().add(createTest(session,
-                                testDescription.getId().toString(), discountStrings, testProfile));
+                                testDescription.getId().toString(), animal, discountStrings,
+                                testProfile));
                     }
                 }
             }
@@ -103,7 +104,8 @@ public class LabcaseHelper {
                     }
                 }
                 if (!added){
-                    animal.getTests().add(createTest(session, testString, discountStrings, null));
+                    animal.getTests().add(createTest(session, testString, animal,
+                            discountStrings, null));
                 }
             }
         }
@@ -117,10 +119,12 @@ public class LabcaseHelper {
      * @param discountStrings
      * @return
      */
-    private Test createTest(Session session, String testString, String[] discountStrings, TestProfile testProfile) {
+    private Test createTest(Session session, String testString, Animal animal,
+            String[] discountStrings, TestProfile testProfile) {
         Test test = new Test();
         test.setTestDescription((TestDescription)session.get(TestDescription.class,
                 Long.parseLong(testString)));
+        test.setAnimal(animal);
         test.setStatus(Test.REGISTERED);
         applyDiscounts(test, testString, discountStrings);
         test.setCounterSample(Boolean.FALSE);
@@ -144,6 +148,8 @@ public class LabcaseHelper {
                     break;
                 }
             }
+        } else {
+            test.setApplyDiscount(Boolean.FALSE);            
         }
     }
 

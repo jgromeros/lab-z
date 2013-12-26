@@ -349,7 +349,7 @@ CREATE SEQUENCE sc_bill_detail;
 CREATE TABLE bill_detail(
 	id					INTEGER			NOT NULL,
 	price				DECIMAL(12,2)	NOT NULL,
-	tax					DECIMAL(6,2)	NOT NULL,
+	tax					DECIMAL(6,2),
 	test				INTEGER			NOT NULL,
 	bill				INTEGER			NOT NULL,
 	PRIMARY KEY (id),
