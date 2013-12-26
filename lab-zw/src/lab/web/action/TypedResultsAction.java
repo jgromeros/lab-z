@@ -204,10 +204,12 @@ public class TypedResultsAction extends Action {
 						double hemoglobina = 0;
 						for (Result result : results){
 							if (test.getTestDescription().getId() == 57){//Cuadro hematico
-								if (!result.getResultFactor().getComputedValue() &&
-								        !result.getResultFactor().getCalculated()){
-									result.setValue(request.getParameter("test" + test.getId() +
-									        "factor" + result.getResultFactor().getId()));
+								if (!result.getResultFactor().getComputedValue() && !result.getResultFactor().getCalculated()){
+								    String resultValue = request.getParameter("test" + test.getId() +
+                                            "factor" + result.getResultFactor().getId()).isEmpty() ?
+                                            null : request.getParameter("test" + test.getId() +
+                                                        "factor" + result.getResultFactor().getId());
+									result.setValue(resultValue);
 									if (result.getResultFactor().getId() == 64){//Leucocitos
 										leucocitos = Double.parseDouble(result.getValue());
 									} else if (result.getResultFactor().getId() == 58){//Hematies
