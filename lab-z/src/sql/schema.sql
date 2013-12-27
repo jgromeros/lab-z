@@ -147,8 +147,8 @@ CREATE TABLE assembly_type(
 	PRIMARY KEY (id)
 );
 
-CREATE SEQUENCE sc_test_profile;
-CREATE TABLE test_profile(
+CREATE SEQUENCE sc_profile;
+CREATE TABLE profile(
 	id					INTEGER 		NOT NULL,
 	description			VARCHAR(255)	NOT NULL,
 	PRIMARY KEY (id),
@@ -174,10 +174,10 @@ CREATE TABLE test_description(
 );
 
 CREATE TABLE test_description_profile(
-	test_profile		INTEGER			NOT NULL,
+	profile		INTEGER			NOT NULL,
 	test_description	INTEGER			NOT NULL,
-	PRIMARY KEY (test_profile, test_description),
-	FOREIGN KEY (test_profile) REFERENCES test_profile,
+	PRIMARY KEY (profile, test_description),
+	FOREIGN KEY (profile) REFERENCES profile,
 	FOREIGN KEY (test_description) REFERENCES test_description
 );
 
@@ -320,15 +320,15 @@ CREATE TABLE prices_by_test_desc(
     tax					DECIMAL(6,2),
     valid_from			DATE			NOT NULL,
     valid_until			DATE			NOT NULL,
-    test_profile		INTEGER,
+    profile		INTEGER,
     PRIMARY KEY (id),
     FOREIGN KEY (test_description) REFERENCES test_description,
-    FOREIGN KEY (test_profile) REFERENCES test_profile,
+    FOREIGN KEY (profile) REFERENCES profile,
     CHECK (valid_from < valid_until)
     CHECK ((test_description IS NOT NULL AND
-			test_profile IS NULL) OR
+			profile IS NULL) OR
 			(test_description IS NULL AND
-			test_profile IS NOT NULL))
+			profile IS NOT NULL))
 );
 
 CREATE SEQUENCE sc_bill;

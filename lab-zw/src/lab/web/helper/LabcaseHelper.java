@@ -10,7 +10,7 @@ import lab.model.animal.Animal;
 import lab.model.labcase.Labcase;
 import lab.model.test.Test;
 import lab.model.test.TestDescription;
-import lab.model.test.TestProfile;
+import lab.model.test.Profile;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -78,9 +78,9 @@ public class LabcaseHelper {
             String[] profileStrings, String[] discountStrings) {
         if (profileStrings != null && profileStrings.length > 0){
             for (String profileString : profileStrings){
-                TestProfile testProfile = (TestProfile) session.get(
-                        TestProfile.class, Long.valueOf(profileString));
-                for (TestDescription testDescription : testProfile.getTestDescriptions()){
+                Profile profile = (Profile) session.get(
+                        Profile.class, Long.valueOf(profileString));
+                for (TestDescription testDescription : profile.getTestDescriptions()){
                     boolean added = false;
                     for(Test t : animal.getTests()){
                         if (t.getTestDescription().getId().equals(testDescription.getId())){
@@ -89,8 +89,7 @@ public class LabcaseHelper {
                     }
                     if (!added){
                         animal.getTests().add(createTest(session,
-                                testDescription.getId().toString(), animal, discountStrings,
-                                testProfile));
+                                testDescription.getId().toString(), animal, discountStrings));
                     }
                 }
             }
@@ -105,7 +104,7 @@ public class LabcaseHelper {
                 }
                 if (!added){
                     animal.getTests().add(createTest(session, testString, animal,
-                            discountStrings, null));
+                            discountStrings));
                 }
             }
         }
@@ -120,7 +119,7 @@ public class LabcaseHelper {
      * @return
      */
     private Test createTest(Session session, String testString, Animal animal,
-            String[] discountStrings, TestProfile testProfile) {
+            String[] discountStrings) {
         Test test = new Test();
         test.setTestDescription((TestDescription)session.get(TestDescription.class,
                 Long.parseLong(testString)));
@@ -128,7 +127,6 @@ public class LabcaseHelper {
         test.setStatus(Test.REGISTERED);
         applyDiscounts(test, testString, discountStrings);
         test.setCounterSample(Boolean.FALSE);
-        test.setTestProfile(testProfile);
         return test;
     }
 

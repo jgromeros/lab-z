@@ -8,7 +8,7 @@ import lab.model.DescribedEntity;
  * Test profile handling
  * @author Juano
  */
-public class TestProfile extends DescribedEntity{
+public class Profile extends DescribedEntity{
 
     private static final long serialVersionUID = 1L;
 

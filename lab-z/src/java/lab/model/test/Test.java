@@ -30,7 +30,6 @@ public class Test extends Entity {
     private String status;
     private Boolean counterSample;
     private Boolean applyDiscount;
-    private TestProfile testProfile;
 
     public Test(){
     	results = new ArrayList<Result>();
@@ -115,14 +114,6 @@ public class Test extends Entity {
 
     public void setApplyDiscount(Boolean applyDiscount) {
         this.applyDiscount = applyDiscount;
-    }
-
-    public TestProfile getTestProfile() {
-        return testProfile;
-    }
-
-    public void setTestProfile(TestProfile testProfile) {
-        this.testProfile = testProfile;
     }
 
 }
