@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import lab.model.Entity;
 import lab.model.test.Test;
+import lab.model.test.TestProfile;
 
 /**
  * This class represents the detail of a bill. It is not a real bill yet. It is just the
@@ -19,6 +20,7 @@ public class BillDetail extends Entity {
 	private Test test;
 	private BigDecimal price;
 	private BigDecimal tax;
+	private TestProfile testProfile;
 
 	/**
 	 * Compute the total value with taxes.
@@ -70,6 +72,14 @@ public class BillDetail extends Entity {
 
     public void setTax(BigDecimal tax) {
         this.tax = tax;
+    }
+
+    public TestProfile getTestProfile() {
+        return testProfile;
+    }
+
+    public void setTestProfile(TestProfile testProfile) {
+        this.testProfile = testProfile;
     }
 
 }

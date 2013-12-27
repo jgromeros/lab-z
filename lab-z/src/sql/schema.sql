@@ -360,10 +360,15 @@ CREATE TABLE bill_detail(
 	id					INTEGER			NOT NULL,
 	price				DECIMAL(12,2)	NOT NULL,
 	tax					DECIMAL(6,2),
-	test				INTEGER			NOT NULL,
+	test				INTEGER,
 	bill				INTEGER			NOT NULL,
+	test_profile		INTEGER,
 	PRIMARY KEY (id),
 	FOREIGN KEY (test) REFERENCES test,
-	FOREIGN KEY (bill) REFERENCES bill
+	FOREIGN KEY (bill) REFERENCES bill,
+	CHECK((test IS NOT NULL AND
+			test_profile IS NULL) OR
+			(test IS NULL AND
+			test_profile IS NOT NULL))
 );
 

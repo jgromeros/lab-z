@@ -90,15 +90,29 @@ public class BillingServlet extends HttpServlet {
                     query.setParameter("cancelledStatus", Bill.CANCELLED);
                     BillDetail detail = (BillDetail) query.uniqueResult();
                     if (detail == null){
-                        BillDetailDto billDetail = new BillDetailDto();
-                        billDetail.setLabcaseCode(labcase.getCode());
-                        billDetail.setComment(labcase.getAnalysisPurpose());
-                        billDetail.setReceptionDate(df.format(labcase.getReceptionDate()));
-                        billDetail.setPatientName(animal.getName());
-                        billDetail.setTestId(test.getId());
-                        billDetail.setTestDescription(test.getTestDescription().getDescription());
-                        billDetail.setPrice(test.getTestDescription().currentPrice().getPrice());
-                        billDetails.add(billDetail);
+                        if (test.getTestProfile() == null){
+                            BillDetailDto billDetail = new BillDetailDto();
+                            billDetail.setLabcaseCode(labcase.getCode());
+                            billDetail.setComment(labcase.getAnalysisPurpose());
+                            billDetail.setReceptionDate(df.format(labcase.getReceptionDate()));
+                            billDetail.setPatientName(animal.getName());
+                            billDetail.setTestId(test.getId());
+                            billDetail.setTestDescription(test.getTestDescription().getDescription());
+                            billDetail.setPrice(test.getTestDescription().currentPrice().getPrice());
+                            billDetails.add(billDetail);
+                        } else {
+                            BillDetailDto billDetail = new BillDetailDto();
+                            billDetail.setLabcaseCode(labcase.getCode());
+                            billDetail.setComment(labcase.getAnalysisPurpose());
+                            billDetail.setReceptionDate(df.format(labcase.getReceptionDate()));
+                            billDetail.setPatientName(animal.getName());
+                            billDetail.setTestProfile(test.getTestProfile().getId());
+                            billDetail.setTestDescription(
+                                    test.getTestProfile().getProfile().getDescription());
+                            billDetail.setPrice(
+                                    test.getTestProfile().getProfile().currentPrice().getPrice());
+                            billDetails.add(billDetail);
+                        }
                     }
                 }
             }

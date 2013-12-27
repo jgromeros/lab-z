@@ -11,6 +11,7 @@ public class BillDetailDto {
     private String patientName;
     private BigDecimal price;
     private String comment;
+    private Long testProfile;
 
     public String getLabcaseCode() {
         return labcaseCode;
@@ -66,6 +67,14 @@ public class BillDetailDto {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Long getTestProfile() {
+        return testProfile;
+    }
+
+    public void setTestProfile(Long testProfile) {
+        this.testProfile = testProfile;
     }
 
 }

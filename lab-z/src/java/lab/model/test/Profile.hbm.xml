@@ -14,5 +14,9 @@
 			<key column="profile"/>
 			<many-to-many column="test_description" class="lab.model.test.TestDescription"/>
 		</bag>
+        <bag name="prices" table="prices_by_test_desc" lazy="true">
+            <key column="profile"/>
+            <one-to-many class="lab.model.test.TestPrice"/>
+        </bag>
 	</class>
 </hibernate-mapping>
