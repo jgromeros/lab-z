@@ -8,9 +8,10 @@ import java.util.Date;
 
 import lab.model.animal.Animal;
 import lab.model.labcase.Labcase;
+import lab.model.test.Profile;
 import lab.model.test.Test;
 import lab.model.test.TestDescription;
-import lab.model.test.Profile;
+import lab.model.test.TestProfile;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -41,6 +42,7 @@ public class LabcaseHelper {
     private void persistAnimal(Session session, Animal animal) {
     	for (Test test : animal.getTests()){
     		test.setAnimal(animal);
+    		session.saveOrUpdate(test.getTestProfile());
     		session.saveOrUpdate(test);
     	}
     	session.saveOrUpdate(animal);
@@ -80,6 +82,8 @@ public class LabcaseHelper {
             for (String profileString : profileStrings){
                 Profile profile = (Profile) session.get(
                         Profile.class, Long.valueOf(profileString));
+                TestProfile testProfile = new TestProfile();
+                testProfile.setProfile(profile);
                 for (TestDescription testDescription : profile.getTestDescriptions()){
                     boolean added = false;
                     for(Test t : animal.getTests()){
@@ -89,7 +93,8 @@ public class LabcaseHelper {
                     }
                     if (!added){
                         animal.getTests().add(createTest(session,
-                                testDescription.getId().toString(), animal, discountStrings));
+                                testDescription.getId().toString(), animal, discountStrings,
+                                testProfile));
                     }
                 }
             }
@@ -104,7 +109,7 @@ public class LabcaseHelper {
                 }
                 if (!added){
                     animal.getTests().add(createTest(session, testString, animal,
-                            discountStrings));
+                            discountStrings, null));
                 }
             }
         }
@@ -119,8 +124,9 @@ public class LabcaseHelper {
      * @return
      */
     private Test createTest(Session session, String testString, Animal animal,
-            String[] discountStrings) {
+            String[] discountStrings, TestProfile testProfile) {
         Test test = new Test();
+        test.setTestProfile(testProfile);
         test.setTestDescription((TestDescription)session.get(TestDescription.class,
                 Long.parseLong(testString)));
         test.setAnimal(animal);

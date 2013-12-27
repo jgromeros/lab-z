@@ -20,5 +20,6 @@
 			<one-to-many class="lab.model.test.result.Result"/>
 		</bag>
 		<many-to-one name="animal" class="lab.model.animal.Animal" column="animal"/>
+        <many-to-one name="testProfile" class="lab.model.test.TestProfile" column="test_profile"/>
 	</class>
 </hibernate-mapping>

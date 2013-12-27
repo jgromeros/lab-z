@@ -181,6 +181,14 @@ CREATE TABLE test_description_profile(
 	FOREIGN KEY (test_description) REFERENCES test_description
 );
 
+CREATE SEQUENCE sc_test_profile;
+CREATE TABLE test_profile(
+	id					INTEGER			NOT NULL,
+	profile				INTEGER			NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (profile) REFERENCES profile
+);
+
 CREATE SEQUENCE sc_test;
 CREATE TABLE test(
 	id					INTEGER			NOT NULL,
@@ -190,9 +198,11 @@ CREATE TABLE test(
 	status				CHAR(1)			NOT NULL CHECK(status IN ('R'/*Registered*/, 'C'/*Cancelled*/)),
 	apply_discount		BOOLEAN			DEFAULT FALSE,
 	counter_sample		BOOLEAN			NOT NULL DEFAULT FALSE,
+	test_profile		INTEGER,
 	PRIMARY KEY (id),
 	FOREIGN KEY (animal) REFERENCES animal,
-	FOREIGN KEY (test_description) REFERENCES test_description
+	FOREIGN KEY (test_description) REFERENCES test_description,
+	FOREIGN KEY (test_profile) REFERENCES test_profile
 );
 
 CREATE SEQUENCE sc_assembly_descriptor;
@@ -356,3 +366,4 @@ CREATE TABLE bill_detail(
 	FOREIGN KEY (test) REFERENCES test,
 	FOREIGN KEY (bill) REFERENCES bill
 );
+

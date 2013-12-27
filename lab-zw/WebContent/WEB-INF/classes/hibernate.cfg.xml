@@ -48,5 +48,6 @@
         <mapping resource="lab/model/bill/Bill.hbm.xml"/>
         <mapping resource="lab/model/bill/BillDetail.hbm.xml"/>
         <mapping resource="lab/model/test/Profile.hbm.xml"/>
+        <mapping resource="lab/model/test/TestProfile.hbm.xml"/>
 	</session-factory>
 </hibernate-configuration>
