@@ -47,7 +47,7 @@
 		                   $('<td>' + this.patientName + '</td>').appendTo($row);
 		                   $('<td class="limited">' + this.comment + '</td>').appendTo($row);
 		                   $('<td align="right">' + this.price + '</td>').appendTo($row);
-		                   $('<td><input type="text" id="price' + this.testId + '" name="price' + this.testId + '" size="8"/></td>').appendTo($row);
+		                   $('<td><input type="text" id="price' + this.testId + '&' + this.testProfile + '" name="price' + this.testId + '&' + this.testProfile + '" size="8"/></td>').appendTo($row);
 		            	   $row.appendTo($cases_table);
 	                    });
 		    		    $("#cases_table tr:even").css("background-color", "#EEEEEE");
