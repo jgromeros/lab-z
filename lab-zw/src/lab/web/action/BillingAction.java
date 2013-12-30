@@ -11,6 +11,7 @@ import lab.model.bill.Bill;
 import lab.model.bill.BillDetail;
 import lab.model.enterprise.Enterprise;
 import lab.model.test.Test;
+import lab.model.test.TestProfile;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -63,18 +64,30 @@ public class BillingAction extends Action {
     private Bill createNewBill(Session session, HttpServletRequest request) {
         Enterprise client = (Enterprise) session.get(Enterprise.class,
                 Long.valueOf(request.getParameter("enterprise")));
-        String[] selectedTests = request.getParameterValues("selected");
+        String[] selected = request.getParameterValues("selected");
         Bill bill = new Bill(client);
-        for (String selectedTest : selectedTests){
+        for (String selectedIter : selected){
             BillDetail billDetail = new BillDetail();
             billDetail.setBill(bill);
-            Test test = (Test) session.get(Test.class, Long.valueOf(selectedTest));
-            billDetail.setTest(test);
-            String priceString = request.getParameter("price" + selectedTest);
-            if (StringUtils.isNotBlank(priceString) && StringUtils.isNumeric(priceString)) {
-                billDetail.setPrice(new BigDecimal(request.getParameter("price" + selectedTest)));
+            String priceString = request.getParameter("price" + selectedIter);
+            String[] selectedSplitted = selectedIter.split("&");
+            if (!selectedSplitted[0].equals("undefined")){
+                Test test = (Test) session.get(Test.class, Long.valueOf(selectedSplitted[0]));
+                billDetail.setTest(test);
+                if (StringUtils.isNotBlank(priceString) && StringUtils.isNumeric(priceString)) {
+                    billDetail.setPrice(new BigDecimal(request.getParameter("price" + selectedIter)));
+                } else {
+                    billDetail.setPrice(test.getTestDescription().currentPrice().getPrice());
+                }
             } else {
-                billDetail.setPrice(test.getTestDescription().currentPrice().getPrice());
+                TestProfile testProfile = (TestProfile) session.get(TestProfile.class,
+                        Long.valueOf(selectedSplitted[1]));
+                billDetail.setTestProfile(testProfile);
+                if (StringUtils.isNotBlank(priceString) && StringUtils.isNumeric(priceString)) {
+                    billDetail.setPrice(new BigDecimal(request.getParameter("price" + selectedIter)));
+                } else {
+                    billDetail.setPrice(testProfile.getProfile().currentPrice().getPrice());
+                }
             }
             bill.getBilledDetails().add(billDetail);
         }

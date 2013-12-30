@@ -40,7 +40,7 @@
 		               $header_row.appendTo($cases_table);
 		               $.each(responseJson, function() {
 		            	   var $row = $('<tr></tr>');
-		                   $('<td><input type="checkbox" id="selected" name="selected" checked="checked" value="' + this.testId + '"></td>').appendTo($row);
+		                   $('<td><input type="checkbox" id="selected" name="selected" checked="checked" value="' + this.testId + '&' + this.testProfile + '"></td>').appendTo($row);
 		                   $('<td>' + this.labcaseCode + '</td>').appendTo($row);
 		                   $('<td>' + this.receptionDate + '</td>').appendTo($row);
 		                   $('<td>' + this.testDescription + '</td>').appendTo($row);

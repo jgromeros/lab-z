@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -41,7 +42,7 @@ public class BillingServlet extends HttpServlet {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
         Query hql = session.createQuery("from Labcase l where l.enterpriseSender.id = " +
-        		":enterprise and l.receptionDate between :begin and :end");
+        		":enterprise and l.receptionDate between :begin and :end order by l.id");
         hql.setParameter("enterprise", Long.parseLong(enterprise));
         try {
 	        hql.setParameter("begin", df.parse(beginString));
@@ -51,7 +52,7 @@ public class BillingServlet extends HttpServlet {
         } catch (ParseException e) {
             logger.error(e.getStackTrace());
         }
-        List<BillDetailDto> billDetails = new ArrayList<BillDetailDto>();
+        Set<BillDetailDto> billDetails = new LinkedHashSet<BillDetailDto>();
         for (Labcase labcase: (List<Labcase>)hql.list()){
             mapBillDetails(session, billDetails, labcase, df);
         }
@@ -79,14 +80,16 @@ public class BillingServlet extends HttpServlet {
      * @param labcase
      * @param df
      */
-    private void mapBillDetails(Session session, List<BillDetailDto> billDetails,
+    private void mapBillDetails(Session session, Set<BillDetailDto> billDetails,
             Labcase labcase, DateFormat df) {
         for (Animal animal : labcase.getAnimals()){
             for (Test test : animal.getTests()){
                 if (!Test.CANCELLED.equals(test.getStatus())){
-                    Query query = session.createQuery("from BillDetail bd where bd.test = :test" +
+                    Query query = session.createQuery("from BillDetail bd where (bd.test = :test" +
+                    		" or bd.testProfile = :testProfile)" +
                     		" and bd.bill.status != :cancelledStatus");
                     query.setParameter("test", test);
+                    query.setParameter("testProfile", test.getTestProfile());
                     query.setParameter("cancelledStatus", Bill.CANCELLED);
                     BillDetail detail = (BillDetail) query.uniqueResult();
                     if (detail == null){

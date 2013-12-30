@@ -15,5 +15,7 @@
 				column="test"/>
 		<many-to-one name="bill" class="lab.model.bill.Bill"
 				column="bill"/>
+		<many-to-one name="testProfile" class="lab.model.test.TestProfile"
+				column="test_profile"/>
 	</class>
 </hibernate-mapping>

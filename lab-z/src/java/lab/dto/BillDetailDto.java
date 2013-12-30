@@ -77,4 +77,35 @@ public class BillDetailDto {
         this.testProfile = testProfile;
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((testId == null) ? 0 : testId.hashCode());
+        result = prime * result + ((testProfile == null) ? 0 : testProfile.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        BillDetailDto other = (BillDetailDto) obj;
+        if (testId == null) {
+            if (other.testId != null)
+                return false;
+        } else if (!testId.equals(other.testId))
+            return false;
+        if (testProfile == null) {
+            if (other.testProfile != null)
+                return false;
+        } else if (!testProfile.equals(other.testProfile))
+            return false;
+        return true;
+    }
+
 }
