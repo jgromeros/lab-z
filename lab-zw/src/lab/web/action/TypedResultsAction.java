@@ -225,7 +225,7 @@ public class TypedResultsAction extends Action {
 								for (ResultFactor resultFactor : testDescription.getResultFactors()){
 									if (result.getResultFactor().getId() == resultFactor.getId()){
 										result.setValue(request.getParameter("test" + test.getId() +
-												"factor" + resultFactor.getId()));
+												"factor" + resultFactor.getId()).trim());
 										break;
 									}
 								}
