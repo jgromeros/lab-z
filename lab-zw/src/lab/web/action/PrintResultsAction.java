@@ -81,9 +81,15 @@ public class PrintResultsAction extends Action {
 				    bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, con);
 					getModel().put("report", bytes);
 				} catch (JRException e) {
-                    logger.error(logger.getName() + ": " + e.getStackTrace());
+                    logger.error(logger.getName() + ": " + e.getLocalizedMessage());
+                    for (StackTraceElement ste : e.getStackTrace()){
+                        logger.error(ste);
+                    }
 				} catch (SQLException e) {
-				    logger.error(logger.getName() + ": " + e.getStackTrace());
+				    logger.error(logger.getName() + ": " + e.getLocalizedMessage());
+                    for (StackTraceElement ste : e.getStackTrace()){
+                        logger.error(ste);
+                    }
 				}
 			}
 		}
