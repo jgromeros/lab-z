@@ -42,7 +42,9 @@ public class LabcaseHelper {
     private void persistAnimal(Session session, Animal animal) {
     	for (Test test : animal.getTests()){
     		test.setAnimal(animal);
-    		session.saveOrUpdate(test.getTestProfile());
+    		if (test.getTestProfile() != null){
+    		    session.saveOrUpdate(test.getTestProfile());
+    		}
     		session.saveOrUpdate(test);
     	}
     	session.saveOrUpdate(animal);
