@@ -23,7 +23,8 @@
 
 <jsp:directive.include file="../common/menu.jspf"/>
 <div class="layerder">
-	<table align="center">
+    <p><c:out value="${model.errores }"/></p>
+    <table align="center">
 		<tr>
 			<td>
 				<form id="labcase3Form" name="forma" action="done.htm" method="post">
@@ -32,12 +33,19 @@
 							<td align="center">Digite aqui la información de cada animal</td>
 						</tr>
 						<tr><td><table align="center">
+                            <tr>
+			    				<th colspan="5">Animal</th>
+                                <th>Es Contramuestra?</th>
+                            </tr>
 							<tr>
-			    				<td>Identificación</td>
-			    				<td>Sexo</td>
-			    				<td>Edad</td>
-			    				<td>Raza</td>
-			    				<td>Observaciones</td>
+			    				<th>Identificación</th>
+			    				<th>Sexo</th>
+			    				<th>Edad</th>
+			    				<th>Raza</th>
+			    				<th>Observaciones</th>
+                                <c:forEach var="test" items="${labcase.animals[0].tests }">
+                                    <td><c:out value="${test.testDescription.description }"/></td>
+                                </c:forEach>
 			    			</tr>
 							<c:forEach var="i" begin="${model.nextAnimalIndex }" end="${model.endAnimalIndex }">
 				    			<tr>
@@ -89,8 +97,14 @@
 										</select>
 									</td>
 									<td>
-										<textarea name="notes" rows="1" cols="50"><c:out value="${labcase.animals[i].observations }"/></textarea>
+										<textarea name="notes" rows="1" cols="30"><c:out value="${labcase.animals[i].observations }"/></textarea>
 									</td>
+                                    <c:forEach var="test" items="${labcase.animals[i].tests }">
+                                        <td align="center">
+                                            <input type="checkbox" name="countersample"
+                                                    value="${i }-${test.testDescription.id }">
+                                        </td>
+                                    </c:forEach>
 								</tr>
 							</c:forEach>
 						</table></td></tr>

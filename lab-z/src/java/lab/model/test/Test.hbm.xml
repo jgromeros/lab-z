@@ -10,6 +10,9 @@
 			</generator>
 		</id>
 		<property name="observations" column="observations"/>
+        <property name="status" column="status"/>
+        <property name="counterSample" column="counter_sample"/>
+        <property name="applyDiscount" column="apply_discount"/>
 		<many-to-one name="testDescription" class="lab.model.test.TestDescription"
 				column="test_description"/>
  		<bag name="results" table="result" lazy="false">
@@ -17,5 +20,6 @@
 			<one-to-many class="lab.model.test.result.Result"/>
 		</bag>
 		<many-to-one name="animal" class="lab.model.animal.Animal" column="animal"/>
+        <many-to-one name="testProfile" class="lab.model.test.TestProfile" column="test_profile"/>
 	</class>
 </hibernate-mapping>

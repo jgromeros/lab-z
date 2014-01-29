@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="lab.model.bill.BillDetail" table="bill_detail">
+		<id name="id" column="id">
+			<generator class="sequence">
+				<param name="sequence">sc_bill_detail</param>
+			</generator>
+		</id>
+		<property name="price" column="price"/>
+        <property name="tax" column="tax"/>
+		<many-to-one name="test" class="lab.model.test.Test"
+				column="test"/>
+		<many-to-one name="bill" class="lab.model.bill.Bill"
+				column="bill"/>
+		<many-to-one name="testProfile" class="lab.model.test.TestProfile"
+				column="test_profile"/>
+	</class>
+</hibernate-mapping>

@@ -11,6 +11,35 @@
         <link rel="stylesheet" href="/lab-zw/css/lab-z.css" type="text/css" />
         <link rel="stylesheet" href="/lab-zw/css/capas.css" type="text/css" />
         <link rel="stylesheet" href="/lab-zw/css/menu.css" type="text/css" />
+        <link rel="stylesheet" href="/lab-zw/css/jquery-ui.css" type="text/css" />
+        <script src="/lab-zw/js/jquery-1.10.2.min.js"></script>
+        <script src="/lab-zw/js/jquery-ui.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $( "#dialog-confirm" ).dialog({
+                    resizable: false,
+                    height:140,
+                    modal: true,
+                    autoOpen: false,
+                });
+
+                $( ".cancel" ).click(function(e) {
+                    e.preventDefault();
+                    var hrefAttribute = $(this).attr("href");
+                    $( "#dialog-confirm" ).dialog({
+                        buttons: {
+                            "Cancelar Prueba": function() {
+                                window.location.href = hrefAttribute;
+                            },
+                            "No cancelar": function() {
+                              $( this ).dialog( "close" );
+                            }
+                          }
+                    });
+                    $( "#dialog-confirm" ).dialog( "open" );
+                });
+            });
+        </script>
         <title>Lab-z</title>
     </head>
     <body>
@@ -18,6 +47,9 @@
 
 <jsp:directive.include file="../common/menu.jspf"/>
 <div class="layerder">
+    <div id="dialog-confirm" title="Cancelar Prueba?">
+        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Está seguro que desea cancelar esta prueba? No podrá deshacer este cambio</p>
+    </div>
 	<table>
 		<tr>
 			<td>Registre aqui los resultados</td>

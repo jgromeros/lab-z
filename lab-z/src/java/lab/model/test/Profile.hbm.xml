@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="lab.model.test.Profile" table="profile">
+		<id name="id" column="id">
+			<generator class="sequence">
+				<param name="sequence">sc_profile</param>
+			</generator>
+		</id>
+		<property name="description" column="description"/>
+		<bag name="testDescriptions" table="test_description_profile" lazy="false">
+			<key column="profile"/>
+			<many-to-many column="test_description" class="lab.model.test.TestDescription"/>
+		</bag>
+        <bag name="prices" table="prices_by_test_desc" lazy="true">
+            <key column="profile"/>
+            <one-to-many class="lab.model.test.TestPrice"/>
+        </bag>
+	</class>
+</hibernate-mapping>

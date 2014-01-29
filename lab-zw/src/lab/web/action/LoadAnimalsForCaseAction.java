@@ -66,7 +66,7 @@ public class LoadAnimalsForCaseAction extends Action {
 		Labcase labcase = (Labcase) request.getSession().getAttribute(LABCASE);
 		labcase.setAnimals(animals);
         String[] testStrings = (String[]) request.getSession().getAttribute("testdescriptions");
-        labcaseHelper.initializeTests(session, labcase, testStrings);
+        labcaseHelper.initializeTests(session, labcase, testStrings, null, null);
         labcaseHelper.saveLabcase(session, labcase);
         labcase.setStatus(Labcase.SAVED);
 		return getModel();

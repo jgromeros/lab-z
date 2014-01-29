@@ -17,6 +17,9 @@ public class TestPrice extends Entity {
     private static final long serialVersionUID = 1L;
 
     private BigDecimal price;
+    /**
+     * The value of the tax as a percentage
+     */
     private BigDecimal tax;
     private Date validFrom;
     private Date validUntil;

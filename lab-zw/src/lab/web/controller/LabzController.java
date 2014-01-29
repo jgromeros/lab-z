@@ -83,7 +83,7 @@ public abstract class LabzController extends HttpServlet {
 			tx.commit();
 		} catch (LabcaseException e){
 		    logger.error(logger.getName() + ": Exception occured on lab stuff.");
-            logger.error(logger.getName() + ": " + e.getStackTrace());
+            logger.error(logger.getName() + ": " + e.getMessage());
 			tx.rollback();
 			model = new HashMap<String, Object>();
 			model.put("errores", e.getMessage());

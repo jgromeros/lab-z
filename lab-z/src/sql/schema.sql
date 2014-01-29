@@ -147,6 +147,14 @@ CREATE TABLE assembly_type(
 	PRIMARY KEY (id)
 );
 
+CREATE SEQUENCE sc_profile;
+CREATE TABLE profile(
+	id					INTEGER 		NOT NULL,
+	description			VARCHAR(255)	NOT NULL,
+	PRIMARY KEY (id),
+	UNIQUE (description)
+);
+
 CREATE SEQUENCE sc_test_description;
 CREATE TABLE test_description(
 	id					INTEGER			NOT NULL,
@@ -165,14 +173,36 @@ CREATE TABLE test_description(
 	FOREIGN KEY (assembly_type) REFERENCES assembly_type
 );
 
+CREATE TABLE test_description_profile(
+	profile		INTEGER			NOT NULL,
+	test_description	INTEGER			NOT NULL,
+	PRIMARY KEY (profile, test_description),
+	FOREIGN KEY (profile) REFERENCES profile,
+	FOREIGN KEY (test_description) REFERENCES test_description
+);
+
+CREATE SEQUENCE sc_test_profile;
+CREATE TABLE test_profile(
+	id					INTEGER			NOT NULL,
+	profile				INTEGER			NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (profile) REFERENCES profile
+);
+
 CREATE SEQUENCE sc_test;
 CREATE TABLE test(
 	id					INTEGER			NOT NULL,
 	animal				INTEGER			/*NOT NULL*/,
 	test_description	INTEGER			NOT NULL,
+	observations		TEXT,
+	status				CHAR(1)			NOT NULL CHECK(status IN ('R'/*Registered*/, 'C'/*Cancelled*/)),
+	apply_discount		BOOLEAN			DEFAULT FALSE,
+	counter_sample		BOOLEAN			NOT NULL DEFAULT FALSE,
+	test_profile		INTEGER,
 	PRIMARY KEY (id),
 	FOREIGN KEY (animal) REFERENCES animal,
-	FOREIGN KEY (test_description) REFERENCES test_description
+	FOREIGN KEY (test_description) REFERENCES test_description,
+	FOREIGN KEY (test_profile) REFERENCES test_profile
 );
 
 CREATE SEQUENCE sc_assembly_descriptor;
@@ -295,12 +325,50 @@ CREATE TABLE authorization_codes(
 CREATE SEQUENCE sc_prices_by_test_desc;
 CREATE TABLE prices_by_test_desc(
     id					INTEGER			NOT NULL,
-    test_description	INTEGER			NOT NULL,
+    test_description	INTEGER,
     price				DECIMAL(10,2)	NOT NULL,
     tax					DECIMAL(6,2),
     valid_from			DATE			NOT NULL,
     valid_until			DATE			NOT NULL,
+    profile		INTEGER,
     PRIMARY KEY (id),
     FOREIGN KEY (test_description) REFERENCES test_description,
+    FOREIGN KEY (profile) REFERENCES profile,
     CHECK (valid_from < valid_until)
+    CHECK ((test_description IS NOT NULL AND
+			profile IS NULL) OR
+			(test_description IS NULL AND
+			profile IS NOT NULL))
 );
+
+CREATE SEQUENCE sc_bill;
+CREATE TABLE bill(
+	id					INTEGER			NOT NULL,
+	bill_number			INTEGER			NOT NULL,
+	bill_date			DATE			NOT NULL,
+	client				INTEGER			NOT NULL,
+	total_before_taxes	DECIMAL(12,2)	NOT NULL,
+	total_after_taxes	DECIMAL(12,2)	NOT NULL,
+	status				CHAR(1)			NOT NULL CHECK(status IN ('V'/*Valid*/, 'C'/*Cancelled*/)),
+	PRIMARY KEY (id),
+	UNIQUE (bill_number),
+	FOREIGN KEY (client) REFERENCES enterprise
+);
+
+CREATE SEQUENCE sc_bill_detail;
+CREATE TABLE bill_detail(
+	id					INTEGER			NOT NULL,
+	price				DECIMAL(12,2)	NOT NULL,
+	tax					DECIMAL(6,2),
+	test				INTEGER,
+	bill				INTEGER			NOT NULL,
+	test_profile		INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY (test) REFERENCES test,
+	FOREIGN KEY (bill) REFERENCES bill,
+	CHECK((test IS NOT NULL AND
+			test_profile IS NULL) OR
+			(test IS NULL AND
+			test_profile IS NOT NULL))
+);
+
