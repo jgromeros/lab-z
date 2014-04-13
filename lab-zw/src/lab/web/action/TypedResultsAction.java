@@ -143,8 +143,10 @@ public class TypedResultsAction extends Action {
 							if (result.getResultFactor().getComputedValue() == true &&
 							        result.getResultFactor().getCalculated() == true &&
 							        result.getValue() != null){
-								result.setRelativeValue("" + ((Double.
-								        parseDouble(result.getValue()) * 100) / leucocitos));
+							    Double relativeValue =
+							            ((Double.parseDouble(result.getValue()) * 100) / leucocitos);
+							    relativeValue = Math.round(relativeValue * 100) / 100.0;
+								result.setRelativeValue("" + relativeValue);
 								result.setValue(result.getValue());
 							}
 						}
