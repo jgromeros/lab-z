@@ -92,9 +92,10 @@ public class TypedResultsAction extends Action {
 	            }
 	        }
 		}
-        Animal animal = animals.get(0);
-		for (Test test : animal.getTests()){
-			Hibernate.initialize(test.getTestDescription());
+		for (Animal animal : animals){
+	        for (Test test : animal.getTests()){
+	            Hibernate.initialize(test.getTestDescription());
+	        }		    
 		}
         logger.debug("loadCase finished successfully");
 	}
