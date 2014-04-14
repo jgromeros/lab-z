@@ -64,28 +64,35 @@
 		<tr>
 			<td colspan="2">Seleccione al que desee registrarle los resultados</td>
 		</tr>
-		<c:forEach var="animal" items="${labcase.animals }">
-			<c:set var="animal1" value="${animal }"/>
-		</c:forEach>
-		<c:forEach var="test" items="${animal1.tests }">
-            <tr>
-            	<td><c:out value="${test.testDescription.description }"/></td>
-                <c:if test="${labcase.status == 'S' || labcase.status == 'W' }">
-    				<td>
-    					<a href="testresult.htm?testdesc=<c:out value="${test.testDescription.id }"/>">
-    						<img alt="Editar" src="../img/edit.png" width="16" height="16"/>
-    					</a>
-    				</td>
-    			</c:if>
-    			<c:if test="${(labcase.status == 'W' || labcase.status == 'F') && test.resultsSize > 0 && test.labProfessional != null}">
-    				<td>
-    					<a href="printresults.htm?id=${labcase.id }&test=${test.id }">
-    						<img alt="Imprimir" src="../img/print.png" width="16" height="16"/>
-    					</a>
-    				</td>
-    			</c:if>
-            </tr>
-		</c:forEach>
+		<tr><td>
+			<c:forEach var="animal" items="${labcase.animals }">
+				<table border="1">
+					<tr><td><c:out value="${animal.name }"/></td><td></td></tr>
+					<c:forEach var="test" items="${animal.tests }">
+			            <tr>
+			            	<td class="data"><c:out value="${test.testDescription.description }"/></td>
+			            	<td><table border="0">
+			                <c:if test="${labcase.status == 'S' || labcase.status == 'W' }">
+			    				<td>
+			    					<a href="testresult.htm?testdesc=<c:out value="${test.testDescription.id }"/>">
+			    						<img alt="Editar" src="../img/edit.png" width="16" height="16"/>
+			    					</a>
+			    				</td>
+			    			</c:if>
+			    			<c:if test="${(labcase.status == 'W' || labcase.status == 'F') && test.resultsSize > 0 && test.labProfessional != null}">
+			    				<td>
+			    					<a href="printresults.htm?id=${labcase.id }&test=${test.id }">
+			    						<img alt="Imprimir" src="../img/print.png" width="16" height="16"/>
+			    					</a>
+			    				</td>
+			    			</c:if>
+			    			</table></td>
+			            </tr>
+					</c:forEach>
+				</table>
+				<br/>
+			</c:forEach>
+		</td></tr>
 	</table>
     </div>
     <c:import url="/common/footer.jspf"/>

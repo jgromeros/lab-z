@@ -1,31 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="copro" language="groovy" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ec1b81a6-5fc5-48de-aacc-5fa0fd37a520">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="bill" language="groovy" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ec1b81a6-5fc5-48de-aacc-5fa0fd37a520">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/Users/juanromero/Documents/workspace/lab-zw/WebContent/reports/"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="enterprise" class="java.lang.Long"/>
-	<parameter name="fechaInicio" class="java.util.Date"/>
-	<parameter name="fechaFin" class="java.util.Date"/>
+	<parameter name="billNumber" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[SELECT e.first_name, l.code, l.reception_date, a.name, td.description, p.price
-FROM (labcase l JOIN enterprise e ON l.enterprise = e.id) JOIN (animal a JOIN
-        (test t JOIN (test_description td JOIN prices_by_test_desc p
-                ON td.id = p.test_description) ON t.test_description = td.id)
-        ON a.id = t.animal)
-ON l.id = a.labcase
-WHERE l.enterprise = $P{enterprise}
-        AND l.reception_date BETWEEN $P{fechaInicio} AND $P{fechaFin}
-ORDER BY l.code, td.id]]>
+		<![CDATA[SELECT * FROM (
+SELECT b.bill_number, e.first_name, l.code, l.reception_date, a.name, td.description,
+	bd.price, bd.tax, b.total_before_taxes, b.total_after_taxes
+FROM (bill_detail bd JOIN
+		((test t JOIN (animal a JOIN labcase l ON a.labcase = l.id)
+			ON t.animal = a.id)
+			JOIN test_description td ON t.test_description = td.id)
+		ON bd.test = t.id)
+	JOIN (bill b JOIN enterprise e ON b.client = e.id) ON bd.bill = b.id
+WHERE b.status = 'V'
+	AND b.bill_number = 4
+UNION ALL
+SELECT DISTINCT b.bill_number, e.first_name, l.code, l.reception_date, a.name, p.description,
+	bd.price, bd.tax, b.total_before_taxes, b.total_after_taxes
+FROM (bill_detail bd JOIN
+		((test_profile tp JOIN profile p ON tp.profile = p.id)
+			JOIN (test t JOIN (animal a JOIN labcase l ON a.labcase = l.id)
+				ON t.animal = a.id)
+			ON t.test_profile = tp.id) ON bd.test_profile = tp.id)
+	JOIN (bill b JOIN enterprise e ON b.client = e.id) ON bd.bill = b.id
+WHERE b.status = 'V'
+	AND b.bill_number = $P{billNumber}) AS bills
+ORDER BY 3
+
+]]>
 	</queryString>
+	<field name="bill_number" class="java.lang.Integer"/>
 	<field name="first_name" class="java.lang.String"/>
 	<field name="code" class="java.lang.String"/>
 	<field name="reception_date" class="java.sql.Date"/>
 	<field name="name" class="java.lang.String"/>
 	<field name="description" class="java.lang.String"/>
 	<field name="price" class="java.math.BigDecimal"/>
+	<field name="tax" class="java.math.BigDecimal"/>
+	<field name="total_before_taxes" class="java.math.BigDecimal"/>
+	<field name="total_after_taxes" class="java.math.BigDecimal"/>
 	<variable name="price_1" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{price}]]></variableExpression>
 	</variable>
@@ -58,35 +76,35 @@ ORDER BY l.code, td.id]]>
 	<columnHeader>
 		<band height="26">
 			<staticText>
-				<reportElement uuid="d2667237-3e55-40fc-bfad-527992064147" x="0" y="4" width="90" height="13"/>
+				<reportElement uuid="d2667237-3e55-40fc-bfad-527992064147" x="0" y="4" width="42" height="13"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Código]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="fb9ddd00-36ba-43a5-84bd-725ab01dbeea" x="100" y="4" width="112" height="13"/>
+				<reportElement uuid="fb9ddd00-36ba-43a5-84bd-725ab01dbeea" x="65" y="4" width="112" height="13"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha de recepción]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="372cf4be-5f82-4301-bde4-636c3d98c382" x="223" y="4" width="100" height="13"/>
+				<reportElement uuid="372cf4be-5f82-4301-bde4-636c3d98c382" x="177" y="4" width="61" height="13"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nombre]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="55998b98-1be4-4400-b9e3-fbb83d8d59c2" x="333" y="4" width="100" height="13"/>
+				<reportElement uuid="55998b98-1be4-4400-b9e3-fbb83d8d59c2" x="312" y="4" width="100" height="13"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Prueba]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="1b6e8096-5ed2-4e15-a514-41a1a85fcc3d" x="455" y="4" width="100" height="13"/>
+				<reportElement uuid="1b6e8096-5ed2-4e15-a514-41a1a85fcc3d" x="470" y="4" width="100" height="13"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
@@ -97,27 +115,27 @@ ORDER BY l.code, td.id]]>
 	<detail>
 		<band height="22" splitType="Stretch">
 			<textField>
-				<reportElement uuid="4a5cae6d-4a4b-426e-9456-3408f58961c6" x="0" y="4" width="100" height="13"/>
+				<reportElement uuid="4a5cae6d-4a4b-426e-9456-3408f58961c6" x="0" y="4" width="77" height="13"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="069ce26a-eac3-49d0-bc92-ab5a3f7a088b" x="112" y="4" width="100" height="13"/>
+				<reportElement uuid="069ce26a-eac3-49d0-bc92-ab5a3f7a088b" x="77" y="4" width="100" height="13"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{reception_date}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="e82d1ca7-852b-4211-96df-20c82d273b26" x="223" y="4" width="100" height="13"/>
+				<reportElement uuid="e82d1ca7-852b-4211-96df-20c82d273b26" x="177" y="4" width="100" height="13"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="bcb80479-1c63-41be-9d4b-c64500c089d4" x="333" y="4" width="100" height="13"/>
+				<reportElement uuid="bcb80479-1c63-41be-9d4b-c64500c089d4" x="288" y="4" width="157" height="13"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="dbd4ac16-24a2-44d3-b6fe-9148aa3d543d" x="455" y="4" width="75" height="13"/>
+				<reportElement uuid="dbd4ac16-24a2-44d3-b6fe-9148aa3d543d" x="479" y="4" width="75" height="13"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
 			</textField>
@@ -140,7 +158,7 @@ ORDER BY l.code, td.id]]>
 	<summary>
 		<band height="38">
 			<textField>
-				<reportElement uuid="98b15ae5-465f-4d0f-a91d-d42bc7d974a1" x="430" y="8" width="100" height="13"/>
+				<reportElement uuid="98b15ae5-465f-4d0f-a91d-d42bc7d974a1" x="454" y="8" width="100" height="13"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{price_1}]]></textFieldExpression>
 			</textField>
