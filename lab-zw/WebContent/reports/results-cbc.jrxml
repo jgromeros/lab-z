@@ -107,14 +107,14 @@ ORDER BY a.id, rf.number_order, rf._group, rf.id]]>
 					<text><![CDATA[Fecha de emisión:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="6644c70c-3261-4b50-a112-f92c927621f8" x="197" y="20" width="87" height="13"/>
+					<reportElement uuid="6644c70c-3261-4b50-a112-f92c927621f8" x="360" y="20" width="44" height="13"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Especie:]]></text>
 				</staticText>
 				<textField>
-					<reportElement uuid="033384c2-7bbe-4f64-9625-0122d7489491" x="243" y="20" width="141" height="13"/>
+					<reportElement uuid="033384c2-7bbe-4f64-9625-0122d7489491" x="406" y="20" width="148" height="13"/>
 					<textElement>
 						<font size="9"/>
 					</textElement>
@@ -260,14 +260,14 @@ ORDER BY a.id, rf.number_order, rf._group, rf.id]]>
 					<text><![CDATA[Valor Absoluto]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement uuid="95d7ddbc-a78f-43fc-8bb8-7fc4dad96b2f" x="472" y="20" width="82" height="13"/>
+					<reportElement uuid="95d7ddbc-a78f-43fc-8bb8-7fc4dad96b2f" x="277" y="20" width="82" height="13"/>
 					<textElement>
 						<font size="9"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{medical_history}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="e699077c-8d90-41d1-a4d9-bdbb343e307e" x="388" y="20" width="82" height="13"/>
+					<reportElement uuid="e699077c-8d90-41d1-a4d9-bdbb343e307e" x="193" y="20" width="82" height="13"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>

@@ -8,7 +8,7 @@
 		<defaultValueExpression><![CDATA["/Users/juanromero/Documents/workspace/lab-zw/WebContent/reports/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT l.reception_date, l.code, a.name AS animal, a.age, ra.name AS race,
+		<![CDATA[SELECT l.reception_date, l.code, a.name AS animal, a.age, ra.name AS race, a.medical_history,
         a.gender, e.first_name, p.name AS city, dpt.name AS state, l.zone, l.farm, l.owner,
         lp.first_name || ' ' || lp.last_name AS professional, s.name AS specie, td.description,
         la.description AS area, rf._group, rf.name, rf.unit, r.string_value, r.result_date, l.analysis_purpose,
@@ -38,6 +38,7 @@ ORDER BY a.id, rf.number_order, rf._group]]>
 	<field name="animal" class="java.lang.String"/>
 	<field name="age" class="java.lang.String"/>
 	<field name="race" class="java.lang.String"/>
+	<field name="medical_history" class="java.lang.String"/>
 	<field name="gender" class="java.lang.String"/>
 	<field name="first_name" class="java.lang.String"/>
 	<field name="city" class="java.lang.String"/>
@@ -75,26 +76,26 @@ ORDER BY a.id, rf.number_order, rf._group]]>
 					<text><![CDATA[Entidad:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="a7bade90-ab6c-4cf9-b4b9-86999dbad6d6" x="204" y="42" width="62" height="13"/>
+					<reportElement uuid="a7bade90-ab6c-4cf9-b4b9-86999dbad6d6" x="349" y="42" width="62" height="13"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Propietario:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="1637a598-609a-4e49-9819-aec04f9f0e3a" x="193" y="24" width="46" height="13"/>
+					<reportElement uuid="1637a598-609a-4e49-9819-aec04f9f0e3a" x="366" y="24" width="46" height="13"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Especie:]]></text>
 				</staticText>
 				<textField>
-					<reportElement uuid="5361b612-9fc2-4624-8724-2b72e210b01e" x="241" y="24" width="138" height="13"/>
+					<reportElement uuid="5361b612-9fc2-4624-8724-2b72e210b01e" x="414" y="24" width="138" height="13"/>
 					<textElement/>
 					<textFieldExpression><![CDATA[$F{specie}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="58681a64-154e-4017-b57a-5c58e5cebdbf" x="268" y="42" width="138" height="13"/>
+					<reportElement uuid="58681a64-154e-4017-b57a-5c58e5cebdbf" x="413" y="42" width="138" height="13"/>
 					<textElement/>
 					<textFieldExpression><![CDATA[$F{owner}]]></textFieldExpression>
 				</textField>
@@ -152,38 +153,38 @@ ORDER BY a.id, rf.number_order, rf._group]]>
 					<textFieldExpression><![CDATA[$F{animal}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="96219fe7-c0f5-4cff-a735-9300d76cd541" x="99" y="42" width="30" height="13"/>
+					<reportElement uuid="96219fe7-c0f5-4cff-a735-9300d76cd541" x="244" y="42" width="30" height="13"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Edad:]]></text>
 				</staticText>
 				<textField>
-					<reportElement uuid="49da4422-a219-463a-a647-f9f71d361664" x="131" y="42" width="70" height="13"/>
+					<reportElement uuid="49da4422-a219-463a-a647-f9f71d361664" x="276" y="42" width="70" height="13"/>
 					<textElement/>
 					<textFieldExpression><![CDATA[$F{age}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="2343b997-ec15-4384-bc1c-0b835132fd63" x="2" y="42" width="34" height="13"/>
+					<reportElement uuid="2343b997-ec15-4384-bc1c-0b835132fd63" x="147" y="42" width="34" height="13"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Sexo:]]></text>
 				</staticText>
 				<textField>
-					<reportElement uuid="3decc170-92ba-4866-ba5f-855ac5b4bf9c" x="36" y="42" width="57" height="13"/>
+					<reportElement uuid="3decc170-92ba-4866-ba5f-855ac5b4bf9c" x="181" y="42" width="57" height="13"/>
 					<textElement/>
 					<textFieldExpression><![CDATA[$F{gender}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="35a07dd5-61ef-4dcd-8f30-9f13f2cac3f4" x="379" y="24" width="34" height="13"/>
+					<reportElement uuid="35a07dd5-61ef-4dcd-8f30-9f13f2cac3f4" x="2" y="42" width="30" height="13"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Raza:]]></text>
 				</staticText>
 				<textField>
-					<reportElement uuid="05aae36a-3710-4708-ae3a-d8740a235421" x="413" y="24" width="137" height="13"/>
+					<reportElement uuid="05aae36a-3710-4708-ae3a-d8740a235421" x="34" y="42" width="110" height="13"/>
 					<textElement/>
 					<textFieldExpression><![CDATA[$F{race}]]></textFieldExpression>
 				</textField>
@@ -216,6 +217,20 @@ ORDER BY a.id, rf.number_order, rf._group]]>
 				<rectangle>
 					<reportElement uuid="b0cbbefa-16d6-410f-a2af-347d653aae81" mode="Transparent" x="0" y="0" width="556" height="76"/>
 				</rectangle>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="330ef51b-a92c-455b-93bf-69538259530f" x="272" y="24" width="92" height="13"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{medical_history}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="2a9be710-6683-47f5-b7fd-0f90a3356bfd" x="191" y="24" width="80" height="13"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Historia clínica:]]></text>
+				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
