@@ -9,3 +9,7 @@ td.title{
 td.limited {
 	width: 30%;
 }
+
+td.data {
+	padding-right: 20px;
+}
