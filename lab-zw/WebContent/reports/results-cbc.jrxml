@@ -71,7 +71,7 @@ ORDER BY a.id, rf.number_order, rf._group, rf.id]]>
 		<groupHeader>
 			<band height="112">
 				<staticText>
-					<reportElement uuid="ebcc0bbf-4a2c-4cfc-bf45-80dd8c3ed1b4" x="5" y="7" width="88" height="13"/>
+					<reportElement uuid="ebcc0bbf-4a2c-4cfc-bf45-80dd8c3ed1b4" x="5" y="7" width="92" height="13"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
@@ -134,7 +134,7 @@ ORDER BY a.id, rf.number_order, rf._group, rf.id]]>
 					<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
 				</textField>
 				<textField pattern="dd/MM/yyyy">
-					<reportElement uuid="f15362b6-3eb5-4746-882f-a03f48cb93d2" x="93" y="7" width="100" height="13"/>
+					<reportElement uuid="f15362b6-3eb5-4746-882f-a03f48cb93d2" x="98" y="7" width="96" height="13"/>
 					<textElement>
 						<font size="9"/>
 					</textElement>
