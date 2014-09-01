@@ -34,11 +34,12 @@
 						</tr>
 						<tr><td><table align="center">
                             <tr>
-			    				<th colspan="5">Animal</th>
+			    				<th colspan="6">Animal</th>
                                 <th>Es Contramuestra?</th>
                             </tr>
 							<tr>
 			    				<th>Identificación</th>
+			    				<th>Historia clínica</th>
 			    				<th>Sexo</th>
 			    				<th>Edad</th>
 			    				<th>Raza</th>
@@ -52,6 +53,10 @@
 									<td>
 										<input type="text" id="animalname" name="animalname"
 											size="16" maxlength="32" value="${labcase.animals[i].name }" required/>
+									</td>
+									<td>
+										<input type="text" id="medicalhistory" name="medicalhistory"
+											size="16" maxlength="32" value="${labcase.animals[i].medicalHistory }"/>
 									</td>
 									<td>
 										<select id="gender" name="gender" required>

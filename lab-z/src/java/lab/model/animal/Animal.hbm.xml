@@ -13,6 +13,7 @@
 		<property name="name" column="name"/>
 		<property name="age" column="age"/>
 		<property name="observations" column="observations"/>
+		<property name="medicalHistory" column="medical_history"/>
 		<many-to-one name="race" class="lab.model.animal.Race"
 				column="race"/>
 		<bag name="tests" table="test" lazy="false">

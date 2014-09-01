@@ -247,6 +247,7 @@ public class LabcaseAction extends Action {
 
 	private void loadAnimals(HttpServletRequest request, Session session, Labcase labcase) {
 		String[] names = request.getParameterValues("animalname");
+		String[] medicalHistories = request.getParameterValues("medicalhistory");
 		String[] genders = request.getParameterValues("gender");
 		String[] age = request.getParameterValues("age");
 		String[] races = request.getParameterValues("race");
@@ -257,6 +258,7 @@ public class LabcaseAction extends Action {
 		for (int i = 0; initialIndex + i < animals.size() && initialIndex + i < endIndex; i++){
 			Animal a = (Animal) animals.get(initialIndex + i);
 			a.setName(names[i]);
+			a.setMedicalHistory(medicalHistories[i]);
 			a.setGender(genders[i]);
 			a.setAge(age[i]);
 			a.setRace((Race) session.get(Race.class, Long.parseLong(races[i])));

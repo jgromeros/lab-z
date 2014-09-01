@@ -12,7 +12,6 @@ import lab.model.test.Test;
 /**
  * @author JuanGa
  *
- * TODO
  */
 public class Animal extends NamedEntity {
 
@@ -23,6 +22,7 @@ public class Animal extends NamedEntity {
     private String age;
     private List<Test> tests;
     private String observations;
+    private String medicalHistory;
 
     /**
      * @constructors
@@ -102,5 +102,13 @@ public class Animal extends NamedEntity {
 	public LabProfessional getLabProfessionalForTest(Test test) {
 		return test.getLabProfessional();
 	}
+
+    public String getMedicalHistory() {
+        return medicalHistory;
+    }
+
+    public void setMedicalHistory(String medicalHistory) {
+        this.medicalHistory = medicalHistory;
+    }
 
 }

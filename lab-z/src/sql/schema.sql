@@ -119,6 +119,7 @@ CREATE TABLE animal (
 	labcase				INTEGER			/*NOT NULL*/,
 	gender				CHAR(1)			NOT NULL CHECK(gender IN ('M'/*Macho*/, 'H'/*Hembra*/)),
 	observations		VARCHAR(255),--No sera text?
+	medical_history		VARCHAR(64),
 	position			INTEGER,
 	PRIMARY KEY (id),
 	FOREIGN KEY (race) REFERENCES race,
