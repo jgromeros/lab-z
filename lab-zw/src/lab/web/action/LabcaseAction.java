@@ -40,7 +40,7 @@ import org.hibernate.Transaction;
  */
 public class LabcaseAction extends Action {
 
-    private static Logger logger = Logger.getLogger(LabcaseAction.class);
+    private static final Logger LOGGER = Logger.getLogger(LabcaseAction.class);
 
 	private static final Long REGION = new Long(1);
     private static final Long CITY = new Long(2);
@@ -101,9 +101,9 @@ public class LabcaseAction extends Action {
 	}
 
 	public void showFirstForm(HttpServletRequest request, Session session){
-	    logger.debug("showFirstForm with the following params:");
+	    LOGGER.debug("showFirstForm with the following params:");
 	    for (String paramName : request.getParameterMap().keySet()){
-	        logger.debug(paramName + ": " + request.getParameterMap().get(paramName));
+	        LOGGER.debug(paramName + ": " + request.getParameterMap().get(paramName));
 	    }
 		request.getSession().removeAttribute(LABCASE);
 		if (request.getParameter("code") != null && !request.getParameter("code").isEmpty()){
@@ -127,13 +127,13 @@ public class LabcaseAction extends Action {
 		getModel().put("regions", hql.list());
 		getModel().put("sampleTypes", session.createQuery("from SampleType st order by st.description").list());
 		getModel().put("species", session.createQuery("from Specie s order by s.name").list());
-		logger.debug("showFirstForm finished successfully");
+		LOGGER.debug("showFirstForm finished successfully");
 	}
 
 	public void showSecondForm(HttpServletRequest request, Session session) {
-        logger.debug("showSecondForm with the following params:");
+        LOGGER.debug("showSecondForm with the following params:");
         for (String paramName : request.getParameterMap().keySet()){
-            logger.debug(paramName + ": " + request.getParameterMap().get(paramName)[0]);
+            LOGGER.debug(paramName + ": " + request.getParameterMap().get(paramName)[0]);
         }
         Labcase labcase = (Labcase) request.getSession().getAttribute(LABCASE);
         if (labcase == null)
@@ -143,16 +143,7 @@ public class LabcaseAction extends Action {
         labcase.setAnalysisPurpose(request.getParameter("purpose"));
         labcase.setReproductiveProblem(request.getParameter("problem"));
         int number = Integer.parseInt(request.getParameter("number"));
-        if (labcase.getAnimals() == null){
-			List<Animal> animals = new ArrayList<Animal>();
-	    	for (int i = 0; i < number; i++){
-	    		Animal animal = new Animal();
-	    		animal.setName("" + (i + 1));
-	    		initializeAnimal(session, animal);
-	    		animals.add(animal);
-	    	}
-	    	labcase.setAnimals(animals);
-        }
+        manageAnimals(session, labcase, number);
         request.getSession().setAttribute(LABCASE, labcase);
         Specie selectedSpecie = (Specie) session.get(Specie.class,
         		Long.parseLong(request.getParameter("specie")));
@@ -179,13 +170,13 @@ public class LabcaseAction extends Action {
         getModel().put("testDescriptions", testDescriptions);
         getModel().put("profiles", session.
                 createQuery("from Profile p order by p.description").list());
-        logger.debug("showSecondForm finished successfully");
+        LOGGER.debug("showSecondForm finished successfully");
 	}
 
-	public void showThirdForm(HttpServletRequest request, Session session){
-        logger.debug("showThirdForm with the following params:");
+    public void showThirdForm(HttpServletRequest request, Session session){
+        LOGGER.debug("showThirdForm with the following params:");
         for (String paramName : request.getParameterMap().keySet()){
-            logger.debug(paramName + ": " + request.getParameterMap().get(paramName));
+            LOGGER.debug(paramName + ": " + request.getParameterMap().get(paramName));
         }
         Labcase labcase = (Labcase) request.getSession().getAttribute(LABCASE);
         String[] testStrings = request.getParameterValues("testdesc");
@@ -202,13 +193,13 @@ public class LabcaseAction extends Action {
     	getModel().put("nextAnimalIndex", nextAnimalIndex(request.getParameter("nextAnimalIndex")));
     	getModel().put("endAnimalIndex", endAnimalIndex(request.getParameter("nextAnimalIndex"),
     			labcase.getAnimals().size()));
-        logger.debug("showThirdForm finished successfully");
+        LOGGER.debug("showThirdForm finished successfully");
 	}
 
 	public void saveLabcase(HttpServletRequest request, Session session) {
-        logger.debug("saveLabcase with the following params:");
+        LOGGER.debug("saveLabcase with the following params:");
         for (String paramName : request.getParameterMap().keySet()){
-            logger.debug(paramName + ": " + request.getParameterMap().get(paramName));
+            LOGGER.debug(paramName + ": " + request.getParameterMap().get(paramName));
         }
         Labcase labcase = (Labcase) request.getSession().getAttribute(LABCASE);
         String[] counterSampleStrings = request.getParameterValues("countersample");
@@ -225,7 +216,7 @@ public class LabcaseAction extends Action {
         	labcase.setStatus(Labcase.SAVED);
             request.getSession().removeAttribute(LABCASE);
         }
-        logger.debug("saveLabcase finished successfully");
+        LOGGER.debug("saveLabcase finished successfully");
 	}
 
     private void loadSenderInformation(HttpServletRequest request, Session session, Labcase labcase) {
@@ -366,12 +357,12 @@ public class LabcaseAction extends Action {
     }
 
     private void labcasesToClose(HttpServletRequest request, Session session) {
-        logger.debug("labcasesToClose with the following params:");
+        LOGGER.debug("labcasesToClose with the following params:");
         for (String paramName : request.getParameterMap().keySet()){
-            logger.debug(paramName + ": " + request.getParameterMap().get(paramName));
+            LOGGER.debug(paramName + ": " + request.getParameterMap().get(paramName));
         }
     	getModel().put("labcasesToFinish", labcasesToClose(session));
-        logger.debug("labcasesToClose finished successfully");
+        LOGGER.debug("labcasesToClose finished successfully");
     }
 
     private List<Labcase> labcasesToClose(Session session) {
@@ -382,15 +373,15 @@ public class LabcaseAction extends Action {
     }
 
 	private void closeLabcases(HttpServletRequest request, Session session) {
-        logger.debug("closeLabcases with the following params:");
+        LOGGER.debug("closeLabcases with the following params:");
         for (String paramName : request.getParameterMap().keySet()){
-            logger.debug(paramName + ": " + request.getParameterMap().get(paramName));
+            LOGGER.debug(paramName + ": " + request.getParameterMap().get(paramName));
         }
 		for (Labcase labcase : labcasesToClose(session)){
 			labcase.setStatus(Labcase.FINISHED);
 		    session.saveOrUpdate(labcase);
 		}
-        logger.debug("closeLabcases finished successfully");
+        LOGGER.debug("closeLabcases finished successfully");
 	}
 
 	/**
@@ -410,6 +401,35 @@ public class LabcaseAction extends Action {
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * Allow to create the quantity of animals in the number parameter
+     * @param labcase
+     * @param session
+     * @param number
+     */
+    private void manageAnimals(Session session, Labcase labcase, int number) {
+        List<Animal> animals = labcase.getAnimals();
+        if (animals == null){
+            animals = new ArrayList<Animal>();
+            addAnimals(session, animals, 0, number);
+            labcase.setAnimals(animals);
+        } else if (animals.size() < number) {
+            addAnimals(session, animals, animals.size(), number);
+        }
+    }
+
+    /**
+     * Create and adds an animal to the list of animals.
+     */
+    private void addAnimals(Session session, List<Animal> animals, int currentSize, int number) {
+        for (int i = currentSize; i < number; i++){
+            Animal animal = new Animal();
+            animal.setName("" + (i + 1));
+            initializeAnimal(session, animal);
+            animals.add(animal);
         }
     }
 
