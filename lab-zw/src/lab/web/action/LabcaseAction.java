@@ -310,6 +310,7 @@ public class LabcaseAction extends Action {
     	if (request.getParameter("animalName") != null && !request.getParameter("animalName").isEmpty()) {
     	    query += " join l.animals a where a.name = :animalName";
     	    params.put("animalName", request.getParameter("animalName"));
+    	    withWhere = true;
     	}
     	if (request.getParameter("code") != null && !request.getParameter("code").isEmpty()){
     		query += " where l.code = :code";
