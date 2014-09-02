@@ -305,8 +305,12 @@ public class LabcaseAction extends Action {
     }
 
     private String createQueryForLabcases(HttpServletRequest request, Session session, Map<String, Object> params) {
-    	String query = "from Labcase l";
+    	String query = "select l from Labcase l";
     	boolean withWhere = false;
+    	if (request.getParameter("animalName") != null && !request.getParameter("animalName").isEmpty()) {
+    	    query += " join l.animals a where a.name = :animalName";
+    	    params.put("animalName", request.getParameter("animalName"));
+    	}
     	if (request.getParameter("code") != null && !request.getParameter("code").isEmpty()){
     		query += " where l.code = :code";
     		params.put("code", request.getParameter("code"));

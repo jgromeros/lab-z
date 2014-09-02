@@ -55,6 +55,11 @@
 							</td>
 						</tr>
 						<tr>
+							<td>Nombre animal:</td>
+							<td>
+								<input type="text" name="animalName"
+										size="24" maxlength="128"/>
+							</td>
 							<td>Caso sin registro completo
 								<input type="checkbox" name="finished" value="R"/>
 							</td>
