@@ -3,6 +3,8 @@
  */
 package lab.web.action;
 
+import java.security.Provider;
+import java.security.Security;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,11 +14,10 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
+import javax.mail.URLName;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -35,12 +36,15 @@ import lab.model.sample.SampleType;
 import lab.model.test.Test;
 import lab.model.test.TestDescription;
 import lab.web.helper.LabcaseHelper;
+import lab.web.util.OAuth2SaslClientFactory;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import com.sun.mail.smtp.SMTPTransport;
 
 /**
  * @author juanromero
@@ -65,6 +69,10 @@ public class LabcaseAction extends Action {
     private static final int ANIMALSPERPAGE = 20;
     private static final String FROM = "jgromero@gmail.com";
     private LabcaseHelper labcaseHelper;
+
+    public static void initialize() {
+        Security.addProvider(new OAuth2Provider());
+      }
 
     public LabcaseAction(String actionPath, String action) {
         super(actionPath, action);
@@ -414,6 +422,7 @@ public class LabcaseAction extends Action {
         for (String paramName : request.getParameterMap().keySet()) {
             LOGGER.debug(paramName + ": " + request.getParameterMap().get(paramName));
         }
+        initialize();
         for (Labcase labcase : labcasesToClose(session)) {
             labcase.setStatus(Labcase.FINISHED);
             session.saveOrUpdate(labcase);
@@ -424,30 +433,40 @@ public class LabcaseAction extends Action {
 
     private void sendEmail(Labcase labcase) {
         String to = labcase.getEnterpriseSender().getEmail();
-        String subject = "Java send mail example";
-        String body = "Welcome to JavaMail!";
-        Properties props = System.getProperties();
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.socketFactory.port", "465");
-        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.port", "465");
-        javax.mail.Session session = javax.mail.Session.getDefaultInstance(props,
-                new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("jgromero", "JAXyCaAu723");
-                    }
-                });
+        String subject = "Resultados";
+        String body = "Buen dia,\n\nAdjunto reporte de resultados\n\nCordialmente,\n\nLuisa Acero"
+                + "\nLaboratorio\nVetest";
+        String oauthToken = "ya29.dgCAaigAUeQ4-RoAAABVySSwVT4THjDbWULt1czoAWI4VuCwQblNsahdq18vbg";
+        String host = "smtp.gmail.com";
+        int port = 587;
+        String userEmail = "jgromero@gmail.com";
+        Properties props = new Properties();
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.starttls.required", "true");
+        props.put("mail.smtp.sasl.enable", "true");
+        props.put("mail.smtp.sasl.mechanisms", "XOAUTH2");
+        props.put(OAuth2SaslClientFactory.OAUTH_TOKEN_PROP, oauthToken);
+        javax.mail.Session session = javax.mail.Session.getInstance(props);
+        session.setDebug(Boolean.TRUE);
+        final URLName unusedUrlName = null;
+        SMTPTransport transport = new SMTPTransport(session, unusedUrlName);
+        final String emptyPassword = "";
         try {
+            transport.connect(host, port, userEmail, emptyPassword);
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(FROM));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+            message.setFrom(new InternetAddress("from@no-spam.com"));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse("to@no-spam.com"));
             message.setSubject(subject);
             message.setText(body);
-            Transport.send(message);
+            Address[] addresses = {new InternetAddress(to)};
+            transport.sendMessage(message, addresses);
+            transport.close();
         } catch (MessagingException e) {
-            throw new RuntimeException(e);
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
+
     }
 
     /**
@@ -500,5 +519,16 @@ public class LabcaseAction extends Action {
             animals.add(animal);
         }
     }
+
+    public static final class OAuth2Provider extends Provider {
+        private static final long serialVersionUID = 1L;
+
+        public OAuth2Provider() {
+          super("Google OAuth2 Provider", 1.0,
+                "Provides the XOAUTH2 SASL Mechanism");
+          put("SaslClientFactory.XOAUTH2",
+              "lab.web.util.OAuth2SaslClientFactory");
+        }
+      }
 
 }
