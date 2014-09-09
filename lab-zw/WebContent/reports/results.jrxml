@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="copro" language="groovy" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ec1b81a6-5fc5-48de-aacc-5fa0fd37a520">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="66"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="testNumber" class="java.lang.Long"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
@@ -165,14 +165,14 @@ ORDER BY a.id, rf.number_order, rf._group]]>
 					<textFieldExpression><![CDATA[$F{age}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="2343b997-ec15-4384-bc1c-0b835132fd63" x="147" y="42" width="34" height="13"/>
+					<reportElement uuid="2343b997-ec15-4384-bc1c-0b835132fd63" x="194" y="42" width="30" height="13"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Sexo:]]></text>
 				</staticText>
 				<textField>
-					<reportElement uuid="3decc170-92ba-4866-ba5f-855ac5b4bf9c" x="181" y="42" width="57" height="13"/>
+					<reportElement uuid="3decc170-92ba-4866-ba5f-855ac5b4bf9c" x="224" y="42" width="20" height="13"/>
 					<textElement/>
 					<textFieldExpression><![CDATA[$F{gender}]]></textFieldExpression>
 				</textField>
@@ -184,7 +184,7 @@ ORDER BY a.id, rf.number_order, rf._group]]>
 					<text><![CDATA[Raza:]]></text>
 				</staticText>
 				<textField>
-					<reportElement uuid="05aae36a-3710-4708-ae3a-d8740a235421" x="34" y="42" width="110" height="13"/>
+					<reportElement uuid="05aae36a-3710-4708-ae3a-d8740a235421" x="34" y="42" width="160" height="13"/>
 					<textElement/>
 					<textFieldExpression><![CDATA[$F{race}]]></textFieldExpression>
 				</textField>
@@ -225,7 +225,7 @@ ORDER BY a.id, rf.number_order, rf._group]]>
 					<textFieldExpression><![CDATA[$F{medical_history}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="2a9be710-6683-47f5-b7fd-0f90a3356bfd" x="191" y="24" width="80" height="13"/>
+					<reportElement uuid="2a9be710-6683-47f5-b7fd-0f90a3356bfd" x="190" y="24" width="82" height="13"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>

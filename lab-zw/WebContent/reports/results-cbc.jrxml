@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="results" language="groovy" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e25db974-5923-42a1-b47f-9f4be28bcc53">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="1"/>
+	<property name="ireport.y" value="96"/>
 	<parameter name="testNumber" class="java.lang.Long"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/Users/juanromero/Documents/workspace/lab-zw/WebContent/reports/"]]></defaultValueExpression>
@@ -72,21 +72,21 @@ ORDER BY a.id, rf.number_order, rf._group, rf.id]]>
 		<groupHeader>
 			<band height="97">
 				<staticText>
-					<reportElement uuid="ebcc0bbf-4a2c-4cfc-bf45-80dd8c3ed1b4" x="5" y="4" width="92" height="13"/>
+					<reportElement uuid="ebcc0bbf-4a2c-4cfc-bf45-80dd8c3ed1b4" x="2" y="4" width="96" height="13"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Fecha de ingreso:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="e08b6f29-593f-4c82-a0e6-68752dda1899" x="399" y="3" width="65" height="13"/>
+					<reportElement uuid="e08b6f29-593f-4c82-a0e6-68752dda1899" x="396" y="4" width="67" height="13"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[No. de caso:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="7858c637-5c1a-47fb-9e0b-477d8ad7ae8f" x="5" y="52" width="46" height="13"/>
+					<reportElement uuid="7858c637-5c1a-47fb-9e0b-477d8ad7ae8f" x="2" y="52" width="46" height="13"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
@@ -100,7 +100,7 @@ ORDER BY a.id, rf.number_order, rf._group, rf.id]]>
 					<text><![CDATA[Propietario:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="a30fccdf-d868-46cb-994d-2e4df0079566" x="196" y="3" width="100" height="13"/>
+					<reportElement uuid="a30fccdf-d868-46cb-994d-2e4df0079566" x="196" y="4" width="100" height="13"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
@@ -159,7 +159,7 @@ ORDER BY a.id, rf.number_order, rf._group, rf.id]]>
 					<reportElement uuid="a8763870-6731-4a3f-aadf-78cdcd5f4bb1" mode="Transparent" x="0" y="0" width="554" height="68"/>
 				</rectangle>
 				<staticText>
-					<reportElement uuid="a982d277-90c4-46dd-b482-0b68a718bbfb" x="5" y="20" width="76" height="13"/>
+					<reportElement uuid="a982d277-90c4-46dd-b482-0b68a718bbfb" x="2" y="20" width="76" height="13"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
@@ -187,28 +187,28 @@ ORDER BY a.id, rf.number_order, rf._group, rf.id]]>
 					<textFieldExpression><![CDATA[$F{age}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="d1c6086f-9028-4a96-96fe-1bce304700f3" x="137" y="36" width="34" height="13"/>
+					<reportElement uuid="d1c6086f-9028-4a96-96fe-1bce304700f3" x="192" y="36" width="30" height="13"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Sexo:]]></text>
 				</staticText>
 				<textField>
-					<reportElement uuid="fdf5b592-5700-4f89-9d8a-63086fb6f4da" x="171" y="36" width="57" height="13"/>
+					<reportElement uuid="fdf5b592-5700-4f89-9d8a-63086fb6f4da" x="222" y="36" width="20" height="13"/>
 					<textElement>
 						<font size="9"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{gender}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="d4a034f8-f7a6-4af9-bb36-dcb63c0fc5f7" x="5" y="36" width="30" height="13"/>
+					<reportElement uuid="d4a034f8-f7a6-4af9-bb36-dcb63c0fc5f7" x="2" y="36" width="30" height="13"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Raza:]]></text>
 				</staticText>
 				<textField>
-					<reportElement uuid="14d601dc-0228-4e87-8b5b-25f0ea23b6c2" x="37" y="36" width="98" height="13"/>
+					<reportElement uuid="14d601dc-0228-4e87-8b5b-25f0ea23b6c2" x="32" y="36" width="160" height="13"/>
 					<textElement>
 						<font size="9"/>
 					</textElement>
