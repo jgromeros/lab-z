@@ -103,6 +103,10 @@ public class TypedResultsAction extends Action {
 	/**
 	 * Once the user have selected the test to register results, this method shows the form to fill
 	 * that results.
+	 * showSaveButton is used with two purposes: the first is declared through the name of the
+	 * variable. The second is that it will be true if and only if there is at least one test with
+	 * status different than CANCELLED. So, it will be false if every test from the labcase is
+	 * CANCELLED.
 	 * @param request
 	 */
 	public void loadTest(HttpServletRequest request, Session session){
@@ -130,29 +134,12 @@ public class TypedResultsAction extends Action {
 				        showSaveButton = Boolean.TRUE;
 				    }
 					test = t;
-					Double leucocitos = null;
-					if (test.getResults().size() == 0){
-					    createEmptyResults(session, test);
-					} else {
-						Collections.sort(test.getResults());
-						for (Result result : test.getResults()){
-							if (result.getResultFactor().getId() == 64){//Leucocitos
-								leucocitos = result.getValue() == null ? null :
-								        Double.parseDouble(result.getValue());
-							}
-							if (result.getResultFactor().getComputedValue() == true &&
-							        result.getResultFactor().getCalculated() == true &&
-							        result.getValue() != null){
-							    Double relativeValue =
-							            ((Double.parseDouble(result.getValue()) * 100) / leucocitos);
-							    relativeValue = Math.round(relativeValue * 100) / 100.0;
-								result.setRelativeValue("" + relativeValue);
-								result.setValue(result.getValue());
-							}
-						}
-					}
+					manageTest(session, test);
 				}
 			}
+		}
+		if (!showSaveButton) {
+		    l.setStatus(Labcase.CANCELLED);
 		}
 		getModel().put("showSaveButton", showSaveButton);
 		getModel().put("testDescription", test.getTestDescription().getDescription());
@@ -168,6 +155,35 @@ public class TypedResultsAction extends Action {
 		request.getSession().setAttribute("labcase", l);
         logger.debug("loadTest finished successfully");
 	}
+
+	/**
+	 * Load the results or create empty results to be shown in the page for result registering
+	 * @param session
+	 * @param test
+	 */
+    private void manageTest(Session session, Test test) {
+        Double leucocitos = null;
+        if (test.getResults().size() == 0){
+            createEmptyResults(session, test);
+        } else {
+            Collections.sort(test.getResults());
+            for (Result result : test.getResults()){
+                if (result.getResultFactor().getId() == 64){//Leucocitos
+                    leucocitos = result.getValue() == null ? null :
+                            Double.parseDouble(result.getValue());
+                }
+                if (result.getResultFactor().getComputedValue() == true &&
+                        result.getResultFactor().getCalculated() == true &&
+                        result.getValue() != null){
+                    Double relativeValue =
+                            ((Double.parseDouble(result.getValue()) * 100) / leucocitos);
+                    relativeValue = Math.round(relativeValue * 100) / 100.0;
+                    result.setRelativeValue("" + relativeValue);
+                    result.setValue(result.getValue());
+                }
+            }
+        }
+    }
 
     /**
 	 * Method to retrieve the information of the results of a test and persist it
