@@ -426,7 +426,7 @@ public class LabcaseAction extends Action {
         for (Labcase labcase : labcasesToClose(session)) {
             labcase.setStatus(Labcase.FINISHED);
             session.saveOrUpdate(labcase);
-            sendEmail(labcase);
+//            sendEmail(labcase);
         }
         LOGGER.debug("closeLabcases finished successfully");
     }
