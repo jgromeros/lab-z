@@ -222,72 +222,76 @@ public class TypedResultsAction extends Action {
 						double hematocrito = 0;
 						double hemoglobina = 0;
 						for (Result result : results){
-							if (test.getTestDescription().getId() == 57){//Cuadro hematico
-								if (!result.getResultFactor().getComputedValue() && !result.getResultFactor().getCalculated()){
-								    String resultValue = request.getParameter("test" + test.getId() +
-                                            "factor" + result.getResultFactor().getId()).isEmpty() ?
-                                            null : request.getParameter("test" + test.getId() +
-                                                        "factor" + result.getResultFactor().getId());
-									result.setValue(resultValue);
-									if (result.getResultFactor().getId() == 64){//Leucocitos
-										leucocitos = Double.parseDouble(result.getValue());
-									} else if (result.getResultFactor().getId() == 58){//Hematies
-										hematies = Double.parseDouble(result.getValue());
-									} else if (result.getResultFactor().getId() == 59){//Hematocrito
-										hematocrito = Double.parseDouble(result.getValue());
-									} else if (result.getResultFactor().getId() == 60){//Hemoglobina
-										hemoglobina = Double.parseDouble(result.getValue());
-									}
-								}
-								session.saveOrUpdate(result);
-							} else {
-								for (ResultFactor resultFactor : testDescription.getResultFactors()){
-									if (result.getResultFactor().getId() == resultFactor.getId()){
-										result.setValue(request.getParameter("test" + test.getId() +
-												"factor" + resultFactor.getId()).trim());
-										break;
-									}
-								}
-								session.saveOrUpdate(result);
-							}
+	                        if (!Test.CANCELLED.equals(test.getStatus())){
+    							if (test.getTestDescription().getId() == 57){//Cuadro hematico
+    								if (!result.getResultFactor().getComputedValue() && !result.getResultFactor().getCalculated()){
+    								    String resultValue = request.getParameter("test" + test.getId() +
+                                                "factor" + result.getResultFactor().getId()).isEmpty() ?
+                                                null : request.getParameter("test" + test.getId() +
+                                                            "factor" + result.getResultFactor().getId());
+    									result.setValue(resultValue);
+    									if (result.getResultFactor().getId() == 64){//Leucocitos
+    										leucocitos = Double.parseDouble(result.getValue());
+    									} else if (result.getResultFactor().getId() == 58){//Hematies
+    										hematies = Double.parseDouble(result.getValue());
+    									} else if (result.getResultFactor().getId() == 59){//Hematocrito
+    										hematocrito = Double.parseDouble(result.getValue());
+    									} else if (result.getResultFactor().getId() == 60){//Hemoglobina
+    										hemoglobina = Double.parseDouble(result.getValue());
+    									}
+    								}
+    								session.saveOrUpdate(result);
+    							} else {
+    								for (ResultFactor resultFactor : testDescription.getResultFactors()){
+    									if (result.getResultFactor().getId() == resultFactor.getId()){
+    										result.setValue(request.getParameter("test" + test.getId() +
+    												"factor" + resultFactor.getId()).trim());
+    										break;
+    									}
+    								}
+    								session.saveOrUpdate(result);
+    							}
+	                        }
 						}
-						//Iteracion para los valores calculados
-						if (test.getTestDescription().getId() == 57){//Cuadro hematico
-							for (Result result : results){
-								if (result.getResultFactor().getCalculated() &&
-								        !result.getResultFactor().getComputedValue()){
-									if (result.getResultFactor().getId() == 61){//VCM
-										BigDecimal valor = new BigDecimal(
-										        (hematocrito * 10)/hematies, new MathContext(4));
-										result.setValue(valor.toPlainString());
-									} else if (result.getResultFactor().getId() == 62){//HCM
-										BigDecimal valor = new BigDecimal(
-										        (hemoglobina * 10)/hematies, new MathContext(4));
-										result.setValue(valor.toPlainString());
-									} else if (result.getResultFactor().getId() == 63){//CCMH
-										BigDecimal valor = new BigDecimal(
-										        (hemoglobina * 100)/hematocrito, new MathContext(4));
-										result.setValue(valor.toPlainString());
-									}
-								} else if (result.getResultFactor().getCalculated() &&
-								        result.getResultFactor().getComputedValue()){
-									result.setRelativeValue(request.getParameter("test" +
-									        test.getId() + "relativefactor" +
-									        result.getResultFactor().getId()));
-									BigDecimal valor = new BigDecimal(result.getRelativeValue(),
-									        new MathContext(4));
-									valor = (valor.multiply(new BigDecimal(leucocitos))).
-									        divide(new BigDecimal(100), new MathContext(4));
-									result.setValue(valor.toPlainString());
-								}
-								session.saveOrUpdate(result);
-							}
-						}
+						if (!Test.CANCELLED.equals(test.getStatus())){
+    						//Iteracion para los valores calculados
+    						if (test.getTestDescription().getId() == 57){//Cuadro hematico
+    							for (Result result : results){
+    								if (result.getResultFactor().getCalculated() &&
+    								        !result.getResultFactor().getComputedValue()){
+    									if (result.getResultFactor().getId() == 61){//VCM
+    										BigDecimal valor = new BigDecimal(
+    										        (hematocrito * 10)/hematies, new MathContext(4));
+    										result.setValue(valor.toPlainString());
+    									} else if (result.getResultFactor().getId() == 62){//HCM
+    										BigDecimal valor = new BigDecimal(
+    										        (hemoglobina * 10)/hematies, new MathContext(4));
+    										result.setValue(valor.toPlainString());
+    									} else if (result.getResultFactor().getId() == 63){//CCMH
+    										BigDecimal valor = new BigDecimal(
+    										        (hemoglobina * 100)/hematocrito, new MathContext(4));
+    										result.setValue(valor.toPlainString());
+    									}
+    								} else if (result.getResultFactor().getCalculated() &&
+    								        result.getResultFactor().getComputedValue()){
+    									result.setRelativeValue(request.getParameter("test" +
+    									        test.getId() + "relativefactor" +
+    									        result.getResultFactor().getId()));
+    									BigDecimal valor = new BigDecimal(result.getRelativeValue(),
+    									        new MathContext(4));
+    									valor = (valor.multiply(new BigDecimal(leucocitos))).
+    									        divide(new BigDecimal(100), new MathContext(4));
+    									result.setValue(valor.toPlainString());
+    								}
+    								session.saveOrUpdate(result);
+    							}
+    						}
+                            if (request.getParameter("obs_test" + test.getId())!= null){
+                                test.setObservations(request.getParameter("obs_test" + test.getId()));
+                            }
+    					}
+    					session.update(test);
 					}
-					if (request.getParameter("obs_test" + test.getId())!= null){
-						test.setObservations(request.getParameter("obs_test" + test.getId()));
-					}
-					session.update(test);
 				}
 			}
 		}
