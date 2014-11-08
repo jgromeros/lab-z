@@ -29,7 +29,7 @@
 			<table align="center">
 				<tr>
 					<td>Documento generado con &eacute;xito</td>
-					<td><a href="">Imprimir</a></td>
+					<td><a href="printbill.htm?number=${model.number }">Imprimir</a></td>
 				</tr>
 			</table>
         </div>

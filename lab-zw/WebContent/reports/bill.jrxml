@@ -18,7 +18,7 @@ FROM (bill_detail bd JOIN
 		ON bd.test = t.id)
 	JOIN (bill b JOIN enterprise e ON b.client = e.id) ON bd.bill = b.id
 WHERE b.status = 'V'
-	AND b.bill_number = 4
+	AND b.bill_number = $P{billNumber}
 UNION ALL
 SELECT DISTINCT b.bill_number, e.first_name, l.code, l.reception_date, a.name, p.description,
 	bd.price, bd.tax, b.total_before_taxes, b.total_after_taxes
@@ -30,9 +30,7 @@ FROM (bill_detail bd JOIN
 	JOIN (bill b JOIN enterprise e ON b.client = e.id) ON bd.bill = b.id
 WHERE b.status = 'V'
 	AND b.bill_number = $P{billNumber}) AS bills
-ORDER BY 3
-
-]]>
+ORDER BY 3]]>
 	</queryString>
 	<field name="bill_number" class="java.lang.Integer"/>
 	<field name="first_name" class="java.lang.String"/>
@@ -134,7 +132,7 @@ ORDER BY 3
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="¤ #,##0.00">
 				<reportElement uuid="dbd4ac16-24a2-44d3-b6fe-9148aa3d543d" x="479" y="4" width="75" height="13"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
@@ -157,7 +155,7 @@ ORDER BY 3
 	</pageFooter>
 	<summary>
 		<band height="38">
-			<textField>
+			<textField pattern="¤ #,##0.00">
 				<reportElement uuid="98b15ae5-465f-4d0f-a91d-d42bc7d974a1" x="454" y="8" width="100" height="13"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{price_1}]]></textFieldExpression>

@@ -4,6 +4,7 @@ import javax.servlet.ServletException;
 
 import lab.web.action.BillingAction;
 import lab.web.action.EnterpriseAction;
+import lab.web.action.PrintBillAction;
 
 /**
  * The task of this controller is to allow the creation/edition/deletion of
@@ -31,6 +32,9 @@ public class ParamsController extends LabzController {
         BillingAction saveBillAction = new BillingAction(BILL_ACTION_PATH,
                 BillingAction.SAVE);
         actions.put(saveBillAction.nameToString(), saveBillAction);
+        PrintBillAction printBillAction = new PrintBillAction(BILL_ACTION_PATH,
+                BillingAction.PRINT, this);
+        actions.put(printBillAction.nameToString(), printBillAction);
 	}
 
 }

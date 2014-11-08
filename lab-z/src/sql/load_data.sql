@@ -146,6 +146,8 @@ INSERT INTO sections (name, url, order_number) VALUES ('Resultados montaje', '/l
 INSERT INTO sections (name, url, order_number) VALUES ('Banco de sueros', '/lab-zw/bank/labcases.htm', 7);
 INSERT INTO sections (name, order_number) VALUES ('Par�metros', 8);
 INSERT INTO sections (name, url, order_number, parent_section) VALUES ('Listar Bancos', '/lab-zw/bank/banklist.htm', 1, 8);
+INSERT INTO sections (name, url, order_number) VALUES ('Cerrar Casos', '/lab-zw/labcase/closure.htm', 9);
+INSERT INTO sections (name, url) VALUES ('Listado exámenes', '/lab-zw/admin/bill/selecting.htm');
 INSERT INTO sections_roles (section, role) VALUES (1, 'admin');
 INSERT INTO sections_roles (section, role) VALUES (2, 'admin');
 INSERT INTO sections_roles (section, role) VALUES (2, 'auxiliar');
@@ -156,6 +158,7 @@ INSERT INTO sections_roles (section, role) VALUES (6, 'admin');
 INSERT INTO sections_roles (section, role) VALUES (7, 'admin');
 INSERT INTO sections_roles (section, role) VALUES (8, 'admin');
 INSERT INTO sections_roles (section, role) VALUES (9, 'admin');
+INSERT INTO sections_roles (section, role) VALUES (11, 'admin');
 
 INSERT INTO application_owner (nit, name, address, phone, fax, authorized_tests, webpage)
 VALUES ('1', 'CEV', '', '', '',

@@ -29,6 +29,7 @@ public class BillingAction extends Action {
 
     public static final String SELECT = "selecting";
     public static final String SAVE = "billed";
+    public static final String PRINT = "printbill";
 
 	public BillingAction(String actionPath, String action) {
 		super(actionPath, action);
@@ -48,6 +49,9 @@ public class BillingAction extends Action {
         } else if (request.getRequestURI().contains(SAVE)){
             Bill bill = createNewBill(session, request);
             session.save(bill);
+            getModel().put("number", bill.getBillNumber());
+        } else if (request.getRequestURI().contains(PRINT)){
+            
         }
         logger.debug(logger.getName() + ": perform finished successfully");
 		return getModel();
