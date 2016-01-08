@@ -189,7 +189,7 @@ public class LabcaseAction extends Action {
         }
         getModel().put("testDescriptions", testDescriptions);
         getModel().put("profiles",
-                session.createQuery("from Profile p order by p.description").list());
+                session.createQuery("from Profile p where p.enabled = true order by p.description").list());
         LOGGER.debug("showSecondForm finished successfully");
     }
 

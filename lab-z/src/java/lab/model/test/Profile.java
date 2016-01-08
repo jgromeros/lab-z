@@ -15,6 +15,7 @@ public class Profile extends DescribedEntity{
 
     private static final long serialVersionUID = 1L;
 
+    public Boolean enabled;
     private List<TestDescription> testDescriptions;
     private List<TestPrice> prices;
 
@@ -32,6 +33,14 @@ public class Profile extends DescribedEntity{
         }
         throw new LabcaseException(LabcaseUtils.createMessage(
                 "No existe precio definido para perfil {0}", this.getDescription()));
+    }
+
+    public Boolean getEnabled() {
+       return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 
     public List<TestDescription> getTestDescriptions() {

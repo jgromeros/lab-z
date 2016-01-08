@@ -152,6 +152,7 @@ CREATE SEQUENCE sc_profile;
 CREATE TABLE profile(
 	id					INTEGER 		NOT NULL,
 	description			VARCHAR(255)	NOT NULL,
+	enabled				BOOLEAN			NOT NULL,
 	PRIMARY KEY (id),
 	UNIQUE (description)
 );

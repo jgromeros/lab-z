@@ -10,6 +10,7 @@
 			</generator>
 		</id>
 		<property name="description" column="description"/>
+		<property name="enabled" column="enabled"/>
 		<bag name="testDescriptions" table="test_description_profile" lazy="false">
 			<key column="profile"/>
 			<many-to-many column="test_description" class="lab.model.test.TestDescription"/>
