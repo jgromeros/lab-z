@@ -24,6 +24,7 @@ CREATE TABLE enterprise(
 	last_name			VARCHAR(64),--Realmente se va a utilizar?
 	first_name			VARCHAR(128)		NOT NULL,
 	address				VARCHAR(255),
+	city				VARCHAR(64),
 	phone				VARCHAR(16),
 	email				VARCHAR(64),
 	numero_ica			VARCHAR(32),

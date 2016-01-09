@@ -21,6 +21,7 @@ public class Enterprise extends NamedEntity {
     private String lastName;
     private String phone;
     private String address;
+    private String city;
     private String email;
     private String numeroICA;
 
@@ -79,6 +80,20 @@ public class Enterprise extends NamedEntity {
 	public String getAddress() {
 		return address;
 	}
+
+    /**
+     * @return the city
+     */
+    public String getCity() {
+        return city;
+    }
+
+    /**
+     * @param city the city to set
+     */
+    public void setCity(String city) {
+        this.city = city;
+    }
 
 	/**
 	 * @param email the email to set

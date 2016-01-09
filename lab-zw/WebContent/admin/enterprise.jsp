@@ -52,13 +52,18 @@
 											<input type="text" id="address" name="address"
 													value="${model.enterprise.address }" size="32" maxlength="255"/>
 										</td>
+										<td>Ciudad:</td>
+										<td>
+											<input type="text" id="city" name="city"
+													value="${model.enterprise.city }" size="32" maxlength="64"/>
+										</td>
+									</tr>
+									<tr>
 										<td>Tel&eacute;fono:</td>
 										<td>
 											<input type="text" id="phone" name="phone"
 													value="${model.enterprise.phone }" size="32" maxlength="16"/>
 										</td>
-									</tr>
-									<tr>
 										<td>Correo electr&oacute;nico:</td>
 										<td>
 											<input type="text" id="email" name="email"

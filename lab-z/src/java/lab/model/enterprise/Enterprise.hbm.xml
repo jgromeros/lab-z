@@ -13,6 +13,7 @@
 		<property name="name" column="first_name"/>
 		<property name="lastName" column="last_name"/>
 		<property name="address" column="address"/>
+		<property name="city" column="city"/>
 		<property name="phone" column="phone"/>
 		<property name="email" column="email"/>
 		<property name="numeroICA" column="numero_ica"/>

@@ -45,6 +45,7 @@ public class EnterpriseAction extends Action {
 				        Long.parseLong(request.getParameter("idnumber")));
 				enterprise.setName(request.getParameter("name"));
 				enterprise.setAddress(request.getParameter("address"));
+				enterprise.setCity(request.getParameter("city"));
 				enterprise.setPhone(request.getParameter("phone"));
 				enterprise.setEmail(request.getParameter("email"));
 				enterprise.setId(request.getParameter("id").isEmpty() ? null :
