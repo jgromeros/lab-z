@@ -50,7 +50,7 @@ public class Bill extends Entity {
     public void computeTotalBeforeTaxes() {
         totalBeforeTaxes = new BigDecimal(0);
         for (BillDetail billDetail : billedDetails){
-            totalBeforeTaxes = totalBeforeTaxes.add(billDetail.getPrice());
+            totalBeforeTaxes = totalBeforeTaxes.add(billDetail.computeTaxes());
         }
     }
 
@@ -60,7 +60,7 @@ public class Bill extends Entity {
     public void computeTotalAfterTaxes() {
         totalAfterTaxes = new BigDecimal(0);
         for (BillDetail billDetail : billedDetails){
-            totalAfterTaxes = totalAfterTaxes.add(billDetail.computeTotalPrice());
+            totalAfterTaxes = totalAfterTaxes.add(billDetail.getPrice());
         }
     }
 

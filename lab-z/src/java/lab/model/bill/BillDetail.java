@@ -23,13 +23,11 @@ public class BillDetail extends Entity {
 	private TestProfile testProfile;
 
 	/**
-	 * Compute the total value with taxes.
-	 * Preconditions:
-	 * - The tax saved is the value of the taxes, not the percentage.
+	 * Compute the total value after subtracting taxes.
 	 * @return the price with taxes applied
 	 */
-    public BigDecimal computeTotalPrice() {
-        return tax == null ? price : price.add(computeTax());
+    public BigDecimal computeTaxes() {
+        return price.subtract(computeTax());
     }
 
     /**
@@ -37,8 +35,10 @@ public class BillDetail extends Entity {
      * @return
      */
     private BigDecimal computeTax() {
-        tax = price.multiply(test.getTestDescription().currentPrice().getTax()).
-                divide(new BigDecimal(100));
+        BigDecimal taxRate = test != null ? test.getTestDescription().currentPrice().getTax() :
+                testProfile.getProfile().currentPrice().getTax();
+        tax = taxRate == null ? new BigDecimal(0) : 
+                price.multiply(taxRate).divide(new BigDecimal(100));
         return tax;
     }
 
