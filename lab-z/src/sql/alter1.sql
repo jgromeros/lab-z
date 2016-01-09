@@ -107,3 +107,5 @@ INSERT INTO prices_by_test_desc (id, valid_from, valid_until, profile, price) VA
 (nextval('sc_prices_by_test_desc'), '2016-01-01', '2017-12-31',43,40000),
 (nextval('sc_prices_by_test_desc'), '2016-01-01', '2017-12-31',44,80000),
 (nextval('sc_prices_by_test_desc'), '2016-01-01', '2017-12-31',45,30000);
+
+UPDATE prices_by_test_desc SET tax = 16 WHERE valid_until = '2017-12-31';
