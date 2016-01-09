@@ -1,6 +1,8 @@
 package lab.model.bill;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 
 import lab.model.Entity;
 import lab.model.test.Test;
@@ -37,31 +39,31 @@ public class BillDetail extends Entity {
     private BigDecimal computeTax() {
         BigDecimal taxRate = test != null ? test.getTestDescription().currentPrice().getTax() :
                 testProfile.getProfile().currentPrice().getTax();
-        tax = taxRate == null ? new BigDecimal(0) : 
-                price.multiply(taxRate).divide(new BigDecimal(100));
+        tax = taxRate == null ? new BigDecimal(0) : price.subtract(price.divide(
+                taxRate.divide(new BigDecimal(100)).add(new BigDecimal(1)), 2, RoundingMode.HALF_UP));
         return tax;
     }
 
     public Bill getBill() {
     	return bill;
     }
-	
+
     public void setBill(Bill bill) {
     	this.bill = bill;
     }
-	
+
     public Test getTest() {
     	return test;
     }
-	
+
     public void setTest(Test test) {
     	this.test = test;
     }
-	
+
     public BigDecimal getPrice() {
     	return price;
     }
-	
+
     public void setPrice(BigDecimal price) {
     	this.price = price;
     }
