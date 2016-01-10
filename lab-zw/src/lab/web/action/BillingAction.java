@@ -1,5 +1,6 @@
 package lab.web.action;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Map;
 
@@ -67,7 +68,8 @@ public class BillingAction extends Action {
 	 */
     private Bill createNewBill(Session session, HttpServletRequest request) {
         Enterprise client = (Enterprise) session.get(Enterprise.class,
-                Long.valueOf(request.getParameter("enterprise")));
+                Long.parseLong((String)request.getSession().getAttribute("billingClient")));
+        request.getSession().removeAttribute("billingClient");
         String[] selected = request.getParameterValues("selected");
         Bill bill = new Bill(client);
         for (String selectedIter : selected){

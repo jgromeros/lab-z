@@ -56,6 +56,9 @@ public class BillingServlet extends HttpServlet {
         for (Labcase labcase: (List<Labcase>)hql.list()){
             mapBillDetails(session, billDetails, labcase, df);
         }
+        if (!billDetails.isEmpty()) {
+            request.getSession().setAttribute("billingClient", enterprise);
+        }
         tx.commit();
         sendJsonResponse(response, billDetails);
     }

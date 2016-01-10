@@ -54,6 +54,7 @@
 			            var $div = $('#billingButton');
 			               $div.find('input').remove();
 			               if (responseJson.length != 0) {
+			            	   $('<input type="hidden" id="client" name="client"/>').appendTo($div);
 				               $('<input type="submit" id="generateAction" name="action" value="Generar"/>').appendTo($div);
 			               }
 		            });
