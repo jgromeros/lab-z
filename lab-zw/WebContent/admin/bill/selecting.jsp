@@ -51,6 +51,11 @@
 		            	   $row.appendTo($cases_table);
 	                    });
 		    		    $("#cases_table tr:even").css("background-color", "#EEEEEE");
+			            var $div = $('#billingButton');
+			               $div.find('input').remove();
+			               if (responseJson.length != 0) {
+				               $('<input type="submit" id="generateAction" name="action" value="Generar"/>').appendTo($div);
+			               }
 		            });
 		        });
 		    });
@@ -125,7 +130,8 @@
                                 </tr>
 								<tr align="center">
 									<td>
-										<input type="submit" id="generateAction" name="action" value="Generar"/>
+										<div id="billingButton">
+										</div>
 									</td>
 								</tr>
 							</table>
