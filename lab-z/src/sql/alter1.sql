@@ -114,4 +114,4 @@ ALTER TABLE enterprise ADD COLUMN city VARCHAR(64);
 
 ALTER TABLE bill_detail ALTER COLUMN tax TYPE NUMERIC(12,2);
 
-UPDATE sequential_numbers SET seq_number = 6 WHERE id = 2;
+UPDATE sequential_numbers SET seq_number = 0 WHERE id = 2;
