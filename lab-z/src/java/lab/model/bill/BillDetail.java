@@ -40,7 +40,7 @@ public class BillDetail extends Entity {
         BigDecimal taxRate = test != null ? test.getTestDescription().currentPrice().getTax() :
                 testProfile.getProfile().currentPrice().getTax();
         tax = taxRate == null ? new BigDecimal(0) : price.subtract(price.divide(
-                taxRate.divide(new BigDecimal(100)).add(new BigDecimal(1)), 2, RoundingMode.HALF_UP));
+                taxRate.divide(new BigDecimal(100)).add(new BigDecimal(1)), 0, RoundingMode.HALF_UP));
         return tax;
     }
 
