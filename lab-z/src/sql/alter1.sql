@@ -113,3 +113,5 @@ UPDATE prices_by_test_desc SET tax = 16 WHERE valid_until = '2017-12-31';
 ALTER TABLE enterprise ADD COLUMN city VARCHAR(64);
 
 ALTER TABLE bill_detail ALTER COLUMN tax TYPE NUMERIC(12,2);
+
+UPDATE sequential_numbers SET seq_number = 6 WHERE id = 2;
