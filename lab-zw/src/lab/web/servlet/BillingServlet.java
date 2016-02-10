@@ -1,6 +1,7 @@
 package lab.web.servlet;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import lab.dto.BillDetailDto;
+import lab.exceptions.LabcaseException;
 import lab.model.animal.Animal;
 import lab.model.bill.Bill;
 import lab.model.bill.BillDetail;
@@ -104,7 +106,12 @@ public class BillingServlet extends HttpServlet {
                             billDetail.setPatientName(animal.getName());
                             billDetail.setTestId(test.getId());
                             billDetail.setTestDescription(test.getTestDescription().getDescription());
-                            billDetail.setPrice(test.getTestDescription().currentPrice().getPrice());
+                            try {
+                                billDetail.setPrice(test.getTestDescription().currentPrice().getPrice());                                
+                            } catch (LabcaseException e) {
+                                logger.warn(e);
+                                billDetail.setPrice(new BigDecimal("0"));
+                            }
                             billDetails.add(billDetail);
                         } else {
                             BillDetailDto billDetail = new BillDetailDto();
@@ -115,8 +122,13 @@ public class BillingServlet extends HttpServlet {
                             billDetail.setTestProfile(test.getTestProfile().getId());
                             billDetail.setTestDescription(
                                     test.getTestProfile().getProfile().getDescription());
-                            billDetail.setPrice(
-                                    test.getTestProfile().getProfile().currentPrice().getPrice());
+                            try {
+                                billDetail.setPrice(
+                                        test.getTestProfile().getProfile().currentPrice().getPrice());
+                            } catch (LabcaseException e) {
+                                logger.warn(e);
+                                billDetail.setPrice(new BigDecimal("0"));
+                            }
                             billDetails.add(billDetail);
                         }
                     }

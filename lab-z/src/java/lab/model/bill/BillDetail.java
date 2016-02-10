@@ -1,12 +1,15 @@
 package lab.model.bill;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 
+import lab.config.ConfigUtil;
+import lab.exceptions.LabcaseException;
 import lab.model.Entity;
 import lab.model.test.Test;
 import lab.model.test.TestProfile;
+
+import org.apache.log4j.Logger;
 
 /**
  * This class represents the detail of a bill. It is not a real bill yet. It is just the
@@ -17,6 +20,10 @@ import lab.model.test.TestProfile;
 public class BillDetail extends Entity {
 
 	private static final long serialVersionUID = 1L;
+
+	private static final String DEFAULT_TAX = "default.tax";
+
+    private static Logger logger = Logger.getLogger(BillDetail.class);
 
 	private Bill bill;
 	private Test test;
@@ -29,7 +36,11 @@ public class BillDetail extends Entity {
 	 * @return the price with taxes applied
 	 */
     public BigDecimal computeTaxes() {
-        return price.subtract(computeTax());
+        try {
+            return price.subtract(computeTax());
+        } catch (LabcaseException e) {
+            return getDefaultTax();
+        }
     }
 
     /**
@@ -37,11 +48,21 @@ public class BillDetail extends Entity {
      * @return
      */
     private BigDecimal computeTax() {
-        BigDecimal taxRate = test != null ? test.getTestDescription().currentPrice().getTax() :
-                testProfile.getProfile().currentPrice().getTax();
+        BigDecimal taxRate = null;
+        try {
+            taxRate = test != null ? test.getTestDescription().currentPrice().getTax() :
+                    testProfile.getProfile().currentPrice().getTax();
+        } catch (LabcaseException e) {
+            logger.warn(e);
+            taxRate = getDefaultTax();
+        }
         tax = taxRate == null ? new BigDecimal(0) : price.subtract(price.divide(
                 taxRate.divide(new BigDecimal(100)).add(new BigDecimal(1)), 0, RoundingMode.HALF_UP));
         return tax;
+    }
+
+    public BigDecimal getDefaultTax() {
+        return new BigDecimal(ConfigUtil.getProperty(DEFAULT_TAX));
     }
 
     public Bill getBill() {
