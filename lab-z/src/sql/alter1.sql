@@ -115,3 +115,18 @@ ALTER TABLE enterprise ADD COLUMN city VARCHAR(64);
 ALTER TABLE bill_detail ALTER COLUMN tax TYPE NUMERIC(12,2);
 
 UPDATE sequential_numbers SET seq_number = 0 WHERE id = 2;
+
+UPDATE test_description_profile SET test_description = 124 WHERE profile = 21 AND test_description = 52;
+UPDATE test_description_profile SET test_description = 124 WHERE profile = 22 AND test_description = 52;
+UPDATE test_description_profile SET test_description = 124 WHERE profile = 23 AND test_description = 52;
+UPDATE test_description_profile SET test_description = 124 WHERE profile = 25 AND test_description = 52;
+UPDATE test_description_profile SET test_description = 124 WHERE profile = 26 AND test_description = 52;
+UPDATE test_description_profile SET test_description = 124 WHERE profile = 31 AND test_description = 52;
+UPDATE test_description_profile SET test_description = 124 WHERE profile = 32 AND test_description = 52;
+UPDATE test_description_profile SET test_description = 124 WHERE profile = 33 AND test_description = 52;
+UPDATE test_description_profile SET test_description = 124 WHERE profile = 34 AND test_description = 52;
+UPDATE test_description_profile SET test_description = 124 WHERE profile = 35 AND test_description = 52;
+UPDATE test_description_profile SET test_description = 124 WHERE profile = 36 AND test_description = 52;
+UPDATE test_description_profile SET test_description = 124 WHERE profile = 38 AND test_description = 52;
+UPDATE test_description_profile SET test_description = 124 WHERE profile = 40 AND test_description = 52;
+UPDATE test_description_profile SET test_description = 94 WHERE profile = 17 AND test_description = 95;
