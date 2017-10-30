@@ -272,7 +272,7 @@ ORDER BY 3]]>
 			</textField>
 			<staticText>
 				<reportElement x="2" y="2" width="560" height="16" uuid="abb8a1af-966c-4b0e-bb6d-7f1ae723369f"/>
-				<text><![CDATA[Resolución DIAN No. 320001319029 de 01/10/2015 autoriza factura desde No. 1 hasta No. 5000]]></text>
+				<text><![CDATA[Resolución DIAN No. 18762005299507 de 19/10/2017 autoriza factura desde No. 285 hasta No. 5000]]></text>
 			</staticText>
 		</band>
 	</pageFooter>
