@@ -26,8 +26,9 @@ public class LabcaseHelper {
 	    saveAnimals(session, labcase);
 	    if (labcase.getId() == null){
 	        labcase.setReceptionDate(new Date());
-	        Query hql = session.createQuery("from Labcase l");
-	        labcase.setCode("" + (hql.list().size() + 1));
+            int code = (Integer) session.
+                    createSQLQuery("SELECT numero_foliado(3)").uniqueResult();
+            labcase.setCode("" + code);
 	    	labcase.setStatus(Labcase.REGISTERING);
 	    }
 	    session.saveOrUpdate(labcase);
