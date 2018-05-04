@@ -64,6 +64,8 @@ public class EnterpriseAction extends Action {
 		    Enterprise enterprise = (Enterprise) session.get(Enterprise.class,
 		            Long.parseLong(request.getParameter("id")));
 		    getModel().put("enterprise", enterprise);
+		} else {
+		    getModel().remove("enterprise");
 		}
         logger.debug(logger.getName() + ": perform finished successfully");
 		return getModel();
