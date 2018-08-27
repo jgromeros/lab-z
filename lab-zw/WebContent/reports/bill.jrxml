@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="bill" language="groovy" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ec1b81a6-5fc5-48de-aacc-5fa0fd37a520">
 	<property name="ireport.zoom" value="1.1000000000000005"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="187"/>
+	<property name="ireport.y" value="204"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/Users/juanromero/Documents/workspace/lab-zw/WebContent/reports/"]]></defaultValueExpression>
 	</parameter>
@@ -67,7 +67,7 @@ ORDER BY 3]]>
 				<reportElement x="412" y="70" width="160" height="16" uuid="fe084d92-1910-45e1-8e68-f4e289ae3833"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="69" width="264" height="82" uuid="20686f11-5e70-4e06-92ec-6b659c792526"/>
+				<reportElement x="0" y="69" width="306" height="82" uuid="20686f11-5e70-4e06-92ec-6b659c792526"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="167" y="9" width="311" height="16" uuid="40cd89c3-33d7-42d0-89f6-98b9fb066c1d"/>
@@ -86,27 +86,27 @@ ORDER BY 3]]>
 				<textFieldExpression><![CDATA[$F{first_name}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="1" y="70" width="263" height="16" uuid="4a457c77-c8eb-4ae6-88e2-bad835aa6e74"/>
+				<reportElement x="1" y="70" width="304" height="16" uuid="4a457c77-c8eb-4ae6-88e2-bad835aa6e74"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<text><![CDATA[VETEST SAS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1" y="86" width="263" height="16" uuid="9bd36c57-54f9-4750-82f2-5b2250d81fad"/>
+				<reportElement x="1" y="86" width="304" height="16" uuid="9bd36c57-54f9-4750-82f2-5b2250d81fad"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<text><![CDATA[NIT: 900884645-8]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1" y="102" width="263" height="16" uuid="902a0007-2ab2-4c79-af89-2727b1cc1e82"/>
+				<reportElement x="1" y="102" width="304" height="16" uuid="902a0007-2ab2-4c79-af89-2727b1cc1e82"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<text><![CDATA[Dirección: CALE 24D No. 43A-39, Bogotá, Colombia]]></text>
+				<text><![CDATA[Dirección: CALE 24D No. 43A-32 Local 2, Bogotá, Colombia]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1" y="118" width="263" height="16" uuid="92a3e018-7e3b-45ea-8a81-149c9dcfadde"/>
+				<reportElement x="1" y="118" width="304" height="16" uuid="92a3e018-7e3b-45ea-8a81-149c9dcfadde"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<text><![CDATA[Correo electrónico: laboratorio.vetest@gmail.com]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1" y="134" width="263" height="16" uuid="d2c96973-a4d8-4a74-afc7-31a9456704e6"/>
+				<reportElement x="1" y="134" width="304" height="16" uuid="d2c96973-a4d8-4a74-afc7-31a9456704e6"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<text><![CDATA[Telefono: +57(1)5702526]]></text>
 			</staticText>
@@ -273,6 +273,10 @@ ORDER BY 3]]>
 			<staticText>
 				<reportElement x="2" y="2" width="560" height="16" uuid="abb8a1af-966c-4b0e-bb6d-7f1ae723369f"/>
 				<text><![CDATA[Resolución DIAN No. 18762005299507 de 19/10/2017 autoriza factura desde No. 285 hasta No. 5000]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="17" width="560" height="16" uuid="582bad10-bf80-47a6-b047-ae18ca8d0867"/>
+				<text><![CDATA[Cuenta Corriente Banco Caja Social # 21003425270]]></text>
 			</staticText>
 		</band>
 	</pageFooter>
